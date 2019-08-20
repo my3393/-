@@ -1,0 +1,98 @@
+<!--pages/sumbit/sumbit.wxml-->
+<view class='public'>
+   <view class='fons'>选择赛区</view>
+   <view style='margin-top:20rpx;'>
+     <input class='dev' placeholder='请选择赛区' disabled='false' bindtap='choose' value='{{dev}}'></input>
+     <view class='enter'>
+       <image src='../../images/enter.png'></image>
+     </view>
+   </view>
+</view>
+
+<view class='public'>
+   <view class='fons'>姓名</view>
+   <view style='margin-top:20rpx;'>
+     <input class='dev' placeholder='请输入姓名' bindinput='name'></input>
+     
+   </view>
+</view>
+
+<view class='public'>
+   <view class='fons'>手机号</view>
+   <view style='margin-top:20rpx;'>
+     <input class='dev' placeholder='请输入手机号' type='number' bindinput='scope'></input>
+    
+   </view>
+</view>
+
+<view class='public'>
+   <view class='fons'>个人简介</view>
+   <view style='margin-top:20rpx;'>
+    <textarea class='texta' placeholder='详细介绍下自己及特长技能（出生、特长、获奖情况、参加的活动等）' maxlength='500' bindinput='intor'>
+    
+    </textarea>
+    
+   </view>
+</view>
+
+<view class='public'>
+   <view class='fons'>个人照片<text class='shang'>（请上传3～5张个人高清照片）</text></view>
+    <view class='dher'>
+           <image wx:for="{{imgs}}" wx:for-index="idx" data-idx="{{idx}}" bindtap="handleImagePreview" src='{{imgs[idx]}}' hidden='{{showimg}}' style='margin-right:20rpx;'></image>
+    <image src='{{post}}' bindtap="chooseImagess" hidden='{{showadd}}'></image>
+       </view>
+</view>
+
+<view class='public'>
+   <view class='fons'>选手封面<text class='shang'>（上传1张做封面图片）</text></view>
+    <view class='dher'>
+          
+    <image src='{{post2}}' bindtap="chooseImagess2" hidden='{{showadd}}'></image>
+       </view>
+</view>
+
+<view class='public'>
+   <view class='fons'>监护人身份证照<text class='shang'>（上传身份证正面照）</text></view>
+    <view class='dher'>
+       <image src='{{post3}}' bindtap="chooseImagess3" hidden='{{showadd}}'></image>   
+       </view>
+</view>
+<view class='public'>
+   <view class='fons'>保险凭证<text class='shang'>（参与赛事购买的保险图片）</text></view>
+    <view class='dher'>
+         
+    <image src='{{post4}}' bindtap="chooseImagess4" hidden='{{showadd}}'></image>
+       </view>
+</view>
+
+
+<view class='submit' bindtap='submit'>
+   提交报名
+</view>
+
+<!-- 赛区选择 -->
+
+<view class='mask' hidden='{{showlabels}}'>
+    <view class='ilebels'>
+        <view class='tops'>
+            <text class='quxiao' bindtap='quxiao'>取消</text>
+            
+            <text class='sure' bindtap='sure'>确定</text>
+        </view>
+       <view class='clearfix'>
+         <view class='left'>
+           <view wx:for='{{nextList}}' id='{{item.id}}' bindtap='prov' class='{{tab == index?"acti" : ""}}' data-index='{{index}}'>{{item.name}}</view>
+           
+         </view>
+         <view class='right'>
+            <view class='sai-x {{tar == index?"active" : ""}}' wx:for='{{area}}' data-index='{{index}}' id='{{item.id}}' data-name='{{item.name}}' bindtap='tag'>
+               {{item.name}}
+            </view>
+            
+         
+         </view>
+       </view>
+        
+    </view>
+</view>
+

@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/sumbit/sumbit",
+    "pages/help/help",
+    "pages/player/player",
+    "pages/my-fan/my-fan",
+    "pages/dynamic/dynamic",
+    "pages/my-submit/my-submit",
+    "pages/recharge/recharge",
+    "pages/mine/mine",
+    "pages/resurrection/resurrection",
+    "pages/sign/sign",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/login/login"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wxf556b39ee9c934b4"
+  ],
+  "sitemapLocation": "sitemap.json"
+}

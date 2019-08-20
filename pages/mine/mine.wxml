@@ -1,0 +1,65 @@
+<!--pages/mine/mine.wxml-->
+<view class='ibottom clearfix'>
+  <view class='fhead' id='{{item.userId}}' catchtap='todetail'>
+    <image mode='aspectFill' src='{{userinfo.headPhoto}}'></image>
+  </view>
+  <text>{{userinfo.userName}}</text>
+
+ <view style='float: right;' wx:if='{{userinfo.isJoin == 1}}'>
+     <view class='flabel' bindtap='play' id='{{userinfo.idolId}}'>查看赛况</view>
+     <view class='flabel' bindtap='fan'>查看粉丝</view>
+ </view>
+</view>
+
+<view class='public' bindtap='recharge'>
+   <view class='fons'>艺呗</view>
+    
+    <view class='enter'>
+       <image src='../../images/enter.png'></image>
+     </view>
+    <text style='float: right;margin-right:20rpx;'>{{userinfo.integral}}</text>   
+</view>
+<view class='public' bindtap='mysub'>
+   <view class='fons'>我的报名</view>
+    
+    <view class='enter'>
+       <image src='../../images/enter.png'></image>
+     </view>
+    
+</view>
+<view class='public' bindtap='dynamic' wx:if='{{userinfo.isJoin == 1}}'>
+   <view class='fons'>发动态</view>
+    
+    <view class='enter'>
+       <image src='../../images/enter.png'></image>
+     </view>
+   
+</view>
+<view class='public' bindtap='yule'>
+   <view class='fons'>前往娱乐世界</view>
+    
+    <view class='enter'>
+       <image src='../../images/enter.png'></image>
+     </view>
+    
+</view>
+
+<view class='footer'>
+  <view class='rems rem' bindtap='home'>
+    <view class='png'><image src='../../images/home-x.png'></image> </view>
+    <view>首页</view>
+  </view>
+  <view class='rems' bindtap='submit' wx:if='{{userinfo.idolId == " " }}'>
+    <view class='pngs'><image src='../../images/submit.png'></image> </view>    
+  </view>
+  <view class='rems' bindtap='submit' wx:elif='{{userinfo.idolId == null }}'>
+    <view class='pngs'><image src='../../images/submit.png'></image> </view>    
+  </view>
+  <view class='rems' bindtap='play' wx:else id='{{userinfo.idolId}}'>
+    <view class='idol'>{{userinfo.idolName}}</view>    
+  </view>
+  <view class='rems rem'>
+    <view class='png'><image src='../../images/mine-y.png'></image> </view>
+    <view class='re-mi'>我的</view>
+  </view>
+</view>

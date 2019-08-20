@@ -1,0 +1,25 @@
+<!--pages/my-submit/my-submit.wxml-->
+<view wx:if='{{detail.length == 0}}'>
+  <view class='kon'>
+    <view class='dzk'>
+      <image src='../../images/none-work.png'></image>
+      <view class='meiy'>翻遍了，什么都没有</view>
+    </view>
+  </view>
+
+</view>
+
+<view wx:else>
+  <view class='public' wx:for="{{detail}}"  bindtap='play' data-status='{{item.status}}'>
+    <view class='title'>{{item.competitionName}}</view>
+    <view class='s-tim'>
+      报名时间：{{item.createDate}}
+    </view>
+    <view class='succ' wx:if='{{item.status == 0}}'>待审核</view>
+    <view class='succ' wx:if='{{item.status == 1}}'>报名成功</view>
+    <view class='succ ship' wx:if='{{item.status == 2}}'>报名失败</view>
+    <view class='bo' wx:if='{{item.status == 2}}'>
+      驳回原因：{{item.remark}}
+    </view>
+  </view>
+</view>

@@ -1,0 +1,244 @@
+/* pages/player/player.wxss */
+page{
+  background: #f2f2f2;
+}
+.public{
+  margin-top: 20rpx;
+  width: calc(100% - 40rpx);
+  margin-left: 20rpx;
+  padding: 30rpx;
+  background: #fff;
+  box-sizing: border-box;
+  
+}
+.species{
+  margin-top: 20rpx;
+  width: calc(100% - 40rpx);
+  margin-left: 20rpx;
+  background: #fff;
+  padding: 20rpx;
+  box-sizing: border-box;
+  border-radius: 8rpx;
+  font-size: 36rpx;
+}
+.banner{
+   margin: 20rpx 0;
+  width: calc(100% - 40rpx);
+  margin-left: 20rpx;
+  height: 500rpx;
+ 
+}
+.banner_img{
+  width: 100%;
+  height: 100%;
+}
+.focus{
+  padding: 20rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  box-sizing: border-box;
+  float: right;
+  color: #F861AA;
+  border-radius: 6rpx;
+  text-align: center;
+  border: 1rpx solid #F861AA;
+  font-size: 30rpx;
+}
+.sai{
+  position: relative;
+}
+.jinj{
+  position: absolute;
+  left: 200rpx;
+  top: 0rpx;
+  width: 100rpx;
+  height: 100rpx;
+}
+.jinj image{
+  width: 100%;
+  height: 100%;
+}
+.eve{
+  display: inline-block;
+  vertical-align: middle;
+}
+.tima{
+  margin-top:30rpx;
+  font-size: 24rpx;
+  font-family:Arial, Helvetica, sans-serif;
+  color: #BBBBBB;
+}
+.sai-k{
+  color: #AEAEAE;
+   font-size: 28rpx;
+}
+.sai-c{
+  display: inline-block;
+  font-size: 28rpx;
+}
+.sai-m{
+  float: right;
+   font-size: 28rpx;
+}
+.partic{
+  margin-top: 60rpx;
+  color: #B7B7B7;
+  display: flex;
+  justify-content: space-around;
+  font-size: 26rpx;
+}
+.partic view{
+  text-align: center;
+}
+.sum{
+  color: #000;
+  font-size: 34rpx;
+  margin-top: 10rpx;
+}
+.tatol{
+  width: calc((100% - 80rpx)/3);
+  height: 78rpx;
+  border: 1rpx solid #F861AA;
+  text-align: center;
+  line-height: 78rpx;
+  color: #F861AA;
+  margin-left: 20rpx;
+  display: inline-block;
+  margin-top: 20rpx;
+  border-radius: 4rpx;
+  box-sizing: border-box;
+}
+
+.intor{
+  padding: 20rpx;
+  box-sizing: border-box;
+  color: #A4A4A4;
+  font-size: 24rpx;
+}
+
+.sindic{
+ margin: 30rpx 0;
+  box-sizing: border-box;
+  width:100%; 
+  text-align: center;
+}
+.heng{
+  width: 30rpx;
+  height: 3rpx;
+  background: #F861AA;
+  margin: 0 10rpx;
+  display: inline-block;
+  vertical-align: middle;
+}
+.list{
+  margin-bottom: 100rpx;
+}
+.nav{
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+.rank{
+  margin-top: 20rpx;
+}
+.rank-head{
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 15rpx;
+}
+.rank-head image{
+  width: 100%;
+  height: 100%;
+}
+.rank-name{
+  vertical-align: middle;
+  display: inline-block;
+  width: 300rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.rank-votes{
+  vertical-align: middle;
+  color: #F861AA;
+}
+.rank-time{
+  float: right;
+  margin-top: 20rpx;
+  color: #ACACAC;
+  font-size: 28rpx;
+}
+
+
+.apply{
+  width: 100%;
+  height: 98rpx;
+  background: #fff;
+  text-align: center;
+  line-height: 98rpx;
+  color: #F861AA;
+  position: fixed;
+  bottom: 0rpx;
+  left: 0rpx;
+  z-index: 9;
+}
+.gohot{
+  display: inline-block;
+  width: 33.3%;
+  height: 100%;
+  text-align: center;
+}
+.shop{
+  width: 100%;
+  height: 100%;
+  background: #C0C0C0;
+  color: #fff;
+}
+.gohot view{
+  display: inline-block;
+  margin-right: 10rpx;
+}
+.gohot image{
+  width: 26rpx;
+  height: 28rpx;
+}
+.sunb{
+  background: #F861AA;
+}
+
+.yds{
+   width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 12;
+}
+.yd{
+	position:absolute;
+  width: 100%;
+  text-align: center;
+	top: 0px;
+	right: 0px;
+}
+
+.yd1 image{
+	width: 400rpx;
+  height: 500rpx;
+  margin-left: 50rpx;
+}
+
+.none{
+  width: 350rpx;
+  height: 320rpx;
+  display: inline-block;
+}
+.none image{
+  width: 100%;
+  height: 100%;
+
+}

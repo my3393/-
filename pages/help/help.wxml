@@ -1,0 +1,55 @@
+<!--pages/help/help.wxml-->
+<view class="top clearfix">
+  <view class="prot">
+    <image src='{{players.playerCoverOss}}'></image>
+  </view>
+  <view class="name">
+    <text class="names">{{players.name}}</text> 编号：
+    <text class="serial">{{players.playerNumber}}</text>
+  </view>
+  <view class="num">
+    票数：
+     <text class="nums">{{players.totalVotes}}</text>
+  </view>
+</view>
+
+<view class="nav">
+  <view class="nav-list {{choo == index?'active':''}}" wx:for='{{detail}}'  data-index='{{index}}' 
+  id='{{item.id}}' data-price='{{item.yiBeiValue}}' data-name='{{item.name}}'  bindtap='choose'>
+
+    <view class="gift-fig">
+      <image src='{{item.photoOss}}'></image>
+    </view>
+    <view class="gift-num">
+     {{item.name}}
+    </view>
+    <view class="pice">
+      <text >{{item.yiBeiValue}}艺呗</text>
+      
+      <text class='pioa'>{{item.voteNumber}}票</text>
+    </view>
+  </view>
+  
+  
+
+  <view class="prompt">
+    活动重在参与，意在宣传推广，不提倡购买！ 支付成功不支持退款，请谨慎操作！
+  </view>
+
+</view>
+
+<view class="footer">
+        
+				<view class="waht">
+					<view style='height:40rpx;' wx:if='{{name.length != 0}}'>{{name}} {{price}}艺呗</view>
+          <view class='spec'>
+            账户余额：{{userinfo.integral}}艺呗
+          </view>
+				</view>
+        
+				<view class="pay" bindtap='pay'>
+					 助力
+				</view>
+</view>
+
+

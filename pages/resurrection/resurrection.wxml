@@ -1,0 +1,114 @@
+<!--pages/home/home.wxml-->
+<view>
+  <swiper class="banner" indicator-dots="true" autoplay="true" duration="1000" indicator-color="#a7a7a7" indicator-active-color="#fe5ba9">
+    <block wx:for='{{banner}}'>
+      <swiper-item id="{{item.ids}}" bindtap="enters" class='swiper'>
+        <image class="banner_img" src="{{item}}"></image>
+      </swiper-item>
+    </block>
+
+  </swiper>
+
+</view>
+
+<view class='res-g'>
+  <view>结束时间: {{detail.endDate}}</view>
+  <view class='res-gu' bindtap='resurr'>
+  <image src='../../images/xnopai.png'></image>
+  <view style='display:inline-block; vertical-align: middle;'> 复活规则</view>
+  </view>
+</view>
+
+<!-- 参赛选手 -->
+
+  <view class='csx'>
+    <view class='search'>
+      <input type='text' class='seainp' confirm-type='search' placeholder='输入编号/姓名' bindinput='searchinp'></input>
+
+    </view>
+
+    <view class='evesai'>
+      <view class='saiq'>赛区：{{competitionName}}
+        <text class='turn' bindtap='bind'>点击切换</text>
+      </view>
+      <view class='top-num'>晋级人数： 前{{qualifiedNumber}}名</view>
+    </view>
+
+    <view wx:if='{{isSearch == false}}'>
+      <view class='baodc' wx:if='{{player.length == 0}}'>
+        <view class='noplay' >
+          <image src='../../images/noplay.png'></image>
+        </view>
+        <view>还没人参加快去试试~</view>
+      </view>
+      <view class='play' wx:else>
+        <view class='play-list' wx:for='{{player}}' id='{{item.userId}}'>
+          <view class='play-img' bindtap='player' id='{{item.userId}}' data-id='{{item.id}}'>
+            <image src='{{item.playerCoverOss}}'></image>
+            <view class='res-top'>
+              {{index + 1}}
+            </view>
+          </view>
+          <view style=' color: #000; font-size: 34rpx; margin-top: 10rpx;'>
+            <text>{{item.playerNumber}}号 </text>
+            <text>{{item.name}}</text>
+          </view>
+          <view class='play-p'>
+            {{item.totalVotes}}票
+          </view>
+          <view class='xuan'>
+            <view class='play-help' catchtap='help' id='{{item.userId}}' data-id='{{item.id}}'>助力</view>
+            <view class='play-help' catchtap='vote' id='{{item.id}}'>投票</view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+    <view wx:else class='oj'>
+      <view class='baodc' wx:if='{{splayer.length == 0}}'>
+        <view class='noplay'>
+          <image src='../../images/noplay1.png'></image>
+        </view>
+        <view> 未搜索到该选手!</view>
+
+      </view>
+     <view class='play' wx:else>
+        <view class='play-list' wx:for='{{splayer}}' id='{{item.userId}}'>
+          <view class='play-img' bindtap='player' id='{{item.userId}}' data-id='{{item.id}}'>
+            <image src='{{item.playerCoverOss}}'></image>
+            <view class='res-top'>
+             2
+            </view>
+          </view>
+          <view style=' color: #000; font-size: 34rpx; margin-top: 10rpx;'>
+            <text>{{item.playerNumber}}号 </text>
+            <text>{{item.name}}</text>
+          </view>
+          <view class='play-p'>
+            {{item.totalVotes}}票
+          </view>
+          <view class='xuan'>
+            <view class='play-help' catchtap='help' id='{{item.userId}}' data-id='{{item.id}}'>助力</view>
+            <view class='play-help' catchtap='vote' id='{{item.id}}'>投票</view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+
+<view class='mask' hidden='{{isgz}}'> 
+  <view class='prompt'>
+     <view >复活规则</view>
+     <view class='konw' bindtap='resurr'>我知道了</view>
+  </view>
+
+</view>
+
+
+<view class="sai-yds" hidden='{{isSai}}'>
+			<view class="sai-yd">
+			   <view class='divis {{tas == index?"act":""}}' wx:for="{{narea}}" id='{{item.id}}' data-index='{{index}}'  data-name='{{item.name}}' data-num='{{item.qualifiedNumber}}'  bindtap='narea'>{{item.name}}</view>
+			</view>
+</view>
+

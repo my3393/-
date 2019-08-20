@@ -1,0 +1,602 @@
+/* pages/home/home.wxss */
+page{
+  background: #f2f2f2;
+}
+.maskvideo{
+    width: 100%;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%,-50%)  !important;
+    z-index: 9999 !important;
+}
+.top{
+  width: 100%;
+  height: 125rpx;
+  position: fixed;
+  left: 0;
+  top:0;
+  z-index: 99;
+}
+.top image{
+  width: 100%;
+  height: 100%
+}
+.colo{
+  color: #F861AA;
+}
+.clone{
+  position: absolute;
+  right: 10rpx;
+  top: 10rpx;
+  width: 34rpx;
+  height: 34rpx;
+}
+.clone image{
+  width: 100%;
+  height: 100%;
+}
+.banner{
+   margin: 20rpx 0;
+  width: calc(100% - 40rpx);
+  margin-left: 20rpx;
+  height: 350rpx;
+ 
+}
+.banner_img{
+  width: 100%;
+  height: 100%;
+}
+.species{
+  width: calc(100% - 40rpx);
+  margin-left: 20rpx;
+  background: #fff;
+  padding: 20rpx;
+  box-sizing: border-box;
+  border-radius: 8rpx;
+}
+.yua{
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  float: left;
+  overflow: hidden;
+  margin-right: 30rpx;
+}
+.yua image{
+  width: 100%;
+  height: 100%;
+}
+.eve{
+  display: inline-block;
+  vertical-align: middle;
+  width: 340rpx;
+  font-size: 28rpx;
+}
+.tima{
+  margin-left: 110rpx;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  font-family:Arial, Helvetica, sans-serif;
+  color: #BBBBBB;
+}
+.jies{
+  color: #D3D3D3;
+}
+.sumbit{
+  float: right;
+  width: 180rpx;
+  margin-top: 10rpx;
+  background: #F861AA;
+  height: 60rpx;
+  border-radius: 40rpx;
+  text-align: center;
+  line-height: 60rpx;
+  color: #fff;
+}
+.fupk{
+  float: right;
+   margin-top: 10rpx;
+  color: #F861AA;
+}
+.nav-list{
+  margin-top: 20rpx;
+  background: #fff;
+  padding: 20rpx 20rpx;
+  padding-bottom: 0rpx;
+  box-sizing: border-box;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+}
+
+.active{
+  color: #F861AA;
+  border-bottom: 1rpx solid #F861AA;
+  padding-bottom: 20rpx;
+  
+}
+.sindic{
+ margin: 30rpx 0;
+  box-sizing: border-box;
+  width:100%; 
+  text-align: center;
+}
+.heng{
+  width: 30rpx;
+  height: 3rpx;
+  background: #F861AA;
+  margin: 0 10rpx;
+  display: inline-block;
+  vertical-align: middle;
+}
+.event{
+  width: 100%;
+  overflow: scroll;
+  white-space: nowrap; 
+  -webkit-overflow-scrolling: touch;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+.intorduce{
+  display:inline-block;
+  margin-left: 20rpx;
+  width: 250rpx;
+  height: 290rpx;
+  background: #fff;
+  text-align: center;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+.intor-nam{
+  height: 90rpx;
+  width: 100%;
+  background: #F861AA;
+  text-align: center;
+  line-height: 90rpx;
+  color: #fff;
+}
+.intor-tim{
+  margin: 40rpx 0;
+}
+.reward{
+
+}
+
+/* 参赛选手 */
+.csx{
+  width: 100%!important;
+  overflow-x: hidden!important;
+
+}
+.search{
+  margin-top: 20rpx;
+}
+.seainp{
+  width: calc(100% - 40rpx);
+  margin-left: 20rpx;
+  height: 80rpx;
+  background: #fff;
+  border-radius: 50rpx;
+  text-align: center;
+  font-size: 24rpx;
+  
+}
+.evesai{
+  padding: 20rpx 20rpx;
+  box-sizing: border-box;
+}
+.saiq{
+  display: inline-block;
+  font-size: 28rpx;
+   color: #BBBBBB; 
+}
+.turn{
+  color: #F861AA;
+  margin-left: 10rpx;
+}
+.top-num{
+  float: right;
+  font-size: 28rpx;
+  color: #BBBBBB;
+  margin-top: 6rpx
+}
+.play{
+  padding-bottom: 100rpx;
+}
+.play-list{
+  width: calc((100% - 60rpx)/2);
+  margin-left: 20rpx;
+  text-align: center;
+  display: inline-block;
+  background: #fff;
+  border-radius: 10rpx;
+  overflow: hidden;
+  margin-top: 20rpx;
+}
+.play-img{
+  width: 100%;
+  height: 250rpx;
+}
+.play-img image{
+  width: 100%;
+  height: 100%;
+}
+.play-p{
+  margin: 10rpx 0;
+  color: #BBBBBB;
+}
+.play-help{
+  width: calc((100% - 15rpx)/2);
+  background: #F861AA;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  color: #fff;
+  display: inline-block;
+}
+.xuan view:nth-child(1){
+  float: left;
+}
+.xuan view:nth-child(2){
+  float: right;
+}
+.noplay{
+  width: 250rpx;
+  height: 225rpx;
+  display: inline-block;
+}
+.noplay image{
+  width: 100%;
+  height: 100%;
+}
+.baodc{
+  width:100%;
+text-align:center;
+margin-top:30rpx;
+color: #A3A3A3;
+}
+
+/* 排行榜 */
+
+.top_3{
+  margin-top: 20rpx;
+}
+.top_3>view{
+  width: 33.3%;
+  display: inline-block;
+}
+.top_list{
+  text-align: center;
+}
+.top_head{
+  margin-top: 20rpx;
+  width: 100rpx;
+  height: 100rpx;
+  display: inline-block; 
+  position: relative;
+}
+.top_head image{
+  width: 100%;
+  height: 100%;
+  border-radius:50%;
+}
+.top_heads{
+  width: 120rpx;
+  height: 120rpx;
+  display: inline-block;
+  position: relative;
+}
+.top_heads image{
+  width: 100%;
+  height: 100%;
+  border-radius:50%;
+}
+.sex{
+  font-size: 22rpx;
+}
+.top-2{
+  color: #FCC500;
+}
+.top-1{
+  color: #FF2D00;
+}
+.top-4{
+  width: 100%;
+  background: #fff;
+  padding: 20rpx 20rpx;
+  margin-top: 30rpx;
+  box-sizing: border-box;
+  margin-bottom: 100rpx;
+}
+.pai{
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10rpx;
+}
+.fuhuo{
+  display: inline-block;
+  width: 130rpx;
+  height: 60rpx;
+  background: #F861AA;
+  color: #fff;
+  text-align: center;
+  line-height: 60rpx;
+  border-radius: 30rpx;
+}
+.fuhuos{
+  display: inline-block;
+  width: 130rpx;
+  height: 60rpx;
+  background: #C0C0C0;
+  color: #fff;
+  text-align: center;
+  line-height: 60rpx;
+  border-radius: 30rpx;
+}
+.rank{
+  margin-top: 20rpx;
+}
+.rankhead image{
+  width: 80rpx;
+  height: 80rpx;
+}
+.rankhead{
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20rpx;
+}
+.rankm{
+  display: inline-block;
+  vertical-align: middle;
+  width: 300rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+.ranksum{
+  float: right;
+  margin-top: 10rpx;
+  color: #808080;
+}
+.gaun{
+  width: 69rpx;
+  height: 62rpx;
+  position: absolute;
+  top: -24rpx;
+  right: -15rpx;
+}
+
+/* 动态 */
+.micro{
+  background: #fff;
+  width: calc(100% - 40rpx);
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  padding: 20rpx 20rpx;
+  box-sizing: border-box;
+  margin-bottom: 30rpx;
+
+}
+.fics{
+  font-size: 28rpx;
+  color: #3F3F3F;
+  margin: 20rpx 0;
+}
+.playcove{
+  display: inline-block;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  vertical-align: middle;
+  overflow: hidden;
+  margin-right: 20rpx;
+}
+.playcove image{
+  width: 100%;
+  height: 100%;
+}
+.microtu{
+  width: 100%;
+  overflow: scroll;
+  white-space: nowrap; 
+  -webkit-overflow-scrolling: touch;
+}
+.dynac{
+  display:inline-block;
+  width: 230rpx;
+  margin-right: 20rpx;
+  height: 230rpx;
+}
+.dynac image{
+  width: 100%;
+  height: 100%;
+}
+.timers{
+  font-size: 28rpx;
+  color: #BDBDBD;
+  margin-top: 10rpx;
+}
+.dynac-vid{
+  width: 100%;
+  height: 380rpx;
+  position: relative;
+  font-size: 0;
+}
+.dynac-vid image{
+  width: 100%;
+  height: 100%;
+}
+
+.ibottom{
+    width: 100%;
+    padding: 0 20rpx;
+    line-height: 94rpx;
+    box-sizing: border-box;
+}
+.ibottom text{
+    float: left;
+    font-size: 28rpx;
+    color: #333;
+}
+.ibottom view{
+    display: inline-block;
+    font-size: 24rpx;
+    color: #fe5ba9;
+}
+.heat{
+    width: 20rpx;
+    height: 28rpx;
+    position: relative;
+    top: 2rpx;
+    margin-left: 10rpx;
+    margin-right: 10rpx;
+}
+.fhead{
+    width: 80rpx;
+    height: 80rpx;
+    position: relative;
+    overflow: hidden;
+    border-radius: 60rpx;
+    float: left;
+    margin-top: 20rpx;
+    margin-right: 20rpx;
+}
+.fhead image{
+    width: 100%;
+    height: 100%;
+}
+.heats{
+    position: relative;
+    top: -2px;
+}
+.flabel{
+    float: right;
+    color: #808080 !important;
+    font-size: 26rpx !important;
+}
+.cont{
+  color: #737272;
+  font-size: 28rpx;
+  margin: 20rpx 0;
+
+}
+.plays{
+  width: 96rpx;
+  height: 96rpx;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+.plays image{
+  width: 100%;
+  height: 100%
+}
+
+.sai-yds{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 12;
+}
+
+.sai-yd{
+	position:absolute;
+  width: calc(100% - 40rpx);
+  right:20rpx;
+	top: 36%;
+  background: #fff;
+  padding: 20rpx 0;
+  padding-bottom: 40rpx;
+  box-sizing: border-box;
+  border-radius: 12rpx;
+}
+.divis{
+  width: calc((100% - 80rpx)/3);
+  margin-left: 20rpx;
+  background: #D8D8D8;
+  color: #fff;
+  border-radius: 12rpx;
+  display: inline-block;
+  text-align: center;
+  height: 75rpx;
+  line-height: 75rpx;
+  margin-top: 20rpx;
+  font-size: 26rpx;
+}
+.sai-active{
+  background: #F861AA;
+}
+.act{
+  background: #F861AA;
+}
+
+.png{
+  width: 45rpx;
+  height: 42rpx;
+  display: inline-block;
+}
+.png image{
+  width: 45rpx;
+  height: 42rpx;
+ 
+}
+.pngs{
+  width: 99rpx;
+  height: 99rpx;
+  text-align: center;
+  display: inline-block;
+}
+.pngs image{
+  width: 100%;
+  height: 100%;
+}
+.rem{
+  margin-top: 15rpx;
+}
+.rems{
+  width: 33.3%;
+  text-align: center;
+  float: left;
+  
+}
+.re-mi{
+  color: #F861AA;
+}
+.idol{
+  color: #F861AA;
+  line-height: 99rpx;
+  font-size: 32rpx;
+}
+
+.fuh{
+  width: calc(100% - 40rpx);
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%,-50%);
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  text-align: center;
+}
+.gofu{
+  display: inline-block;
+  margin-top: 30rpx;
+  width: 200rpx;
+  height: 70rpx;
+  border-radius: 10rpx;
+  background: #F861AA;
+  color: #fff;
+  text-align: center;
+  line-height: 70rpx;
+}

@@ -1,0 +1,103 @@
+/* pages/mine/mine.wxss */
+page{
+  background: #f2f2f2;
+}
+.ibottom{
+    width: calc(100% - 40rpx);
+    margin-left: 20rpx;
+    background: #fff;
+    padding: 0 20rpx;
+    line-height: 174rpx;
+    box-sizing: border-box;
+    margin-top: 20rpx;
+}
+.ibottom text{
+    float: left;
+    font-size: 28rpx;
+    color: #333;
+}
+.ibottom view{
+    display: inline-block;
+    font-size: 24rpx;
+    color: #fe5ba9;
+}
+
+.fhead{
+    width: 120rpx;
+    height: 120rpx;
+    position: relative;
+    overflow: hidden;
+    border-radius: 60rpx;
+    float: left;
+    margin-top: 20rpx;
+    margin-right: 20rpx;
+}
+.fhead image{
+    width: 100%;
+    height: 100%;
+}
+
+.flabel{
+    color: #fe5ba9;
+    margin-right: 15rpx;
+    font-size: 26rpx !important;
+}
+
+.public{
+  margin-top: 20rpx;
+  width: calc(100% - 40rpx);
+  margin-left: 20rpx;
+  padding: 30rpx;
+  background: #fff;
+  box-sizing: border-box;
+  
+}
+.fons{
+  display: inline-block;
+}
+.enter{
+  float: right;
+  width: 16rpx;
+  height: 26rpx;
+}
+.enter image{
+  width: 100%;
+  height: 100%;
+}
+.png{
+  width: 45rpx;
+  height: 42rpx;
+  display: inline-block;
+}
+.png image{
+  width: 45rpx;
+  height: 42rpx;
+ 
+}
+.pngs{
+  width: 99rpx;
+  height: 99rpx;
+  text-align: center;
+  display: inline-block;
+}
+.pngs image{
+  width: 100%;
+  height: 100%;
+}
+.rem{
+  margin-top: 15rpx;
+}
+.rems{
+  width: 33.3%;
+  text-align: center;
+  
+  float: left;
+}
+.re-mi{
+  color: #F861AA;
+}
+.idol{
+  color: #F861AA;
+  line-height: 99rpx;
+  font-size: 32rpx;
+}

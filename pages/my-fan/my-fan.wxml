@@ -1,0 +1,25 @@
+<!--pages/my-fan/my-fan.wxml-->
+<view wx:if='{{detail.length == 0}}'>
+  <view class='kon'>
+    <view class='dzk'>
+      <image src='../../images/none-work.png'></image>
+      <view class='meiy'>空空如也~</view>
+    </view>
+  </view>
+</view>
+
+<view wx:else>
+  <view class='top'>
+  有以下粉丝关注了您的赛况
+</view>
+<view class='nav'>
+  <view class='rank' wx:for='{{detail}}'>
+    <view class='rank-head'>
+      <image src='{{item.headPhoto}}'></image>
+    </view>
+    <text class='rank-name'>{{item.userName}}</text>
+  </view>
+
+</view>
+
+</view>

@@ -1,0 +1,117 @@
+<!--pages/player/player.wxml-->
+<view class='species'>
+  <view>
+    <view class='eve'>{{detail.name}}  {{detail.playerNumber}}号</view>
+    <view class='focus' wx:if='{{userinfo.idolId == id}}'>已关注</view>
+    <view class='focus' bindtap='focus' wx:elif='{{userinfo.idolId == null}}'>关注赛况</view>
+     <view class='focus' bindtap='focus' wx:elif='{{userinfo.idolId == ""}}'>关注赛况</view>
+    <view class='tima'>
+      我正在参加《明日告白》影视剧组剧组线上海选赛“{{detail.areaName}}”选拔赛，快来投我一票～
+    </view>
+  </view>
+</view>
+<view class='public'>
+    <!-- <view class='sai-k'>比赛还未开始</view> -->
+     <view class='sai'>
+        <view class='sai-c'>当前赛程：{{detail.seasonName}}</view>
+         <view class='jinj' wx:if="{{detail.status == 3}}">
+           <image src='../../images/jinj.png'></image>
+         </view>
+          <view class='jinj' wx:if="{{detail.status == 2}}">
+           <image src='../../images/taot.png'></image>
+         </view>
+        <view class='sai-m'>所在赛区：{{detail.areaName}}</view>
+     </view>
+     <view class='partic'>
+        <view>
+          <view class='sum'>{{detail.currentRank}}</view>
+           <view>当前排名</view> 
+        </view>
+        <view hidden='{{competitionType == 1}}'>
+         
+          <view class='sum'>{{detail.totalVotes}}</view>
+           <view>票数</view>
+        </view>
+        <view>
+         
+          <view class='sum'>{{before}}</view>
+           <view>距上一名差</view>
+        </view>
+      </view>
+</view>
+<view>
+   <view class='tatol' bindtap='vote'>投TA一票</view>
+   <view class='tatol' bindtap='help' >助力</view>
+   <view class='tatol' bindtap='know'>帮TA拉票</view>
+</view>
+   <view class='sindic'>
+      <view class='heng'></view>
+      <text>个人简介</text>
+      <view class='heng'></view>
+    </view>
+<view>
+  <swiper class="banner" indicator-dots="true" circular='true' autoplay="true" duration="1000" indicator-color="#a7a7a7" indicator-active-color="#fe5ba9">
+    <block wx:for='{{detail.playerPhotoOss}}'>
+      <swiper-item id="{{item.ids}}" bindtap="enters" class='swiper'>
+        <image class="banner_img" src="{{item}}"></image>
+      </swiper-item>
+    </block>
+
+  </swiper>
+
+</view>
+
+<view class='intor'>
+   {{detail.playerIntroduce}}
+</view>
+
+<view class='list'>
+   <view class='sindic'>
+      <view class='heng'></view>
+      <text>投票记录</text>
+      <view class='heng'></view>
+    </view>
+    <view style='text-align:center;margin-top:20rpx;' wx:if="{{votelist.length == 0}}">
+        <view class='none'>
+         <image src='../../images/none.png'></image>
+        </view>
+        <view style='margin-top:20rpx;'>空空如也~</view>
+    </view>
+    <view class='nav' wx:else>
+      <view class='rank' wx:for="{{votelist}}">
+        <view class='rank-head'>
+          <image src='{{item.headPhoto}}'></image>
+        </view>
+        <text class='rank-name'>{{item.userName}}</text>
+         <text class='rank-votes'>+{{item.voteNumber}}票</text>
+         <view class='rank-time'>{{item.data}}</view>
+      </view>  
+      
+    </view>
+</view>
+
+<view class='apply' >
+    <view class='gohot' bindtap='hots'>
+       
+       <text>首页</text>
+    </view>
+     <view class='gohot' bindtap='yule'>
+     
+       <text>预约TA</text>
+    </view>
+     <view class='gohot'>
+       <!-- <view class='shop' wx:if="{{detail.status == 0}}">报名还未开始</view> -->
+       <view class='shop sunb' bindtap='submit' wx:if="{{status == 1}}" id='{{userinfo.userId}}'>立即报名</view>
+       <view class='shop' wx:else>报名截止</view>
+       <!-- <view class='shop' wx:else>活动结束</view> -->
+       <!-- <text bindtap='submit'>立即报名</text> -->
+    </view>
+</view>
+
+<view class="yds" hidden='{{isyds}}'>
+			<view class="yd">
+				<view class="yd1" bindtap='know'> <image src="../../images/fenx.png"></image> </view>
+				
+			</view>
+</view>
+

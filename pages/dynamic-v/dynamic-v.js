@@ -1,6 +1,6 @@
 // pages/dynamic/dynamic.js
 const app = getApp();
-var images = [];
+var img;
 var simages = [];
 Page({
 
@@ -8,9 +8,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    post:'../../images/add.png',
-    showadd:false,
-    evedet:'',
+    post: '../../images/add.png',
+    post1: '../../images/add.png',
+    showadd: false,
+    evedet: '',
+    showadd: false,
+    showadds: false,
+    tvideo: '',
   },
 
   /**
@@ -74,20 +78,25 @@ Page({
   submit: function () {
     var that = this;
 
-    if (simages.length > 5) {
+    if (that.data.img == '') {
       wx.showToast({
-        title: '请上传不超过5张照片',
+        title: '请上传视频封面',
         icon: 'none'
       })
-    } else{
+    } else if (that.data.tvideo == '') {
+      wx.showToast({
+        title: '请上传视频',
+        icon: 'none'
+      })
+    } else {
       wx.request({
         url: app.data.urlevent + "/appuser/savedynamic.do",
         data: {
           token: wx.getStorageSync('token'),
-          fileType: 1,
+          fileType: 2,
           content: that.data.evedet,
-          filePath: simages,
-         
+          filePath: that.data.tvideo,
+          fileCover:img
         },
         method: 'POST',
         header: {
@@ -95,15 +104,17 @@ Page({
         },
         dataType: 'json',
         success: function (res) {
-        
+
           if (res.data.status === 100) {
             wx.showToast({
               title: '发布成功',
               icon: 'none'
             })
-             wx.redirectTo({
-               url: '../mine/mine',
-             })
+            setTimeout(function(){
+              wx.redirectTo({
+                url: '../mine/mine',
+              })
+            },200)
           } else if (res.data.status === 103) {
             wx.showToast({
               title: '请重新登录',
@@ -120,7 +131,7 @@ Page({
           }
         }
       })
-    } 
+    }
   },
   //介绍
   evedetail: function (e) {
@@ -132,19 +143,19 @@ Page({
   chooseImagess: function (e) {
     var that = this;
     wx.chooseImage({
-      count: 6,
+      count: 1,
       sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
       sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
       success: res => {
         console.log(res.tempFilePaths);
         var tempFilePaths = res.tempFilePaths;
-        for (var i in tempFilePaths) {
-          images.push(tempFilePaths[i])
+       
+         
           console.log(1)
           wx.showLoading();
           wx.uploadFile({
             url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
-            filePath: tempFilePaths[i],
+            filePath: tempFilePaths[0],
             name: 'file',
             header: {
               "Content-Type": "multipart/form-data",
@@ -162,23 +173,72 @@ Page({
                 title: '上传成功',
                 icon: 'none'
               })
-              simages.push(datas.data.fileName)
-              // do something
-              console.log(simages)
-              if (simages.length == 6) {
-                that.setData({
-                  showadd: !that.data.showadd
-                })
-              }
+              img = datas.data.fileName
+              that.setData({
+                post1:datas.data.url
+              })
+              console.log(datas.data.fileName)
             }
           })
-
-
-        }
+       
         that.setData({
-          imgs: images,
           showimg: false
         })
+      }
+    })
+  },
+  //视频
+  chooseVideo: function (e) {
+    var that = this;
+    
+    wx.chooseVideo({
+      sourceType: ['album', 'camera'],
+      maxDuration: 60,
+      camera: 'back',
+      success(res) {
+        wx.showLoading({
+          title: '视频上传中...',
+        })
+        console.log(res)
+        var tempFilePathss = res.tempFilePaths;
+        
+        if (res.duration < 40) {
+          wx.uploadFile({
+            url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
+            filePath: res.tempFilePath,
+            name: 'file',
+            header: {
+              "Content-Type": "multipart/form-data",
+              'accept': 'application/json',
+            },
+
+            formData: {
+              'token': wx.getStorageSync('token')
+            },
+            dataType: 'json',
+            success(res) {
+              console.log(res)
+              let datas = JSON.parse(res.data)
+              console.log(datas)
+
+              wx.hideLoading();
+              wx.showToast({
+                title: '上传成功',
+                icon: 'success'
+              })
+              that.setData({
+                post:'../../images/plays.png',
+                tvideo: datas.data.fileName
+              })
+            }
+          })
+        } else {
+          wx.showToast({
+            title: '请选择20s以内',
+            icon: 'none'
+          })
+         
+        }
       }
     })
   },

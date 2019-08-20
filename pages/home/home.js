@@ -48,7 +48,8 @@ Page({
     userinfo:'',
     time:'',
     isAnnouncement:'',
-    isCurrent:''
+    isCurrent:'',
+    valu:''
   },
 
   /**
@@ -57,9 +58,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     this.getdetail();
-    this.getdev();
-    this.getmode();
-    this.getdynamic();
+    
     // 调用函数时，传入new Date()参数，返回值是日期和时间
     var time = util.formatTime(new Date());
     console.log(time)
@@ -137,7 +136,7 @@ Page({
        ranklist = [];
        dynamic = [];
       that.setData({
-
+        valu: '',
         ranklist: [],
         top_1: '',
         top_2: '',
@@ -241,7 +240,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '《明日告白》影视剧组线上海选赛火热进行中，快进来看看吧~',
+      path: '/pages/home/home'
+    }
   },
   play:function(e){
     var that = this;
@@ -469,6 +471,7 @@ Page({
     that.setData({
       isSearch: true,
       splayer:[],
+      valu:e.detail.value
     })
     wx.request({
       url: app.data.urlevent + "/appcomeptitionplayer/playerlist.do",
@@ -568,7 +571,9 @@ Page({
   bind: function () {
     var that = this;
     this.setData({
-      isSai: !this.data.isSai
+      isSai: !this.data.isSai,
+      
+      valu:'',
     })
     that.getNarea();
   },
@@ -588,6 +593,7 @@ Page({
       qualifiedNumber: qualifiedNumber,
       isSai: !this.data.isSai,
       tas: index,
+      isSearch: false,
       players: [],
       mo_id:id,
       ranklist: [],
@@ -644,7 +650,9 @@ Page({
         console.log(res.data.data)
         if (res.data.status === 100) {
          
-          
+          that.getdev();
+          that.getmode();
+          that.getdynamic();
           that.setData({
             detail: res.data.data,
             banner: res.data.data.competitionPhotoOss,

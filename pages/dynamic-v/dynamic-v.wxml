@@ -1,0 +1,23 @@
+<view class='public'>
+   <view>
+      <textarea placeholder='说点什么吧~' maxlength='500' bindinput='evedetail'>
+      
+      </textarea>
+   </view>
+   <view class=' '>
+    <view class='dher'>
+    <view class='fenm'>请上传视频封面</view>
+    <image src='{{post1}}' bindtap="chooseImagess" ></image>
+    
+    </view>
+    <view class='dher'>
+    <view class='fenm fenx'>请上传视频</view>
+    <image src='{{post}}' bindtap="chooseVideo" ></image>
+       </view>
+</view>
+
+</view>
+
+<view class='submit' bindtap='submit'>
+   发布
+</view>

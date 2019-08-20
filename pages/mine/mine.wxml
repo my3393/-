@@ -63,3 +63,13 @@
     <view class='re-mi'>我的</view>
   </view>
 </view>
+
+<view class="yds" hidden='{{isart}}' bindtap='qux'>
+			<view class="yd">
+				 请选择发布的动态是视频还是照片
+        <view class='xioe'>
+          <view class='deter' catchtap='cance'>视频</view>
+          <view class='deter' catchtap='deter' >照片</view>
+        </view>
+			</view>
+</view>

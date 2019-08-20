@@ -442,11 +442,13 @@ color: #A3A3A3;
     float: left;
     font-size: 28rpx;
     color: #333;
+    margin-top: 10rpx;
 }
 .ibottom view{
     display: inline-block;
     font-size: 24rpx;
     color: #fe5ba9;
+    margin-top: 10rpx;
 }
 .heat{
     width: 20rpx;

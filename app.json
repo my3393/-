@@ -10,16 +10,16 @@
     "pages/recharge/recharge",
     "pages/mine/mine",
     "pages/resurrection/resurrection",
-    "pages/sign/sign",
     "pages/index/index",
     "pages/logs/logs",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/dynamic-v/dynamic-v"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#F861AA",
+    "navigationBarTitleText": "明日告白",
+    "navigationBarTextStyle": "white"
   },
   "navigateToMiniProgramAppIdList": [
     "wxf556b39ee9c934b4"

@@ -46,7 +46,7 @@
   <view class='event'>
     <view class='intorduce' wx:for='{{allseason}}'>
       <view class='intor-nam'>{{item.name}}</view>
-      <view class='intor-tim'>{{item.start}}~{{item.end}}</view>
+      <view class='intor-tim'>{{item.start}}-{{item.end}}</view>
        <view wx:if='{{item.isshow == 2}}' class='colo'>进行中</view>
       <view wx:if='{{item.isshow == 1}}' class='jies'>未开启</view>
       <view wx:if='{{item.isshow == 3}}' class='jies'>已结束</view>
@@ -78,7 +78,7 @@
 <view wx:if='{{tab == 1}}'>
   <view class='csx'>
     <view class='search'>
-      <input type='text' class='seainp' confirm-type='search' placeholder='输入编号/姓名' bindinput='searchinp'></input>
+      <input type='text' class='seainp' confirm-type='search' placeholder='输入编号/姓名' value='{{valu}}'  bindinput='searchinp'></input>
 
     </view>
 

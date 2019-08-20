@@ -89,7 +89,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
- 
+    return {
+      title: '《明日告白》影视剧组线上海选赛火热进行中，快进来看看吧~',
+      path: '/pages/home/home'
+    }
   },
   play:function(e){
     console.log(e)

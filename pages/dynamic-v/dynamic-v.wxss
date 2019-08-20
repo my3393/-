@@ -1,0 +1,63 @@
+/* pages/dynamic-v/dynamic-v.wxss *//* pages/dynamic/dynamic.wxss */
+page{
+  background: #f2f2f2;
+}
+.public{
+  margin-top: 20rpx;
+  width: calc(100% - 40rpx);
+  margin-left: 20rpx;
+  padding: 30rpx;
+  background: #fff;
+  box-sizing: border-box;
+  
+}
+textarea{
+  width: 100%;
+  height: 200rpx;
+  font-size: 24rpx;
+}
+.dher{
+  margin-top: 20rpx;
+   width: 100%;
+  overflow: scroll;
+  white-space: nowrap; 
+  -webkit-overflow-scrolling: touch;
+}
+.fenm{
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 28rpx;
+  color: #F861AA;
+  margin-right: 20rpx;
+}
+.fenx{
+  margin-right: 74rpx;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.dher image{
+  width: 200rpx;
+  height: 200rpx;
+  margin-right: 10rpx;
+  vertical-align: middle;
+}
+.add image{
+  width: 200rpx;
+  height: 200rpx;
+}
+.submit{
+  width: calc(100% - 40rpx);
+  margin-left: 20rpx;
+  border-radius: 40rpx;
+  height: 80rpx;
+  margin-bottom: 30rpx;
+  background: #F861AA;
+  color: #fff;
+  text-align: center;
+  line-height: 80rpx;
+  margin-top: 40rpx;
+}

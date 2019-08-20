@@ -18,6 +18,7 @@ Page({
     time:'',
     is:'',
     userinfo:'',
+    isart:true,
   },
 
   /**
@@ -94,11 +95,28 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '《明日告白》影视剧组线上海选赛火热进行中，快进来看看吧~',
+      path: '/pages/home/home'
+    }
   },
-  pay:function(){
+  cance:function(){
     var that = this;
-   
+    this.setData({
+      isart: !that.data.isart,
+    })
+  },
+  pay: function () {
+    var that = this;
+    this.setData({
+      isart: !that.data.isart,
+    })
+  },
+  deter:function(){
+    var that = this;
+    this.setData({
+      isart: !that.data.isart,
+    })
     if (that.data.chooid == '') {
       wx.showToast({
         title: '请先选择礼物',
@@ -129,8 +147,9 @@ Page({
               title: '助力成功',
             
             })
-             that.getplayer();
              that.getuser();
+             that.getplayer();
+             
           } else if (res.data.status === 103) {
             wx.showToast({
               title: '请重新登录',

@@ -101,3 +101,40 @@ page{
   line-height: 99rpx;
   font-size: 32rpx;
 }
+
+.yds{
+   width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 12;
+}
+.yd{
+	position:absolute;
+  width: 500rpx;
+  background: #fff;
+  text-align: center;
+  font-size: 28rpx;
+  border-radius: 12rpx;
+  padding-top: 40rpx;
+	top: 40%;
+	left: 50%;
+  transform: translate(-50%,-50%)
+}
+.baodc{
+width:100%;
+text-align:center;
+margin-top:30rpx;
+color: #F861AA;
+}
+.xioe{
+  margin-top: 50rpx;
+  line-height: 70rpx;
+  display: flex;
+  justify-content: space-around
+}
+.deter{
+  color: #F861AA;
+}

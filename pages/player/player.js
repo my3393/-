@@ -19,7 +19,7 @@ Page({
     playid:'',
     status:'',
     userinfo:'',
-
+    ok:true,
   },
 
   /**
@@ -146,7 +146,7 @@ Page({
   
   onShareAppMessage: function () {
     var abc = {
-      title: '我是' + that.data.detail.playerNumber + '号' + that.data.detail.name + '我正在参加' + that.data.areaName + ',快来投我一票吧',
+      title: '大家好，我是'  + that.data.detail.name + '我正在参加' + that.data.areaName + ',快来投我一票吧',
       path: '/pages/player/player?id=' + that.data.id  + '&share=' + 1,
       success: function (res) {
         // 转发成功
@@ -169,6 +169,11 @@ Page({
   //投票
   vote: function (e) {
     var that = this;
+    if (that.data.ok) {    //判断ok，初始化是true所以会执行，
+      that.setData({       //进去之后设置为false这样后面再点击就没有用了
+        ok: false,
+      })
+    }
     wx.request({
       url: app.data.urlevent + "/appcomeptitionplayer/uservote.do",
       data: {
@@ -187,13 +192,16 @@ Page({
             title: '感谢你宝贵的一票',
             icon: 'none'
           })
+          that.setData({   
+            ok: true,
+          })
           that.getdetail();
         } else if (res.data.status === 105) {
           wx.showToast({
             title: '投票达上限，请明天再来吧',
             icon: 'none'
           })
-
+  
         } else {
           wx.showToast({
             title: res.data.msg,

@@ -52,4 +52,13 @@
 				</view>
 </view>
 
+<view class="yds" hidden='{{isart}}' >
+			<view class="yd">
+				 确定使用艺呗抵扣给TA助力
+        <view class='xioe'>
+          <view class='deter' catchtap='cance'>暂不考虑</view>
+          <view class='deter' catchtap='deter' >确定</view>
+        </view>
+			</view>
+</view>
 

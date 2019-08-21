@@ -17,16 +17,18 @@ Page({
    post2: '../../images/add.png',
    post3: '../../images/add.png',
    post4: '../../images/add.png',
+   imgs:[],
    showlabels:true,
    scope:'',
    name:'',
    intor:'',
    nextList:[],
    pro_id:'',
-    area:[],
-    tar:999,
+   area:[],
+   tar:999,
    dev_id:'',
    tab:999,
+   ok:true,
   },
 
   /**
@@ -54,14 +56,19 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+   
+    
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    images = [];
+    simages = [];
+    this.setData({
+      imgs: []
+    })
   },
 
   /**
@@ -160,7 +167,9 @@ Page({
   },
   //个人照片
   chooseImagess: function (e) {
+    console.log(simages)
     var that = this;
+    console.log(that.data.imgs)
     wx.chooseImage({
       count: 5,
       sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
@@ -172,6 +181,7 @@ Page({
           images.push(tempFilePaths[i])
           console.log(1)
           wx.showLoading();
+          console.log(simages)
           wx.uploadFile({
             url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
             filePath: tempFilePaths[i],
@@ -192,6 +202,7 @@ Page({
                 title: '上传成功',
                 icon: 'none'
               })
+              console.log(simages)
               simages.push(datas.data.fileName)
               // do something
               console.log(simages)
@@ -209,8 +220,11 @@ Page({
           imgs: images,
           showimg: false
         })
+        console.log(that.data.imgs)
       }
     })
+
+
   },
   //选手封面
   chooseImagess2(e) {
@@ -353,6 +367,8 @@ Page({
   submit:function(e){
      var that = this;
     var phonetel = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+    if (that.data.ok) {    //判断ok，初始化是true所以会执行，
+      
      if(that.data.dev_id == ''){
         wx.showToast({
           title: '请选择赛区',
@@ -387,9 +403,14 @@ Page({
          title: '请填写个人简介',
          icon: 'none'
        })
-     } else if (simages.length < 3) {
+     } else if(simages.length < 3) {
        wx.showToast({
          title: '请上传至少3张个人照',
+         icon: 'none'
+       })
+     } else if (simages.length > 5) {
+       wx.showToast({
+         title: '请上传3~5张个人照',
          icon: 'none'
        })
      }else if (post2 == '') {
@@ -408,6 +429,9 @@ Page({
          icon: 'none'
        })
      }else{
+       that.setData({       //进去之后设置为false这样后面再点击就没有用了
+         ok: false,
+       })
        wx.request({
          url: app.data.urlevent + "/appcompetition/submit/registration.do",
          data: {
@@ -429,6 +453,9 @@ Page({
          success: function (res) {
            console.log(res.data.data)
            if (res.data.status === 100) {
+             that.setData({
+               ok: true,
+             })
              wx.showToast({
                title: '提交成功可去个人中心查看报名情况',
                icon: 'none'
@@ -445,6 +472,7 @@ Page({
          }
        })
      }
+    }
   },
   quxiao: function (e) {
     var that = this;

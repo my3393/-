@@ -20,6 +20,7 @@ Page({
     status:'',
     userinfo:'',
     ok:true,
+    share:1,
   },
 
   /**
@@ -107,7 +108,7 @@ Page({
         votelist: [],
         playid: '',
         status: '',
-        
+        share:1,
       })
 
       setTimeout(function () {
@@ -145,35 +146,25 @@ Page({
    */
   
   onShareAppMessage: function () {
-    var abc = {
-      title: '大家好，我是'  + that.data.detail.name + '我正在参加' + that.data.areaName + ',快来投我一票吧',
-      path: '/pages/player/player?id=' + that.data.id  + '&share=' + 1,
-      success: function (res) {
-        // 转发成功
-        console.log(res)
-        wx.showToast({
-          title: '转发成功',
-
-        })
-
-      },
-      fail: function (res) {
-        // 转发失败
-        wx.showToast({
-          title: '转发失败',
-          icon: 'none'
-        })
-      }
-    }  
+     var that = this;
+    // return {
+    //   title: '大家好，我是'  + that.data.detail.name + '我正在参加' + that.data.areaName + ',快来投我一票吧',
+    //   path: '/pages/player/player?id=' + that.data.id  + '&share=' + 1,
+      
+    //      }  
+    return {
+      title: '大家好，我是' + that.data.detail.name + '我正在参加《明日告白》影视剧组剧组线上海选赛' + that.data.detail.areaName + '选拔,快来投我一票吧',
+      path: '/pages/player/player?id=' + that.data.id + '&share=' + that.data.share
+    }
   },
   //投票
   vote: function (e) {
     var that = this;
-    if (that.data.ok) {    //判断ok，初始化是true所以会执行，
+   if (that.data.ok) {    //判断ok，初始化是true所以会执行，
       that.setData({       //进去之后设置为false这样后面再点击就没有用了
         ok: false,
       })
-    }
+    
     wx.request({
       url: app.data.urlevent + "/appcomeptitionplayer/uservote.do",
       data: {
@@ -210,6 +201,7 @@ Page({
         }
       }
     })
+   }
   },
   yule: function (e) {
     //娱乐世界
@@ -353,6 +345,60 @@ Page({
       }
     })
   },
+  //复活他
+  resurrection: function () {
+    var that = this;
+    wx.showModal({
+
+      content: '确定开启复活',
+      confirmColor: '#F861AA',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          wx.request({
+            url: app.data.urlevent + "/appcomeptitionplayer/joinresurgence.do",
+            data: {
+              token: wx.getStorageSync('token'),
+              userId: that.data.id
+            },
+            method: 'POST',
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            dataType: 'json',
+            success: function (res) {
+              console.log(res.data.data)
+              if (res.data.status === 100) {
+                wx.showToast({
+                  title: '复活成功',
+                  icon: 'none'
+                })
+                that.getdetail();
+
+              } else if (res.data.status === 103) {
+                wx.showToast({
+                  title: '请重新登录',
+                  icon: 'none'
+                })
+                wx.navigateTo({
+                  url: '../login/login',
+                })
+              } else {
+                wx.showToast({
+                  title: res.data.msg,
+                  icon: 'none'
+                })
+              }
+            }
+          })
+
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+
+  },
   getdetail: function () {
     var that = this;
     wx.request({
@@ -383,6 +429,10 @@ Page({
 
               })
           }
+          if (res.data.data.status == 2 && res.data.data.isJoinResurgence == 0) {
+            res.data.data.fuh = 2
+          }
+          console.log(res.data.data)
           that.setData({
             detail: res.data.data,
             playid:res.data.data.id 

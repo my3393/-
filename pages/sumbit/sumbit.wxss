@@ -57,7 +57,9 @@ textarea{
   height: 200rpx;
   margin-right: 10rpx;
 }
-
+.imgs{
+  display: inline-block;
+}
 .submit{
   width: calc(100% - 40rpx);
   margin-left: 20rpx;

@@ -102,6 +102,7 @@
      <view class='gohot'>
        <!-- <view class='shop' wx:if="{{detail.status == 0}}">报名还未开始</view> -->
        <view class='shop sunb' bindtap='submit' wx:if="{{status == 1}}" id='{{userinfo.userId}}'>立即报名</view>
+       <view class='shop sunb' bindtap='resurrection' wx:elif="{{detail.fuh == 2}}">复活TA</view>
        <view class='shop' wx:else>报名截止</view>
        <!-- <view class='shop' wx:else>活动结束</view> -->
        <!-- <text bindtap='submit'>立即报名</text> -->

@@ -27,7 +27,7 @@
      </view>
     
 </view>
-<view class='public' bindtap='dynamic' wx:if='{{userinfo.isJoin == 1}}'>
+<view class='public' bindtap='dynamic' hidden='{{isf}}'>
    <view class='fons'>发动态</view>
     
     <view class='enter'>

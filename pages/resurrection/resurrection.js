@@ -36,6 +36,7 @@ Page({
        that.getplayer();
        that.getmode();
        that.getdetail();
+       that.getseasondetail();
   },
 
   /**
@@ -75,7 +76,44 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    wx.showNavigationBarLoading() //在标题栏中显示加载
+    wx.showToast({
+      title: '刷新中',
+      icon: "none"
+    })
+    var that = this;
 
+    //模拟加载
+    setTimeout(function () {
+       player = [];
+       splayer = [];
+      that.setData({
+
+        isgz: true,
+        isSearch: false,
+        isSai: true,
+        player: [],
+        splayer: [],
+        currentPage: 1,
+        narea: [],
+        qualifiedNumber: '',
+        competitionName: '',
+        banner: [],
+        detail: [],
+        seasonId: '',
+        valu:'',
+      })
+
+      setTimeout(function () {
+        that.getplayer();
+        that.getmode();
+        that.getdetail();
+      }, 500)
+      // complete
+      wx.hideNavigationBarLoading() //完成停止加载
+      wx.stopPullDownRefresh() //停止下拉刷新
+
+    }, 1000);
   },
 
   /**
@@ -107,6 +145,12 @@ Page({
       path: '/pages/home/home'
     }
   }, 
+  //去选手页
+  player: function (e) {
+    wx.navigateTo({
+      url: '../player/player?id=' + e.currentTarget.id + '&ids=' + e.currentTarget.dataset.id,
+    })
+  },
   help: function (e) {
     var that = this;
     console.log(e)
@@ -182,7 +226,8 @@ Page({
   bind: function () {
     var that = this;
     this.setData({
-      isSai: !this.data.isSai
+      isSai: !this.data.isSai,
+      valu:'',
     })
     that.getNarea();
   },
@@ -194,6 +239,7 @@ Page({
     that.setData({
       isSearch: true,
       splayer: [],
+      valu: e.detail.value
     })
     wx.request({
       url: app.data.urlevent + "/appcomeptitionplayer/resurgencelist.do",
@@ -251,6 +297,7 @@ Page({
       qualifiedNumber: qualifiedNumber,
       isSai: !this.data.isSai,
       tas: index,
+      isSearch: false,
       players: [],
       id: id,   
     })
@@ -335,7 +382,7 @@ Page({
   getmode: function () {
     var that = this;
     wx.request({
-      url: app.data.urlevent + "/appcomeptitionplayer/default/comeptitionarea.do",
+      url: app.data.urlevent + "/appcomeptitionplayer/default/resurgencearea.do",
       data: {
         token: wx.getStorageSync('token'),
       },
@@ -350,7 +397,7 @@ Page({
           that.setData({
             mode: res.data.data,
             competitionName: res.data.data.name,
-            qualifiedNumber: res.data.data.qualifiedNumber,
+            qualifiedNumber: res.data.data.resurgenceQualifiedNumber,
             id: res.data.data.id,
             seasonId: res.data.data.seasonId,
           })
@@ -391,6 +438,43 @@ Page({
           that.setData({
             detail: res.data.data,
             banner: res.data.data.competitionPhotoOss,          
+          })
+
+        } else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
+  getseasondetail: function () {
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/appcompetition/currentseasondetail.do",
+      data: {
+        token: wx.getStorageSync('token'),
+        seasonId: that.data.id
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+          that.setData({
+            season: res.data.data,
           })
 
         } else if (res.data.status === 103) {

@@ -122,12 +122,7 @@ Page({
         title: '请先选择礼物',
         icon: 'none'
       })
-    }else if (that.data.is == 1) {
-      wx.showToast({
-        title: '赛事还未开始，不能投票',
-        icon: 'none'
-      })
-    } else if (that.data.is == 2) {
+    } else {
       wx.request({
         url: app.data.urlevent + "/appcomeptitionplayer/addrefuel.do",
         data: {
@@ -180,11 +175,6 @@ Page({
             })
           }
         }
-      })
-    }else{
-      wx.showToast({
-        title: '赛事已结束，不能投票',
-        icon: 'none'
       })
     }
   },

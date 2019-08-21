@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "复活PK榜"
+  "navigationBarTitleText": "复活PK榜",
+  "enablePullDownRefresh": true
 }

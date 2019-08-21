@@ -15,6 +15,7 @@ Page({
     showadd: false,
     showadds: false,
     tvideo: '',
+    ok: true,
   },
 
   /**
@@ -77,6 +78,10 @@ Page({
   },
   submit: function () {
     var that = this;
+    if (that.data.ok) {    //判断ok，初始化是true所以会执行，
+      that.setData({       //进去之后设置为false这样后面再点击就没有用了
+        ok: false,
+      })
 
     if (that.data.img == '') {
       wx.showToast({
@@ -106,6 +111,9 @@ Page({
         success: function (res) {
 
           if (res.data.status === 100) {
+            that.setData({
+              ok: true,
+            })
             wx.showToast({
               title: '发布成功',
               icon: 'none'
@@ -131,6 +139,7 @@ Page({
           }
         }
       })
+    }
     }
   },
   //介绍

@@ -1,4 +1,5 @@
 // pages/home/home.js
+
 const app = getApp();
 var util = require('../../utils/util.js');
 var allseason=[];
@@ -19,6 +20,7 @@ Page({
       { id: 4, name: '赛事动态' },
      
     ],
+    idx:'',
     tar:'',
     tab:'',
     ranklist: [],
@@ -49,7 +51,8 @@ Page({
     time:'',
     isAnnouncement:'',
     isCurrent:'',
-    valu:''
+    valu:'',
+    anfu:true,
   },
 
   /**
@@ -89,6 +92,7 @@ Page({
         })
       },
     })
+    
 
   },
 
@@ -131,13 +135,13 @@ Page({
     //模拟加载
     setTimeout(function () {
        allseason = [];
-      player = [];
-      splayer = [];
+       player = [];
+       splayer = [];
        ranklist = [];
        dynamic = [];
       that.setData({
         valu: '',
-        ranklist: [],
+        ranklist:[],
         top_1: '',
         top_2: '',
         top_3: '',
@@ -168,10 +172,10 @@ Page({
       })
 
       setTimeout(function () {
+        console.log(ranklist)
+        console.log(that.data.ranklist)
         that.getdetail();
-        that.getdev();
-        that.getmode();
-        that.getdynamic();
+
       }, 500)
       // complete
       wx.hideNavigationBarLoading() //完成停止加载
@@ -261,6 +265,25 @@ Page({
       success: function (res) {
         console.log(res.data.data)
         if (res.data.status === 100) {
+          var date = Date.parse(that.data.time)
+
+          var seasonEndtDate = Date.parse(res.data.data.seasonEndDate.replace(/-/g, '/'))
+          var seasonStartDate = Date.parse(res.data.data.seasonStartDate.replace(/-/g, '/'))
+          var t3 = date - seasonStartDate;
+          var t4 = date - seasonEndtDate;
+          if (t3 < 0) {
+            that.setData({
+              is: 1
+            })
+          } else if (t3 > 0 && t4 < 0) {
+            that.setData({
+              is: 2
+            })
+          } else if (t4 > 0) {
+            that.setData({
+              is: 3
+            })
+          }
           wx.navigateTo({
             url: '../player/player?id=' + e.currentTarget.id,
           })
@@ -336,8 +359,21 @@ Page({
     // })
 
   },
-   
-  resurrection: function () {
+   //前往复活赛
+   gofu:function(e){
+     var that = this;
+     that.setData({
+       anfu:!that.data.anfu,
+       tab:2,
+       idx:2
+     })
+     wx.setStorage({
+       key: 'anfu',
+       data: '1',
+     })
+     that.tag(e);
+   },
+  resurrection: function (e) {
     var that = this;
     wx.showModal({
      
@@ -347,10 +383,10 @@ Page({
         if (res.confirm) {
           console.log('用户点击确定')
           wx.request({
-            url: app.data.urlevent + "/appcomeptitionplayer/focusplayer.do",
+            url: app.data.urlevent + "/appcomeptitionplayer/joinresurgence.do",
             data: {
               token: wx.getStorageSync('token'),
-              userId: that.data.id
+              userId: e.currentTarget.id
             },
             method: 'POST',
             header: {
@@ -364,7 +400,7 @@ Page({
                   title: '复活成功',
                   icon: 'none'
                 })
-
+                that.getranklist();
               } else if (res.data.status === 103) {
                 wx.showToast({
                   title: '请重新登录',
@@ -392,47 +428,58 @@ Page({
   //去报名
   submit: function (e) {
     var that = this;
-    wx.request({
-      url: app.data.urlevent + "/appcomeptitionplayer/detail.do",
-      data: {
-        token: wx.getStorageSync('token'),
-        userId: e.currentTarget.id
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      dataType: 'json',
-      success: function (res) {
-        console.log(res.data.data)
-        if (res.data.status === 100) {
-          wx.showToast({
-            title: '你已报名',
-            icon: 'none'
-          })
-          
-        } else if (res.data.status === 103) {
-          wx.showToast({
-            title: '请重新登录',
-            icon: 'none'
-          })
-          wx.navigateTo({
-            url: '../login/login',
-          })
-        }
-        else if (res.data.status === 104) {
-          wx.navigateTo({
-            url: '../sumbit/sumbit',
-          })
-        } else {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          })
-        }
-      }
-    })
-   
+    if(that.data.detail.status == 0){
+      wx.showToast({
+        title: '报名还未开启',
+        icon:'none'
+      })
+    } else if (that.data.detail.status == 1){
+        wx.request({
+          url: app.data.urlevent + "/appcomeptitionplayer/detail.do",
+          data: {
+            token: wx.getStorageSync('token'),
+            userId: e.currentTarget.id
+          },
+          method: 'POST',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          dataType: 'json',
+          success: function (res) {
+            console.log(res.data.data)
+            if (res.data.status === 100) {
+              wx.showToast({
+                title: '你已报名',
+                icon: 'none'
+              })
+              
+            } else if (res.data.status === 103) {
+              wx.showToast({
+                title: '请重新登录',
+                icon: 'none'
+              })
+              wx.navigateTo({
+                url: '../login/login',
+              })
+            }
+            else if (res.data.status === 104) {
+              wx.navigateTo({
+                url: '../sumbit/sumbit',
+              })
+            } else {
+              wx.showToast({
+                title: res.data.msg,
+                icon: 'none'
+              })
+            }
+          }
+        })
+    }else{
+      wx.showToast({
+        title: '你来晚了，报名已截止',
+        icon: 'none'
+      })
+    }
     console.log(this.data.userinfo)
   },
   //去选手页
@@ -454,14 +501,18 @@ Page({
     console.log(e.currentTarget.dataset.num);
     player=[];
     ranklist=[];
+    dynamic=[];
     that.setData({
+      idx: e.currentTarget.dataset.num,
       tar: e.currentTarget.dataset.num,
       tab: e.currentTarget.dataset.num,
       player:[],
       ranklist:[],
+      dynamic:[],
     })
     that.getplayer();
     that.getranklist();
+    that.getdynamic();
   },
   //搜索
   searchinp: function (e) {
@@ -652,14 +703,52 @@ Page({
          
           that.getdev();
           that.getmode();
-          that.getdynamic();
+          
           that.setData({
             detail: res.data.data,
             banner: res.data.data.competitionPhotoOss,
             id:res.data.data.id,
             isAnnouncement: res.data.data.isAnnouncement
           })
-
+          that.getseasondetail();
+        } else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
+  //当前赛事
+  getseasondetail: function () {
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/appcompetition/currentseasondetail.do",
+      data: {
+        token: wx.getStorageSync('token'),
+        seasonId:that.data.id
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+          that.setData({
+            season: res.data.data,     
+          })
+          
         } else if (res.data.status === 103) {
           wx.showToast({
             title: '请重新登录',
@@ -710,6 +799,22 @@ Page({
               console.log('feko')
               that.setData({
                 isCurrent: res.data.data[i].name
+              })
+            }
+            if(wx.getStorageSync('anfu')){
+              that.setData({
+                
+                anfu: true,
+              })
+            }else  if (res.data.data[i].isCurrent == 1 && res.data.data[i].type == 2){
+              that.setData({
+                anfu:false,
+              })
+            }
+            if(res.data.data[i].isCurrent == 1 && res.data.data[i].type == 2){
+              that.setData({
+                isfuhuo: false,
+                
               })
             }
           }
@@ -849,8 +954,13 @@ Page({
              })
            }
           for(var i in res.data.data.data){
+            if (res.data.data.data[i].status == 2 && res.data.data.data[i].isJoinResurgence == 0){
+               console.log(111)
+              res.data.data.data[i].fuh = 2
+            }
             ranklist.push(res.data.data.data[i])
           }
+          console.log(ranklist)
           that.setData({
             ranklist:ranklist,
             p_totalPage: res.data.data.totalPage  

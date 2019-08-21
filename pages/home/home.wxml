@@ -25,8 +25,11 @@
     <view class='eve'>{{isCurrent}}</view>
     <view class='sumbit' wx:if="{{detail.status == 1}}" id='{{userinfo.userId}}' bindtap='submit'>立即报名</view>
     <view class='fupk' bindtap='resurr' hidden='{{isfuhuo}}'>复活PK榜</view>
-    <view class='tima'>
+    <view class='tima' wx:if='{{detail.status == 1}}'>
       时间：{{detail.startDate}}-{{detail.endDate}}
+    </view>
+     <view class='tima' wx:else>
+      时间：{{season.startDate}}-{{season.endDate}}
     </view>
   </view>
 
@@ -46,7 +49,7 @@
   <view class='event'>
     <view class='intorduce' wx:for='{{allseason}}'>
       <view class='intor-nam'>{{item.name}}</view>
-      <view class='intor-tim'>{{item.start}}-{{item.end}}</view>
+      <view class='intor-tim'>{{item.start}}~{{item.end}}</view>
        <view wx:if='{{item.isshow == 2}}' class='colo'>进行中</view>
       <view wx:if='{{item.isshow == 1}}' class='jies'>未开启</view>
       <view wx:if='{{item.isshow == 3}}' class='jies'>已结束</view>
@@ -228,6 +231,7 @@
 
       <view class='sex'>{{top_3.name}}
         <view>{{top_3.totalVotes}}票</view>
+        
       </view>
     </view>
   </view>
@@ -238,8 +242,9 @@
        <image src='{{item.playerCoverOss}}'></image>
       </view>
       <view class='rankm'>{{item.name}}</view>
-      <view class='fuhuo' wx:if='{{item.isJoinResurgence == 1}}' catchtap='resurrection' id='{{item.userId}}'>复活TA</view>
-      <!-- <view class='fuhuos' >已复活</view> -->
+      <view class='fuhuo' wx:if='{{item.fuh == 2}}' catchtap='resurrection' id='{{item.userId}}'>复活TA</view>
+     
+      <view class='fuhuos' wx:elif='{{item.isJoinResurgence == 1}}'>已复活</view>
       <view class='ranksum'> {{item.totalVotes}}票</view>
     </view>
   </view>
@@ -284,11 +289,11 @@
 </view>
 
 <!-- 复活赛开启 -->
-<view class='mask' hidden='{{isfu}}'>
+<view class='mask' hidden='{{anfu}}'>
    <view class='fuh'>
       <view>复活赛开启了</view>
-      <view style='color:#7C7C7C;margin-top: 20rpx;'>快去复活你心仪的选手吧～</view>
-      <view class='gofu'>前往复活</view>
+      <view style='color:#7C7C7C;margin-top: 40rpx;'>快去复活你心仪的选手吧～</view>
+      <view class='gofu' bindtap='gofu' data-num='{{2}}'>前往复活</view>
    </view>
 
 </view>

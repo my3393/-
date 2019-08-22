@@ -1,4 +1,5 @@
-<!--pages/home/home.wxml-->
+<!-- pages/home/home.wxml -->
+
 <view class='top' wx:if='{{isAnnouncement == 1}}'>
   <image src='{{detail.announcementPhotoOss}}'></image>
   <view class='clone' bindtap='clone'>
@@ -12,34 +13,29 @@
         <image class="banner_img" src="{{item}}"></image>
       </swiper-item>
     </block>
-
   </swiper>
-
 </view>
-
 <view class='species'>
   <view>
     <view class='yua'>
       <image src='../../images/reward.png'></image>
     </view>
     <view class='eve'>{{isCurrent}}</view>
-    <view class='sumbit' wx:if="{{detail.status == 1}}" id='{{userinfo.userId}}' bindtap='submit'>立即报名</view>
+    <view class='sumbit' wx:if="{{detail.status == 1}}" id='{{userinfo.userId}}' bindtap='submit'>
+      立即报名
+    </view>
     <view class='fupk' bindtap='resurr' hidden='{{isfuhuo}}'>复活PK榜</view>
     <view class='tima' wx:if='{{detail.status == 1}}'>
       时间：{{detail.startDate}}-{{detail.endDate}}
     </view>
-     <view class='tima' wx:else>
-      时间：{{season.startDate}}-{{season.endDate}}
-    </view>
+    <view class='tima' wx:else>时间：{{season.startDate}}-{{season.endDate}}</view>
   </view>
-
-
 </view>
-
 <view class='nav-list'>
-  <view wx:for="{{tag}}" wx:for-index="idx" bindtap="tag" data-num='{{idx}}' class='{{tar == idx?"active":""}}'>{{item.name}}</view>
+  <view wx:for="{{tag}}" wx:for-index="idx" bindtap="tag" data-num='{{idx}}' class='{{tar == idx?"active":""}}'>
+    {{item.name}}
+  </view>
 </view>
-
 <view wx:if='{{tab == 0}}'>
   <view class='sindic'>
     <view class='heng'></view>
@@ -50,51 +46,41 @@
     <view class='intorduce' wx:for='{{allseason}}'>
       <view class='intor-nam'>{{item.name}}</view>
       <view class='intor-tim'>{{item.start}}~{{item.end}}</view>
-       <view wx:if='{{item.isshow == 2}}' class='colo'>进行中</view>
-      <view wx:if='{{item.isshow == 1}}' class='jies'>未开启</view>
-      <view wx:if='{{item.isshow == 3}}' class='jies'>已结束</view>
-   
-      
+      <view wx:if='{{item.isshow == 3}}' class='jies'>未开启</view>
+      <view wx:if='{{item.isshow == 2}}' class='colo'>进行中</view>
+      <view wx:if='{{item.isshow == 1}}' class='jies'>已结束</view>
     </view>
-
   </view>
   <view class='sindic'>
     <view class='heng'></view>
     <text>赛事奖励</text>
     <view class='heng'></view>
   </view>
-  <view class='species'>
-
-  </view>
+  <view class='species'></view>
   <view class='sindic'>
     <view class='heng'></view>
     <text>赛事规则</text>
     <view class='heng'></view>
   </view>
-  <view class='species'>
-
-  </view>
+  <view class='species'></view>
   <view style='padding-bottom:120rpx;'></view>
 </view>
-
 <!-- 参赛选手 -->
 <view wx:if='{{tab == 1}}'>
   <view class='csx'>
     <view class='search'>
-      <input type='text' class='seainp' confirm-type='search' placeholder='输入编号/姓名' value='{{valu}}'  bindinput='searchinp'></input>
-
+      <input type='text' class='seainp' confirm-type='search' placeholder='输入编号/姓名' value='{{valu}}' bindinput='searchinp'></input>
     </view>
-
     <view class='evesai'>
-      <view class='saiq'>赛区：{{competitionName}}
+      <view class='saiq'>
+        赛区：{{competitionName}}
         <text class='turn' bindtap='bind'>点击切换</text>
       </view>
       <view class='top-num'>晋级人数： 前{{qualifiedNumber}}名</view>
     </view>
-
     <view wx:if='{{isSearch == false}}'>
       <view class='baodc' wx:if='{{player.length == 0}}'>
-        <view class='noplay' >
+        <view class='noplay'>
           <image src='../../images/noplay.png'></image>
         </view>
         <view>还没人参加快去试试~</view>
@@ -105,18 +91,17 @@
             <image src='{{item.playerCoverOss}}'></image>
           </view>
           <view style=' color: #000; font-size: 34rpx; margin-top: 10rpx;'>
-            <text>{{item.playerNumber}}号 </text>
+            <text>{{item.playerNumber}}号</text>
             <text>{{item.name}}</text>
           </view>
-          <view class='play-p'>
-            {{item.totalVotes}}票
-          </view>
+          <view class='play-p'>{{item.totalVotes}}票</view>
           <view class='xuan'>
-            <view class='play-help' catchtap='help' id='{{item.userId}}' data-id='{{item.id}}'>助力</view>
+            <view class='play-help' catchtap='help' id='{{item.userId}}' data-id='{{item.id}}'>
+              助力
+            </view>
             <view class='play-help' catchtap='vote' id='{{item.id}}'>投票</view>
           </view>
         </view>
-
       </view>
     </view>
     <view wx:else class='oj'>
@@ -124,52 +109,48 @@
         <view class='noplay'>
           <image src='../../images/noplay1.png'></image>
         </view>
-        <view> 未搜索到该选手!</view>
-
+        <view>未搜索到该选手!</view>
       </view>
-     <view class='play' wx:else>
+      <view class='play' wx:else>
         <view class='play-list' wx:for='{{splayer}}' id='{{item.userId}}'>
           <view class='play-img' bindtap='player' id='{{item.userId}}' data-id='{{item.id}}'>
             <image src='{{item.playerCoverOss}}'></image>
           </view>
           <view style=' color: #000; font-size: 34rpx; margin-top: 10rpx;'>
-            <text>{{item.playerNumber}}号 </text>
+            <text>{{item.playerNumber}}号</text>
             <text>{{item.name}}</text>
           </view>
-          <view class='play-p'>
-            {{item.totalVotes}}票
-          </view>
+          <view class='play-p'>{{item.totalVotes}}票</view>
           <view class='xuan'>
-            <view class='play-help' catchtap='help' id='{{item.userId}}' data-id='{{item.id}}'>助力</view>
+            <view class='play-help' catchtap='help' id='{{item.userId}}' data-id='{{item.id}}'>
+              助力
+            </view>
             <view class='play-help' catchtap='vote' id='{{item.id}}'>投票</view>
           </view>
         </view>
-
       </view>
     </view>
   </view>
 </view>
-
 <!-- 排行榜 -->
-
 <view wx:elif='{{tab == 2}}'>
-    <view class='evesai'>
-      <view class='saiq'>赛区：{{competitionName}}
-        <text class='turn' bindtap='bind'>点击切换</text>
-      </view>
-      <view class='top-num'>晋级人数：前{{qualifiedNumber}}名</view>
+  <view class='evesai'>
+    <view class='saiq'>
+      赛区：{{competitionName}}
+      <text class='turn' bindtap='bind'>点击切换</text>
     </view>
-
+    <view class='top-num'>晋级人数：前{{qualifiedNumber}}名</view>
+  </view>
   <view class='top_3'>
     <view class='top_list' wx:if="{{top_2.length == 0}}">
-      <view class='top_head' >
+      <view class='top_head'>
         <image src='../../images/xu.png'></image>
         <view class='gaun'>
           <image src='../../images/No2.png'></image>
         </view>
       </view>
-
-      <view class='sex'>虚位以待
+      <view class='sex'>
+        虚位以待
         <text></text>
       </view>
     </view>
@@ -180,9 +161,13 @@
           <image src='../../images/No2.png'></image>
         </view>
       </view>
-
-      <view class='sex'>{{top_2.name}}
+      <view class='sex'>
+        {{top_2.name}}
         <view>{{top_2.totalVotes}}票</view>
+        <!-- <view class='fuhuota' wx:if='{{top_2.fuh == 2}}' catchtap='resurrection' id='{{top_2.userId}}'>
+          复活TA
+        </view>
+        <view class='fuhuos' wx:elif='{{top_2.isJoinResurgence == 1}}'>已复活</view> -->
       </view>
     </view>
     <view class='top_list' wx:if="{{top_1.length == 0}}">
@@ -192,8 +177,8 @@
           <image src='../../images/No1.png'></image>
         </view>
       </view>
-
-      <view class='sex'>虚位以待
+      <view class='sex'>
+        虚位以待
         <text></text>
       </view>
     </view>
@@ -204,9 +189,13 @@
           <image src='../../images/No1.png'></image>
         </view>
       </view>
-
-      <view class='sex'>{{top_1.name}}
+      <view class='sex'>
+        {{top_1.name}}
         <view>{{top_1.totalVotes}}票</view>
+        <!-- <view class='fuhuota' wx:if='{{top_1.fuh == 2}}' catchtap='resurrection' id='{{top_1.userId}}'>
+          复活TA
+        </view>
+        <view class='fuhuos' wx:elif='{{top_1.isJoinResurgence == 1}}'>已复活</view> -->
       </view>
     </view>
     <view class='top_list' wx:if="{{top_3.length == 0}}">
@@ -216,8 +205,8 @@
           <image src='../../images/No3.png'></image>
         </view>
       </view>
-
-      <view class='sex'>虚位以待
+      <view class='sex'>
+        虚位以待
         <text></text>
       </view>
     </view>
@@ -228,10 +217,13 @@
           <image src='../../images/No3.png'></image>
         </view>
       </view>
-
-      <view class='sex'>{{top_3.name}}
+      <view class='sex'>
+        {{top_3.name}}
         <view>{{top_3.totalVotes}}票</view>
-        
+        <!-- <view class='fuhuota' wx:if='{{item.fuh == 2}}' catchtap='resurrection' id='{{top_3.userId}}'>
+          复活TA
+        </view>
+        <view class='fuhuos' wx:elif='{{top_3.isJoinResurgence == 1}}'>已复活</view> -->
       </view>
     </view>
   </view>
@@ -239,20 +231,18 @@
     <view class='rank clearfix' wx:for='{{ranklist}}' wx:key='{{index}}' bindtap='player' id='{{item.userId}}' data-id='{{item.id}}'>
       <view class='pai'>{{index + 4}}.</view>
       <view class='playcove'>
-       <image src='{{item.playerCoverOss}}'></image>
+        <image src='{{item.playerCoverOss}}'></image>
       </view>
       <view class='rankm'>{{item.name}}</view>
-      <view class='fuhuo' wx:if='{{item.fuh == 2}}' catchtap='resurrection' id='{{item.userId}}'>复活TA</view>
-     
+      <view class='fuhuo' wx:if='{{item.fuh == 2}}' catchtap='resurrection' id='{{item.userId}}'>
+        复活TA
+      </view>
       <view class='fuhuos' wx:elif='{{item.isJoinResurgence == 1}}'>已复活</view>
-      <view class='ranksum'> {{item.totalVotes}}票</view>
+      <view class='ranksum'>{{item.totalVotes}}票</view>
     </view>
   </view>
-
 </view>
-
 <!-- 赛事动态 -->
-
 <view wx:elif='{{tab == 3}}'>
   <view style='padding-bottom:100rpx;'>
     <view class='micro' wx:for-index='widx' wx:for='{{dynamic}}'>
@@ -261,12 +251,9 @@
           <image mode='aspectFill' src='{{item.headPhoto}}'></image>
         </view>
         <text>{{item.userName}}</text>
-
         <view class='flabel'>{{item.createDate}}</view>
       </view>
-      <view class='cont'>
-       {{item.content}}
-      </view>
+      <view class='cont'>{{item.content}}</view>
       <view class='microtu'>
         <view wx:if="{{item.fileType == 1}}">
           <view class='dynac' wx:for="{{item.filePathOss}}" wx:for-index='indexs' bindtap='imgsrc' data-index='{{indexs}}' data-num='{{widx}}' data-src='{{item}}'>
@@ -274,58 +261,61 @@
           </view>
         </view>
         <view wx:if="{{item.fileType == 2}}">
-          <view class='dynac-vid' wx:for="{{item.filePathOss}}" bindtap='seevideo' data-index='{{index}}' data-num='{{widx}}' data-src='{{item}}'>
+          <view class='dynac-vid' wx:for="{{item.filePathOss}}" bindtap='showModalFun' data-index='{{index}}' data-num='{{widx}}' data-src='{{item}}'>
             <image src='{{dynamic[widx].fileCoverOss[index]}}'></image>
-             <view class='plays'>
+            <view class='plays'>
               <image src='../../images/play.png'></image>
             </view>
           </view>
         </view>
       </view>
-
     </view>
   </view>
-
 </view>
-
 <!-- 复活赛开启 -->
 <view class='mask' hidden='{{anfu}}'>
-   <view class='fuh'>
-      <view>复活赛开启了</view>
-      <view style='color:#7C7C7C;margin-top: 40rpx;'>快去复活你心仪的选手吧～</view>
-      <view class='gofu' bindtap='gofu' data-num='{{2}}'>前往复活</view>
-   </view>
-
+  <view class='fuh'>
+    <view>复活赛开启了</view>
+    <view style='color:#7C7C7C;margin-top: 40rpx;'>快去复活你心仪的选手吧～</view>
+    <view class='gofu' bindtap='gofu' data-num='{{2}}'>前往复活</view>
+  </view>
 </view>
-
 <!-- 预览视频 -->
-<view class='mask' catchtouchmove='true' hidden='{{isvideo}}' catchtap='hidevideo'>
+<view class='mask' catchtouchmove='true' wx:if='{{showModal}}' catchtap='showModalFun'></view>
+<view class='ars' wx:if='{{showModal}}'>
+  <video class='maskvideo' src='{{play}}' loop='true'></video>
 </view>
-<video class='maskvideo' hidden='{{isvideo}}' src='{{play}}'></video>
-
 <view class="sai-yds" hidden='{{isSai}}'>
-			<view class="sai-yd">
-			   <view class='divis {{tas == index?"act":""}}' wx:for="{{narea}}" id='{{item.id}}' data-index='{{index}}'  data-name='{{item.name}}' data-num='{{item.qualifiedNumber}}'  bindtap='narea'>{{item.name}}</view>
-			</view>
+  <view class="sai-yd">
+    <view class='divis {{tas == index?"act":""}}' wx:for="{{narea}}" id='{{item.id}}' data-index='{{index}}' data-name='{{item.name}}' data-num='{{item.qualifiedNumber}}' bindtap='narea'>
+      {{item.name}}
+    </view>
+  </view>
 </view>
-
 <view class='footer'>
   <view class='rems rem'>
-    <view class='png'><image src='../../images/home-y.png'></image> </view>
+    <view class='png'>
+      <image src='../../images/home-y.png'></image>
+    </view>
     <view class='re-mi'>首页</view>
   </view>
-  
   <view class='rems' bindtap='submit' wx:if='{{userinfo.idolId == " " }}' id='{{userinfo.userId}}'>
-    <view class='pngs'><image src='../../images/submit.png'></image> </view>    
+    <view class='pngs'>
+      <image src='../../images/submit.png'></image>
+    </view>
   </view>
   <view class='rems' bindtap='submit' wx:elif='{{userinfo.idolId == null }}' id='{{userinfo.userId}}'>
-    <view class='pngs'><image src='../../images/submit.png'></image> </view>    
+    <view class='pngs'>
+      <image src='../../images/submit.png'></image>
+    </view>
   </view>
   <view class='rems' bindtap='play' wx:else id='{{userinfo.idolId}}'>
-    <view class='idol'>{{userinfo.idolName}}</view>    
+    <view class='idol'>{{userinfo.idolName}}</view>
   </view>
   <view class='rems rem' bindtap='mine'>
-    <view class='png'><image src='../../images/mine-x.png'></image> </view>
-    <view >我的</view>
+    <view class='png'>
+      <image src='../../images/mine-x.png'></image>
+    </view>
+    <view>我的</view>
   </view>
 </view>

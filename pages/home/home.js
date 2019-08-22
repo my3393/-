@@ -53,6 +53,8 @@ Page({
     isCurrent:'',
     valu:'',
     anfu:true,
+    showModal:false,
+    play:'',
   },
 
   /**
@@ -175,7 +177,7 @@ Page({
         console.log(ranklist)
         console.log(that.data.ranklist)
         that.getdetail();
-
+        that.getdynamic();
       }, 500)
       // complete
       wx.hideNavigationBarLoading() //完成停止加载
@@ -671,18 +673,10 @@ Page({
     })
   },
   //查看视频
-  hidevideo: function (e) {
-    var that = this;
-    that.setData({
-      isvideo: !that.data.isvideo
-    })
-  },
-  seevideo: function (e) {
-    console.log(e)
-    var that = this;
-    that.setData({
-      isvideo: !that.data.isvideo,
-      play: e.currentTarget.dataset.src
+  showModalFun: function (e) {
+    this.setData({
+      showModal: !this.data.showModal,
+      play:e.currentTarget.dataset.src
     })
   },
   getdetail:function(){
@@ -735,7 +729,7 @@ Page({
       url: app.data.urlevent + "/appcompetition/currentseasondetail.do",
       data: {
         token: wx.getStorageSync('token'),
-        seasonId:that.data.id
+        seasonId: that.data.seasonId
       },
       method: 'POST',
       header: {
@@ -782,10 +776,11 @@ Page({
       success: function (res) {
         console.log(res.data.data)
         if (res.data.status === 100) {
+          var a = 0;
           for(var i in res.data.data){
             res.data.data[i].start = res.data.data[i].startDate.substring(5)
             res.data.data[i].end = res.data.data[i].endDate.substring(5)
-            var a = 0;
+            
             if (a == 0 && res.data.data[i].isCurrent == 0) {
               res.data.data[i].isshow = 1
             } else if (a == 1 && res.data.data[i].isCurrent == 0) {
@@ -862,7 +857,8 @@ Page({
             mode: res.data.data,
             competitionName: res.data.data.name,
             qualifiedNumber: res.data.data.qualifiedNumber,
-            mo_id: res.data.data.id
+            mo_id: res.data.data.id,
+            seasonId: res.data.data.seasonId
           })
           that.getplayer();
           that.getranklist();
@@ -947,11 +943,14 @@ Page({
         if (res.data.status === 100) {
 
            if(that.data.p_currentPage == 1){
+             var j = 0;
+             
              that.setData({
                top_1: res.data.data.data.splice(0, 1)[0],
                top_2: res.data.data.data.splice(0, 1)[0],
                top_3: res.data.data.data.splice(0, 1)[0],        
              })
+             
            }
           for(var i in res.data.data.data){
             if (res.data.data.data[i].status == 2 && res.data.data.data[i].isJoinResurgence == 0){
@@ -1034,7 +1033,7 @@ Page({
     wx.request({
       url: app.data.urlevent + "/appcomeptitionplayer/allcompetitionarea.do",
       data: {
-        seasonId: that.data.id,
+        seasonId: that.data.seasonId,
         token: wx.getStorageSync('token'),
       },
       method: 'POST',

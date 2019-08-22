@@ -1,0 +1,210 @@
+/* 动态 */
+.micro{
+  background: #fff;
+  width: calc(100% - 40rpx);
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  padding: 20rpx 20rpx;
+  box-sizing: border-box;
+  margin-bottom: 30rpx;
+
+}
+.fics{
+  font-size: 28rpx;
+  color: #3F3F3F;
+  margin: 20rpx 0;
+}
+.playcove{
+  display: inline-block;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  vertical-align: middle;
+  overflow: hidden;
+  margin-right: 20rpx;
+}
+.playcove image{
+  width: 100%;
+  height: 100%;
+}
+.microtu{
+  width: 100%;
+  overflow: scroll;
+  white-space: nowrap; 
+  -webkit-overflow-scrolling: touch;
+}
+.dynac{
+  display:inline-block;
+  width: 230rpx;
+  margin-right: 20rpx;
+  height: 230rpx;
+}
+.dynac image{
+  width: 100%;
+  height: 100%;
+}
+.timers{
+  font-size: 28rpx;
+  color: #BDBDBD;
+  margin-top: 10rpx;
+}
+.dynac-vid{
+  width: 100%;
+  height: 380rpx;
+  position: relative;
+  font-size: 0;
+}
+.dynac-vid image{
+  width: 100%;
+  height: 100%;
+}
+
+.ibottom{
+    width: 100%;
+    padding: 0 20rpx;
+    line-height: 94rpx;
+    box-sizing: border-box;
+}
+.ibottom text{
+    float: left;
+    font-size: 28rpx;
+    color: #333;
+    margin-top: 10rpx;
+}
+.ibottom view{
+    display: inline-block;
+    font-size: 24rpx;
+    color: #fe5ba9;
+    margin-top: 10rpx;
+}
+.heat{
+    width: 20rpx;
+    height: 28rpx;
+    position: relative;
+    top: 2rpx;
+    margin-left: 10rpx;
+    margin-right: 10rpx;
+}
+.fhead{
+    width: 80rpx;
+    height: 80rpx;
+    position: relative;
+    overflow: hidden;
+    border-radius: 60rpx;
+    float: left;
+    margin-top: 20rpx;
+    margin-right: 20rpx;
+}
+.fhead image{
+    width: 100%;
+    height: 100%;
+}
+.heats{
+    position: relative;
+    top: -2px;
+}
+.flabel{
+    float: right;
+    color: #808080 !important;
+    font-size: 26rpx !important;
+}
+.cont{
+  color: #737272;
+  font-size: 28rpx;
+  margin: 20rpx 0;
+
+}
+.plays{
+  width: 96rpx;
+  height: 96rpx;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+.plays image{
+  width: 100%;
+  height: 100%
+}
+
+.sai-yds{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 12;
+}
+
+.sai-yd{
+	position:absolute;
+  width: calc(100% - 40rpx);
+  right:20rpx;
+	top: 36%;
+  background: #fff;
+  padding: 20rpx 0;
+  padding-bottom: 40rpx;
+  box-sizing: border-box;
+  border-radius: 12rpx;
+}
+.divis{
+  width: calc((100% - 80rpx)/3);
+  margin-left: 20rpx;
+  background: #D8D8D8;
+  color: #fff;
+  border-radius: 12rpx;
+  display: inline-block;
+  text-align: center;
+  height: 75rpx;
+  line-height: 75rpx;
+  margin-top: 20rpx;
+  font-size: 26rpx;
+}
+.sai-active{
+  background: #F861AA;
+}
+.act{
+  background: #F861AA;
+}
+
+.png{
+  width: 45rpx;
+  height: 42rpx;
+  display: inline-block;
+}
+.png image{
+  width: 45rpx;
+  height: 42rpx;
+ 
+}
+.pngs{
+  width: 99rpx;
+  height: 99rpx;
+  text-align: center;
+  display: inline-block;
+}
+.pngs image{
+  width: 100%;
+  height: 100%;
+}
+.rem{
+  margin-top: 15rpx;
+}
+.rems{
+  width: 33.3%;
+  text-align: center;
+  float: left;
+  
+}
+.re-mi{
+  color: #F861AA;
+}
+.maskvideo{
+    width: 100%;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%,-50%)  !important;
+    z-index: 9999 !important;
+}

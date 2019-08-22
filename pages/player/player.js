@@ -1,7 +1,8 @@
 // pages/player/player.js
+var util = require('../../utils/util.js');
 const app = getApp();
 var votelist=[];
-
+var isshow;
 Page({
 
   /**
@@ -21,6 +22,7 @@ Page({
     userinfo:'',
     ok:true,
     share:1,
+    
   },
 
   /**
@@ -29,18 +31,53 @@ Page({
   onLoad: function (options) {
      var that = this;
      console.log(options)
+     var time = util.formatTime(new Date());
+    console.log(time)
+    // 再通过setData更改Page()里面的data，动态更新页面的数据
      that.setData({
        id:options.id,
        ids:options.ids,
+       time: time
      })
      that.getdetail();
      that.getdet();
       wx.getStorage({
         key: 'userinfo',
         success: function (res) {
-          if(options.share == 1){
-            if (res.data.idolId == null && res.data.idolId == ''){
-              that.focus();
+          if(options.share){
+            if (res.data.idolId == null || res.data.idolId == ''){
+                wx.request({
+                  url: app.data.urlevent + "/appcomeptitionplayer/focusplayer.do",
+                  data: {
+                    token: wx.getStorageSync('token'),
+                    userId: that.data.id
+                  },
+                  method: 'POST',
+                  header: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                  },
+                  dataType: 'json',
+                  success: function (res) {
+                    console.log(res.data.data)
+                    if (res.data.status === 100) {
+                      
+                      that.getuser();
+                    } else if (res.data.status === 103) {
+                      wx.showToast({
+                        title: '请重新登录',
+                        icon: 'none'
+                      })
+                      wx.navigateTo({
+                        url: '../login/login',
+                      })
+                    } else {
+                      wx.showToast({
+                        title: res.data.msg,
+                        icon: 'none'
+                      })
+                    }
+                  }
+                })
             }
           }
           
@@ -160,48 +197,50 @@ Page({
   //投票
   vote: function (e) {
     var that = this;
-   if (that.data.ok) {    //判断ok，初始化是true所以会执行，
-      that.setData({       //进去之后设置为false这样后面再点击就没有用了
-        ok: false,
-      })
+   
+    if(isshow == 3){
+       wx.showToast({
+         title: '当前赛程已结束哦',
+         icon:'none'
+       })
+    }else{
+      wx.request({
+        url: app.data.urlevent + "/appcomeptitionplayer/uservote.do",
+        data: {
+          playerId: that.data.playid,
+          token: wx.getStorageSync('token')
+        },
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        dataType: 'json',
+        success: function (res) {
+          console.log(res.data.data)
+          if (res.data.status === 100) {
+            wx.showToast({
+              title: '感谢你宝贵的一票',
+              icon: 'none'
+            })
+            
+            that.getdetail();
+          } else if (res.data.status === 105) {
+            wx.showToast({
+              title: '投票达上限，请明天再来吧',
+              icon: 'none'
+            })
     
-    wx.request({
-      url: app.data.urlevent + "/appcomeptitionplayer/uservote.do",
-      data: {
-        playerId: that.data.playid,
-        token: wx.getStorageSync('token')
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      dataType: 'json',
-      success: function (res) {
-        console.log(res.data.data)
-        if (res.data.status === 100) {
-          wx.showToast({
-            title: '感谢你宝贵的一票',
-            icon: 'none'
-          })
-          that.setData({   
-            ok: true,
-          })
-          that.getdetail();
-        } else if (res.data.status === 105) {
-          wx.showToast({
-            title: '投票达上限，请明天再来吧',
-            icon: 'none'
-          })
-  
-        } else {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          })
+          } else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
+          }
         }
-      }
-    })
-   }
+      })
+    }
+   
+   
   },
   yule: function (e) {
     //娱乐世界
@@ -432,12 +471,34 @@ Page({
           if (res.data.data.status == 2 && res.data.data.isJoinResurgence == 0) {
             res.data.data.fuh = 2
           }
-          console.log(res.data.data)
+          
+          var date = Date.parse(new Date())
+          console.log(res.data.data.seasonEndDate)
+          var endDatas = res.data.data.seasonEndDate
+          var a = ' 00:00:00';
+          var b = ' 23:59:59';
+          var startDatas = res.data.data.seasonStartDate;
+          var start = Date.parse(startDatas + a);
+          var end = Date.parse(endDatas + b)
+          
+          var t2 = date - end;
+          var t1 = date - start;
+          if (t1 < 0) {
+            isshow = 1
+          } else if (t1 > 0 && t2 < 0) {
+            isshow = 2
+          } else if (t2 > 0) {
+            isshow = 3
+
+          }
+          votelist = [];
+          console.log(isshow)
           that.setData({
             detail: res.data.data,
-            playid:res.data.data.id 
-            
+            playid:res.data.data.id, 
+            votelist:[]
           })
+
           that.getvote();
         }else if (res.data.status === 103) {
           wx.showToast({

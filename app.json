@@ -14,7 +14,9 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/login/login",
-    "pages/dynamic-v/dynamic-v"
+    "pages/dynamic-v/dynamic-v",
+    "pages/my-help/my-help",
+    "pages/receive/receive"
   ],
   "window": {
     "backgroundTextStyle": "light",

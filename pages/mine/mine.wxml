@@ -11,7 +11,7 @@
  </view>
 </view>
 
-<view class='public' bindtap='recharge'>
+<view class='public' bindtap='recharge' hidden='{{zhif}}'>
    <view class='fons'>艺呗</view>
     
     <view class='enter'>
@@ -19,13 +19,21 @@
      </view>
     <text style='float: right;margin-right:20rpx;'>{{userinfo.integral}}</text>   
 </view>
-<view class='public' bindtap='mysub'>
+<view class='public' bindtap='mysub' >
    <view class='fons'>我的报名</view>
     
     <view class='enter'>
        <image src='../../images/enter.png'></image>
      </view>
     
+</view>
+<view class='public' bindtap='gift' >
+   <view class='fons'>我的礼品</view>
+    
+    <view class='enter'>
+       <image src='../../images/enter.png'></image>
+     </view>
+   
 </view>
 <view class='public' bindtap='dynamic' hidden='{{isf}}'>
    <view class='fons'>发动态</view>
@@ -49,10 +57,10 @@
     <view class='png'><image src='../../images/home-x.png'></image> </view>
     <view>首页</view>
   </view>
-  <view class='rems' bindtap='submit' wx:if='{{userinfo.idolId == " " }}'>
+  <view class='rems' bindtap='submit' id='{{userinfo.idolId}}' wx:if='{{userinfo.idolId == " " }}'>
     <view class='pngs'><image src='../../images/submit.png'></image> </view>    
   </view>
-  <view class='rems' bindtap='submit' wx:elif='{{userinfo.idolId == null }}'>
+  <view class='rems' bindtap='submit' id='{{userinfo.idolId}}' wx:elif='{{userinfo.idolId == null }}'>
     <view class='pngs'><image src='../../images/submit.png'></image> </view>    
   </view>
   <view class='rems' bindtap='play' wx:else id='{{userinfo.idolId}}'>

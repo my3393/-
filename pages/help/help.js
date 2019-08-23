@@ -19,6 +19,9 @@ Page({
     is:'',
     userinfo:'',
     isart:true,
+    isgift:true,
+    recegift:''
+    
   },
 
   /**
@@ -100,23 +103,27 @@ Page({
       path: '/pages/home/home'
     }
   },
+  que:function(){
+    var that = this;
+    this.setData({
+      isgift: !that.data.isgift,
+    })
+  },
   cance:function(){
     var that = this;
-    this.setData({
-      isart: !that.data.isart,
+    wx.navigateTo({
+      url:'../my-help/my-help'
     })
   },
-  pay: function () {
+  deter: function () {
     var that = this;
     this.setData({
       isart: !that.data.isart,
     })
   },
-  deter:function(){
+  pay:function(){
     var that = this;
-    this.setData({
-      isart: !that.data.isart,
-    })
+   
     if (that.data.chooid == '') {
       wx.showToast({
         title: '请先选择礼物',
@@ -138,12 +145,12 @@ Page({
         success: function (res) {
           console.log(res.data.data)
           if (res.data.status === 100) {
-            wx.showToast({
-              title: '助力成功',
+           
+            that.getuser();
+            that.getplayer();
+            that.getcanreceivegift();
             
-            })
-             that.getuser();
-             that.getplayer();
+             
              
           } else if (res.data.status === 103) {
             wx.showToast({
@@ -156,12 +163,12 @@ Page({
           } else if (res.data.status === 106) {
             wx.showModal({
               title: '艺呗不足',
-              content: '艺呗余额不足是否前往充值',
+              content: '艺呗余额不足可前往battle公众号充值',
               success(res) {
                 if (res.confirm) {
-                   wx.navigateTo({
-                     url: '../recharge/recharge',
-                   })
+                  //  wx.navigateTo({
+                  //    url: '../recharge/recharge',
+                  //  })
 
                 } else if (res.cancel) {
                   console.log('用户点击取消')
@@ -177,6 +184,54 @@ Page({
         }
       })
     }
+  },
+  //用户距离下一个礼品票数
+  getcanreceivegift: function () {
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/appuser/canreceivegift.do",
+      data: {
+        token: wx.getStorageSync('token'),
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+          that.setData({
+            recegift: res.data.data,
+          })
+           if(res.data.data.status == 0){
+              that.setData({
+                isgift:that.data.isgift,
+            })
+           }else if(res.data.data.status == 1){
+                this.setData({
+                  isart: !that.data.isart,
+                })
+           }
+          
+         
+
+        } else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
   },
   choose: function (e) {
     console.log(e)

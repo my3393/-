@@ -22,7 +22,7 @@ Page({
     userinfo:'',
     ok:true,
     share:1,
-    
+    sort:''
   },
 
   /**
@@ -31,6 +31,7 @@ Page({
   onLoad: function (options) {
      var that = this;
      console.log(options)
+     that.getseasondetail();
      var time = util.formatTime(new Date());
     console.log(time)
     // 再通过setData更改Page()里面的data，动态更新页面的数据
@@ -39,7 +40,7 @@ Page({
        ids:options.ids,
        time: time
      })
-     that.getdetail();
+     
      that.getdet();
       wx.getStorage({
         key: 'userinfo',
@@ -190,7 +191,7 @@ Page({
       
     //      }  
     return {
-      title: '大家好，我是' + that.data.detail.name + '我正在参加《明日告白》影视剧组剧组线上海选赛' + that.data.detail.areaName + '选拔,快来投我一票吧',
+      title: '大家好，我正在参加《明日告白》影视剧组剧组线上海选赛选拔,快来投我一票吧',
       path: '/pages/player/player?id=' + that.data.id + '&share=' + that.data.share
     }
   },
@@ -241,6 +242,45 @@ Page({
     }
    
    
+  },
+  //当前赛事
+  getseasondetail: function () {
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/appcompetition/currentseasondetail.do",
+      data: {
+        token: wx.getStorageSync('token'),
+        seasonId: that.data.seasonId
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+          that.setData({
+            season: res.data.data,  
+            sort:res.data.data.sort   
+          })
+          that.getdetail();
+        } else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
   },
   yule: function (e) {
     //娱乐世界
@@ -468,7 +508,8 @@ Page({
 
               })
           }
-          if (res.data.data.status == 2 && res.data.data.isJoinResurgence == 0) {
+          console.log(that.data.sort)
+          if (res.data.data.status == 2 && res.data.data.isJoinResurgence == 0 && res.data.data.competitionType == 2 && res.data.data.sort == that.data.sort) {
             res.data.data.fuh = 2
           }
           
@@ -479,8 +520,7 @@ Page({
           var b = ' 23:59:59';
           var startDatas = res.data.data.seasonStartDate;
           var start = Date.parse(startDatas + a);
-          var end = Date.parse(endDatas + b)
-          
+          var end = Date.parse(endDatas + b)         
           var t2 = date - end;
           var t1 = date - start;
           if (t1 < 0) {
@@ -492,7 +532,7 @@ Page({
 
           }
           votelist = [];
-          console.log(isshow)
+          
           that.setData({
             detail: res.data.data,
             playid:res.data.data.id, 

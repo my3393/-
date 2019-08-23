@@ -7,6 +7,7 @@ var player = [];
 var splayer = [];
 var ranklist = [];
 var dynamic  = [];
+var isshow;
 Page({
 
   /**
@@ -63,7 +64,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     this.getdetail();
-    
+    that.getcanreceivegift();
     // 调用函数时，传入new Date()参数，返回值是日期和时间
     var time = util.formatTime(new Date());
     console.log(time)
@@ -569,56 +570,63 @@ Page({
   //投票
   vote: function (e) {
     var that = this;
-    wx.request({
-      url: app.data.urlevent + "/appcomeptitionplayer/uservote.do",
-      data: {
-        playerId: e.currentTarget.id,
-        token: wx.getStorageSync('token')
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      dataType: 'json',
-      success: function (res) {
-        console.log(res.data.data)
-        if (res.data.status === 100) {
-          wx.showToast({
-            title: '感谢你宝贵的一票',
-            icon: 'none'
-          })
-          ranklist=[];
-          player=[];
-          that.setData({
-            p_currentPage:1,
-            x_currentPage:1,
-            ranklist:[],
-            player:[],
-          })
-          that.getranklist();
-          that.getplayer();
-        } else if (res.data.status === 103) {
-          wx.showToast({
-            title: '请重新登录',
-            icon: 'none'
-          })
-          wx.navigateTo({
-            url: '../login/login',
-          })
-        } else if (res.data.status === 105) {
-          wx.showToast({
-            title: '投票达上限，请明天再来吧',
-            icon: 'none'
-          })
-
-        }else {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          })
+     if(isshow == 3){
+       wx.showToast({
+         title:'当前赛程已结束哦',
+         icon:'none'
+       })
+     }else{
+      wx.request({
+        url: app.data.urlevent + "/appcomeptitionplayer/uservote.do",
+        data: {
+          playerId: e.currentTarget.id,
+          token: wx.getStorageSync('token')
+        },
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        dataType: 'json',
+        success: function (res) {
+          console.log(res.data.data)
+          if (res.data.status === 100) {
+            wx.showToast({
+              title: '感谢你宝贵的一票',
+              icon: 'none'
+            })
+            ranklist=[];
+            player=[];
+            that.setData({
+              p_currentPage:1,
+              x_currentPage:1,
+              ranklist:[],
+              player:[],
+            })
+            that.getranklist();
+            that.getplayer();
+          } else if (res.data.status === 103) {
+            wx.showToast({
+              title: '请重新登录',
+              icon: 'none'
+            })
+            wx.navigateTo({
+              url: '../login/login',
+            })
+          } else if (res.data.status === 105) {
+            wx.showToast({
+              title: '投票达上限，请明天再来吧',
+              icon: 'none'
+            })
+  
+          }else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
+          }
         }
-      }
-    })
+      })
+     }
   },
   //赛区切换
   bind: function () {
@@ -742,6 +750,25 @@ Page({
           that.setData({
             season: res.data.data,     
           })
+          var date = Date.parse(new Date())
+          console.log(res.data.data.EndDate)
+          var endDatas = res.data.data.EndDate
+          var a = ' 00:00:00';
+          var b = ' 23:59:59';
+          var startDatas = res.data.data.StartDate;
+          var start = Date.parse(startDatas + a);
+          var end = Date.parse(endDatas + b)
+          
+          var t2 = date - end;
+          var t1 = date - start;
+          if (t1 < 0) {
+            isshow = 1
+          } else if (t1 > 0 && t2 < 0) {
+            isshow = 2
+          } else if (t2 > 0) {
+            isshow = 3
+
+          }
           
         } else if (res.data.status === 103) {
           wx.showToast({
@@ -1049,6 +1076,45 @@ Page({
           })
         }
         else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
+   //用户距离下一个礼品票数
+   getcanreceivegift: function () {
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/appuser/canreceivegift.do",
+      data: {
+        token: wx.getStorageSync('token'),
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+          
+          
+          that.setData({
+            recegift: res.data.data,
+          })
+
+        } else if (res.data.status === 103) {
           wx.showToast({
             title: '请重新登录',
             icon: 'none'

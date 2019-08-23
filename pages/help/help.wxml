@@ -54,10 +54,20 @@
 
 <view class="yds" hidden='{{isart}}' >
 			<view class="yd">
-				 确定使用艺呗抵扣给TA助力
+				  感谢支持，我会加油的
         <view class='xioe'>
-          <view class='deter' catchtap='cance'>暂不考虑</view>
-          <view class='deter' catchtap='deter' >确定</view>
+          <view class='deter' catchtap='cance'>前往领取</view>
+          <view class='deter' catchtap='deter' >继续支持</view>
+        </view>
+			</view>
+</view>
+
+<view class="yds" hidden='{{isgift}}' bindtap='qux'>
+			<view class="yd">
+				  感谢支持，我会加油的
+          <view class="lip">你还差{{recegift.discrepancyVote}}票就能领取赞助商提供的{{recegift.name}}一份，多给选手们助力吧~</view>
+        <view class='xioe' bindtap='que'>
+           好的
         </view>
 			</view>
 </view>

@@ -211,7 +211,7 @@ Page({
         console.log(res)
         var tempFilePathss = res.tempFilePaths;
         
-        if (res.duration < 40) {
+        if (res.duration < 30) {
           wx.uploadFile({
             url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
             filePath: res.tempFilePath,
@@ -243,7 +243,7 @@ Page({
           })
         } else {
           wx.showToast({
-            title: '请选择20s以内',
+            title: '请选择30s以内,',
             icon: 'none'
           })
          

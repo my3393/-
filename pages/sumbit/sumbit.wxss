@@ -140,3 +140,18 @@ textarea{
   background: #fff;
   
 }
+.der{
+  position: relative;
+  display: inline-block;
+}
+.detel{
+  width: 36rpx;
+  height: 36rpx;
+  position: absolute;
+  top: 10rpx;
+  right: 25rpx;
+}
+.detel image{
+  width: 100%;
+  height: 100%;
+}

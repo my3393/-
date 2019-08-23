@@ -66,6 +66,9 @@ Page({
   onUnload: function () {
     images = [];
     simages = [];
+    post2 = ''
+    post3 = ''
+    post4 = ''
     this.setData({
       imgs: []
     })
@@ -94,6 +97,23 @@ Page({
       path: '/pages/home/home'
     }
   },
+  //删除个人照照片
+  detel:function(e){
+     var that = this;
+     console.log(e)
+     console.log(that.data.imgs)
+     var imgs = that.data.imgs.splice(e.currentTarget.dataset.index,1)
+     console.log(imgs)
+     
+     simages.splice(e.currentTarget.dataset.index,1)
+     images.splice(e.currentTarget.dataset.index,1)
+     that.setData({
+      imgs:images
+    })
+     console.log(that.data.imgs)
+     console.log(simages)
+     console.log(images)
+  },
   //赛区选择
   tag:function(e){
     this.setData({
@@ -108,6 +128,7 @@ Page({
      console.log(e)
      that.setData({
        area:[],
+       tar:999,
        tab: e.currentTarget.dataset.index, 
      })
 
@@ -167,9 +188,9 @@ Page({
   },
   //个人照片
   chooseImagess: function (e) {
-    console.log(simages)
+   
     var that = this;
-    console.log(that.data.imgs)
+   
     wx.chooseImage({
       count: 5,
       sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
@@ -179,9 +200,9 @@ Page({
         var tempFilePaths = res.tempFilePaths;
         for (var i in tempFilePaths) {
           images.push(tempFilePaths[i])
-          console.log(1)
+          
           wx.showLoading();
-          console.log(simages)
+          
           wx.uploadFile({
             url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
             filePath: tempFilePaths[i],
@@ -202,7 +223,7 @@ Page({
                 title: '上传成功',
                 icon: 'none'
               })
-              console.log(simages)
+              
               simages.push(datas.data.fileName)
               // do something
               console.log(simages)
@@ -460,9 +481,11 @@ Page({
                title: '提交成功可去个人中心查看报名情况',
                icon: 'none'
              })
-             wx.navigateBack({
-               delta: 1
-             })
+             setTimeout(function(){
+               wx.navigateBack({
+                 delta: 1
+               })
+             },2000)
            } else {
              wx.showToast({
                title: res.data.msg,

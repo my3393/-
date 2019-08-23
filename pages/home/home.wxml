@@ -20,7 +20,8 @@
     <view class='yua'>
       <image src='../../images/reward.png'></image>
     </view>
-    <view class='eve'>{{isCurrent}}</view>
+    <view class='eve' wx:if="{{detail.status == 1}}">赛事报名</view>
+    <view class='eve' wx:else>{{isCurrent}}</view>
     <view class='sumbit' wx:if="{{detail.status == 1}}" id='{{userinfo.userId}}' bindtap='submit'>
       立即报名
     </view>

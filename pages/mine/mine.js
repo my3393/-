@@ -9,13 +9,15 @@ Page({
     userinfo:'',
     isart:true,
     isf:true,
+    detail:'',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-     
+      var that = this;
+      that.getdetail();
   },
 
   /**
@@ -144,8 +146,9 @@ Page({
           if (res.data.data.user.isReleaseDynamic == 0){          
             that.setData({
               isf:true,
+              zhif:true,
             })
-          } else if (res.data.data.user.isJoin == 1){
+          }else if (res.data.data.user.isJoin == 1){
             that.setData({
               isf: false,
             })
@@ -190,6 +193,7 @@ Page({
   //去报名
   submit: function (e) {
     var that = this;
+    console.log(e)
     if (that.data.detail.status == 0) {
       wx.showToast({
         title: '报名还未开启',
@@ -200,7 +204,7 @@ Page({
         url: app.data.urlevent + "/appcomeptitionplayer/detail.do",
         data: {
           token: wx.getStorageSync('token'),
-          userId: e.currentTarget.id
+          userId:that.data.userinfo.userId
         },
         method: 'POST',
         header: {
@@ -242,6 +246,12 @@ Page({
         icon: 'none'
       })
     }
+  },
+  //我的礼品
+  gift:function () {
+      wx.navigateTo({
+        url:'../my-help/my-help'
+      })
   },
   //发动态
   dynamic: function () {
@@ -305,5 +315,41 @@ Page({
     wx.navigateTo({
       url: '../recharge/recharge',
     })
-  }
+  },
+  getdetail:function(){
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/appcompetition/detail.do",
+      data: {
+        token: wx.getStorageSync('token'),
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+          
+          that.setData({
+            detail: res.data.data,
+          })
+        } else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
 })

@@ -1,0 +1,27 @@
+<!--pages/my-help/my-help.wxml-->
+<view class="public" hover-class="none" hover-stop-propagation="false">
+   <view class="piao" hover-class="none" hover-stop-propagation="false">
+       {{vote}}票
+   </view>
+   <view class="leij" hover-class="none" hover-stop-propagation="false">
+      累计助力票数
+   </view>
+</view>
+<view class="wid" >
+    <view class="zhuli" >
+       前去助力
+    </view>
+    <view class="zhuli" bind:tap="receive">
+       领取礼品
+    </view>
+</view>
+
+<view class="yds" hidden='{{isgift}}' bindtap='qux'>
+			<view class="yd">
+				  恭喜
+          <view class="lip">恭喜你获得赞助方提供的{{detail.name}}一份</view>
+        <view class='xioe' bindtap='que'>
+           点击领取
+        </view>
+			</view>
+</view>

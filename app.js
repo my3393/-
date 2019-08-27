@@ -40,7 +40,7 @@ App({
                   if (res) {
                     setTimeout(function () {
                       wx.request({
-                        url: "http://battel.api.xingtu-group.cn/battel-api-service/applogin/xcx/login.do",
+                        url: "https://battel.api.xingtu-group.cn/battel-api-service/applogin/xcx/login.do",
                         data: {
                           code: res.code,
                           nickName: avater.nickName,

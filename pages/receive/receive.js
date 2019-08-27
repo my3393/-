@@ -1,12 +1,12 @@
 // pages/receve/receive.js
-var app = getApp();
-var province_id = '';
-var city_id = '';
-var citys = [];
-var areas = [];
-var towns = [];
-var area_id = '';
-var town_id = '';
+const app = getApp();
+let province_id = '';
+let city_id = '';
+let citys = [];
+let areas = [];
+let towns = [];
+let area_id = '';
+let town_id = '';
 Page({
 
   /**
@@ -374,22 +374,15 @@ Page({
   getxcx: function () {
     var that = this;
     wx.request({
-      url: app.data.urlmall + "/appcompetition/apply.do",
+      url: app.data.urlevent + "/appuser/receivegift.do",
       data: {
-        typeId: that.data.typeid,
-        token: wx.getStorageSync('etoken'),
-        competitionName: that.data.info,
-        organizeName: that.data.contact,
+        token: wx.getStorageSync('token'),
+        consigneeName: that.data.names,
+        consigneePhone: that.data.scope,
         provinceId: province_id,
         cityId: city_id,
         areaId: area_id,
-        // townId: town_id,
-        phone: that.data.scope,
-        weixin: that.data.numb,
-        businessLicense: postersis,
-        competitionLogo: poster,
-        activityPoster: photos,
-        activityIntroduction: that.data.evedet
+        address: that.data.minute
       },
       method: 'POST',
       header: {
@@ -400,7 +393,7 @@ Page({
         console.log(res.data.data)
         if (res.data.status === 100) {
           wx.showToast({
-            title: '提交成功',
+            title: '提交成功,请耐心等待',
             icon: 'none',
             duration: 3000
           })

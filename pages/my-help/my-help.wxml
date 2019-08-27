@@ -8,7 +8,7 @@
    </view>
 </view>
 <view class="wid" >
-    <view class="zhuli" >
+    <view class="zhuli" bind:tap="gohelp">
        前去助力
     </view>
     <view class="zhuli" bind:tap="receive">

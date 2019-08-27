@@ -108,18 +108,24 @@ Page({
     this.setData({
       isgift: !that.data.isgift,
     })
+    that.getuser();
   },
   cance:function(){
     var that = this;
     wx.navigateTo({
       url:'../my-help/my-help'
     })
+    that.setData({
+      isart: !that.data.isart,
+    })
+    that.getuser();
   },
   deter: function () {
     var that = this;
     this.setData({
       isart: !that.data.isart,
     })
+    that.getuser();
   },
   pay:function(){
     var that = this;
@@ -146,7 +152,7 @@ Page({
           console.log(res.data.data)
           if (res.data.status === 100) {
            
-            that.getuser();
+           // that.getuser();
             that.getplayer();
             that.getcanreceivegift();
             
@@ -163,7 +169,7 @@ Page({
           } else if (res.data.status === 106) {
             wx.showModal({
               title: '艺呗不足',
-              content: '艺呗余额不足可前往battle公众号充值',
+              content: '艺呗余额不足可前往我的-艺呗-充值',
               success(res) {
                 if (res.confirm) {
                   //  wx.navigateTo({
@@ -205,11 +211,12 @@ Page({
             recegift: res.data.data,
           })
            if(res.data.data.status == 0){
+
               that.setData({
-                isgift:that.data.isgift,
+                isgift:!that.data.isgift,
             })
            }else if(res.data.data.status == 1){
-                this.setData({
+                that.setData({
                   isart: !that.data.isart,
                 })
            }

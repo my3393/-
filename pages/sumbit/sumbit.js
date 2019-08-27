@@ -6,7 +6,9 @@ var simages=[];
 var post2=''
 var post3=''
 var post4=''
-var dev
+var dev;
+let url;
+let id;
 Page({
 
   /**
@@ -29,6 +31,11 @@ Page({
    dev_id:'',
    tab:999,
    ok:true,
+   ishidd:false,
+   ishidden:false,
+   isshow:true,
+   
+
   },
 
   /**
@@ -97,13 +104,99 @@ Page({
       path: '/pages/home/home'
     }
   },
+ 
+  
+  cut() {
+    var that = this;
+    this.selectComponent('#imgcut').cut().then(r => {
+      // wx.previewImage({
+      //   urls: [r],
+      // })
+      wx.showLoading({
+        title: '上传中',
+      })
+      url = r
+      that.setData({
+        isshow: !that.data.isshow,
+        ishidden: !that.data.ishidden
+      })
+      wx.uploadFile({
+        url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
+        filePath:url ,
+        name: 'file',
+        header: {
+          "Content-Type": "multipart/form-data",
+          'accept': 'application/json',
+        },
+        formData: {
+          'token': wx.getStorageSync('token')
+        },
+        dataType: 'json',
+        success(res) {
+          let datas = JSON.parse(res.data)
+          console.log(datas)
+          
+          wx.showToast({
+            title: '上传成功',
+            icon: 'none'
+          })
+          if(id == 0){
+            that.setData({
+              post2:datas.data.url
+            })
+            post2 = datas.data.fileName;
+          }else if(id == 1){
+            that.setData({
+              post3:datas.data.url
+            })
+            post3 = datas.data.fileName;
+          }else if(id == 2){
+            that.setData({
+              post4:datas.data.url
+            })
+            post4 = datas.data.fileName;
+          }else if(id == 3){
+              images.push(datas.data.url)
+              simages.push(datas.data.fileName)
+              // do something
+              console.log(simages)
+              if (simages.length == 5) {
+                that.setData({
+                  showadd: !that.data.showadd
+                })
+              }
+                that.setData({
+                  imgs: images,
+                  showimg: false
+                })
+          }
+        }
+      })
+      
+    }).catch(e => {
+      wx.showModal({
+        title: '',
+        content: e.errMsg,
+        showCancel: false
+      })
+    })
+  },
+  chooseimg() {
+    wx.chooseImage({
+      count: 1,
+      success: (res) => {
+        this.setData({
+          src: res.tempFilePaths[0]
+        })
+      },
+    })
+  },
   //删除个人照照片
   detel:function(e){
      var that = this;
      console.log(e)
      console.log(that.data.imgs)
-     var imgs = that.data.imgs.splice(e.currentTarget.dataset.index,1)
-     console.log(imgs)
+    
      
      simages.splice(e.currentTarget.dataset.index,1)
      images.splice(e.currentTarget.dataset.index,1)
@@ -183,197 +276,73 @@ Page({
     var that = this;
     that.setData({
       showlabels: !that.data.showlabels,
-
+      ishidd: !that.data.ishidd,  
     })
   },
   //个人照片
   chooseImagess: function (e) {
    
     var that = this;
-   
-    wx.chooseImage({
-      count: 5,
-      sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
-      sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
-      success: res => {
-        console.log(res.tempFilePaths);
-        var tempFilePaths = res.tempFilePaths;
-        for (var i in tempFilePaths) {
-          images.push(tempFilePaths[i])
+    id = e.currentTarget.id,
+    that.setData({
+      isshow: !that.data.isshow,
+      ishidden:!that.data.ishidden
+     })
+    // wx.chooseImage({
+    //   count: 5,
+    //   sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
+    //   sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
+    //   success: res => {
+    //     console.log(res.tempFilePaths);
+    //     var tempFilePaths = res.tempFilePaths;
+    //     for (var i in tempFilePaths) {
+    //       images.push(tempFilePaths[i])
           
-          wx.showLoading();
+    //       wx.showLoading();
           
-          wx.uploadFile({
-            url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
-            filePath: tempFilePaths[i],
-            name: 'file',
-            header: {
-              "Content-Type": "multipart/form-data",
-              'accept': 'application/json',
-            },
-            formData: {
-              'token': wx.getStorageSync('token')
-            },
-            dataType: 'json',
-            success(res) {
-              let datas = JSON.parse(res.data)
-              console.log(datas)
-              wx.hideLoading();
-              wx.showToast({
-                title: '上传成功',
-                icon: 'none'
-              })
+    //       wx.uploadFile({
+    //         url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
+    //         filePath: tempFilePaths[i],
+    //         name: 'file',
+    //         header: {
+    //           "Content-Type": "multipart/form-data",
+    //           'accept': 'application/json',
+    //         },
+    //         formData: {
+    //           'token': wx.getStorageSync('token')
+    //         },
+    //         dataType: 'json',
+    //         success(res) {
+    //           let datas = JSON.parse(res.data)
+    //           console.log(datas)
+    //           wx.hideLoading();
+    //           wx.showToast({
+    //             title: '上传成功',
+    //             icon: 'none'
+    //           })
               
-              simages.push(datas.data.fileName)
-              // do something
-              console.log(simages)
-              if (simages.length == 5) {
-                that.setData({
-                  showadd: !that.data.showadd
-                })
-              }
-            }
-          })
+    //           simages.push(datas.data.fileName)
+    //           // do something
+    //           console.log(simages)
+    //           if (simages.length == 5) {
+    //             that.setData({
+    //               showadd: !that.data.showadd
+    //             })
+    //           }
+    //         }
+    //       })
 
 
-        }
-        that.setData({
-          imgs: images,
-          showimg: false
-        })
-        console.log(that.data.imgs)
-      }
-    })
+    //     }
+    //     that.setData({
+    //       imgs: images,
+    //       showimg: false
+    //     })
+    //     console.log(that.data.imgs)
+    //   }
+    // })
 
 
-  },
-  //选手封面
-  chooseImagess2(e) {
-    var that = this;
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
-      sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
-      success: res => {
-        console.log(res.tempFilePaths[0]);
-        var tempFilePaths = res.tempFilePaths;
-        wx.showLoading();
-        wx.uploadFile({
-          url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
-          filePath: tempFilePaths[0],
-          name: 'file',
-          header: {
-            "Content-Type": "multipart/form-data",
-            'accept': 'application/json',
-          },
-          formData: {
-            'token': wx.getStorageSync("token")
-          },
-          dataType: 'json',
-          success(res) {
-
-            let datas = JSON.parse(res.data)
-            console.log(datas)
-            post2 = datas.data.fileName;
-            
-            wx.hideLoading();
-            // do something
-            wx.showToast({
-              title: '上传成功',
-              icon: 'none'
-            })
-          }
-        })
-        that.setData({
-          post2: res.tempFilePaths[0]
-        })
-      }
-    })
-  },
-  //监护人身份证照
-  chooseImagess3(e) {
-    var that = this;
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
-      sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
-      success: res => {
-        console.log(res.tempFilePaths[0]);
-        var tempFilePaths = res.tempFilePaths;
-        wx.showLoading();
-        wx.uploadFile({
-          url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
-          filePath: tempFilePaths[0],
-          name: 'file',
-          header: {
-            "Content-Type": "multipart/form-data",
-            'accept': 'application/json',
-          },
-          formData: {
-            'token': wx.getStorageSync("token")
-          },
-          dataType: 'json',
-          success(res) {
-
-            let datas = JSON.parse(res.data)
-            console.log(datas)
-            post3 = datas.data.fileName;
-
-            wx.hideLoading();
-            // do something
-            wx.showToast({
-              title: '上传成功',
-              icon: 'none'
-            })
-          }
-        })
-        that.setData({
-          post3: res.tempFilePaths[0]
-        })
-      }
-    })
-  },
-  chooseImagess4(e) {
-    var that = this;
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
-      sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
-      success: res => {
-        console.log(res.tempFilePaths[0]);
-        var tempFilePaths = res.tempFilePaths;
-        wx.showLoading();
-        wx.uploadFile({
-          url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
-          filePath: tempFilePaths[0],
-          name: 'file',
-          header: {
-            "Content-Type": "multipart/form-data",
-            'accept': 'application/json',
-          },
-          formData: {
-            'token': wx.getStorageSync("token")
-          },
-          dataType: 'json',
-          success(res) {
-
-            let datas = JSON.parse(res.data)
-            console.log(datas)
-            post4 = datas.data.fileName;
-
-            wx.hideLoading();
-            // do something
-            wx.showToast({
-              title: '上传成功',
-              icon: 'none'
-            })
-          }
-        })
-        that.setData({
-          post4: res.tempFilePaths[0]
-        })
-      }
-    })
   },
   handleImagePreview(e) {
     var that = this;
@@ -503,6 +472,7 @@ Page({
     that.setData({
       showlabels: !that.data.showlabels,
       tar:999,
+      ishidd: !that.data.ishidd,
     })
    
   },
@@ -513,6 +483,7 @@ Page({
         dev:dev,
         dev_id:dev_id,
         showlabels: !that.data.showlabels,
+        ishidd: !that.data.ishidd,
       })
     
   },

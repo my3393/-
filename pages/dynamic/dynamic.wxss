@@ -50,3 +50,36 @@ textarea{
   line-height: 80rpx;
   margin-top: 40rpx;
 }
+
+.container {
+  border-top: 1px solid #f2f2f2;
+}
+
+.take {
+  padding-left: 30rpx;
+  line-height: 100rpx;
+  height: 100rpx;
+  background-color: #fff;
+}
+
+imgcut {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 90rpx;
+  width: 100%;
+}
+
+.footer {
+  line-height: 90rpx;
+  position: fixed;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.footer view{
+  color: var(--color-primary);
+  padding: 0 20rpx;
+}

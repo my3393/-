@@ -63,8 +63,10 @@
     <text>赛事规则</text>
     <view class='heng'></view>
   </view>
-  <view class='species'></view>
-  <view style='padding-bottom:120rpx;'></view>
+  <view class='species'>
+  Battle，俗称斗舞。 一般参与battle的舞种是Hiphop，Locking，Popping，Waacking，Breaking，Punking和Voguing（后面两种练的人比较少）。其他答案里没有提到Locking（锁舞）的，我比较熟，就说下这个。 Locking这个舞种有自己的routine，即固定的几套基本动作。在Battle里会重点考察根据不同音乐场景下运用和改编动作的能力。为什么？因为battle的时候音乐都是DJ出，dancer不知道会遇到怎样的节奏和旋律，所以随机应变，使用不同的技术，理解音乐融入音乐最重要。音乐感觉和动作变化，这些都是要靠长期练习积累。 </view>
+  <view style='padding-bottom:120rpx;'>
+  </view>
 </view>
 <!-- 参赛选手 -->
 <view wx:if='{{tab == 1}}'>
@@ -286,6 +288,7 @@
 <view class='ars' wx:if='{{showModal}}'>
   <video class='maskvideo' src='{{play}}' loop='true'></video>
 </view>
+<!-- 赛区选择 -->
 <view class="sai-yds" hidden='{{isSai}}'>
   <view class="sai-yd">
     <view class='divis {{tas == index?"act":""}}' wx:for="{{narea}}" id='{{item.id}}' data-index='{{index}}' data-name='{{item.name}}' data-num='{{item.qualifiedNumber}}' bindtap='narea'>

@@ -1,3 +1,8 @@
 {
-  "navigationBarTitleText": "我要报名"
+  "navigationBarTitleText": "我要报名",
+  "usingComponents": {
+    "swiper-out": "../../plugin/swiperout/swiperout",
+    "imgcut": "../../plugin/imgcut/imgcut"
+  }
+  
 }

@@ -64,6 +64,8 @@ page{
   padding: 20rpx;
   box-sizing: border-box;
   border-radius: 8rpx;
+  font-size: 26rpx;
+  color: #A4A4A4;
 }
 .yua{
   width: 80rpx;

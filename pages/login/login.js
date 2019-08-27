@@ -84,6 +84,9 @@ Page({
     },
     bindGetUserInfo(e) {
         console.log(e.detail.userInfo)
+        wx.showLoading({
+          title: '加载中',
+        })
         wx.getSetting({
             success(res) {
                 console.log(res)
@@ -131,7 +134,7 @@ Page({
                                             console.log(res.data.data);
                                           
                                             if(res.data.status == 100){
-                                                
+                                              wx.hideLoading()
                                                 wx.setStorage({
                                                     key: 'token',
                                                     data: res.data.data.token,

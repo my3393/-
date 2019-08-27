@@ -194,53 +194,55 @@ Page({
   submit: function (e) {
     var that = this;
     console.log(e)
-    if (that.data.detail.status == 0) {
+    if(that.data.detail.status == 0){
       wx.showToast({
         title: '报名还未开启',
-        icon: 'none'
+        icon:'none'
       })
-    } else if (that.data.detail.status == 1) {
-      wx.request({
-        url: app.data.urlevent + "/appcomeptitionplayer/detail.do",
-        data: {
-          token: wx.getStorageSync('token'),
-          userId:that.data.userinfo.userId
-        },
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        dataType: 'json',
-        success: function (res) {
-          console.log(res.data.data)
-          if (res.data.status === 100) {
-            wx.showToast({
-              title: '你已报名',
-              icon: 'none'
-            })
-
-          } else if (res.data.status === 103) {
-            wx.showToast({
-              title: '请重新登录',
-              icon: 'none'
-            })
-            wx.navigateTo({
-              url: '../login/login',
-            })
+    } else if (that.data.detail.status == 1){
+      if(that.data.userinfo.isJoin == 1){
+        wx.showToast({
+          title: '你已报名',
+          icon:'none'
+        })
+      }else{
+        wx.request({
+          url: app.data.urlevent + "/appcompetition/isaudit.do",
+          data: {
+            token: wx.getStorageSync('token'),
+            userId: e.currentTarget.id
+          },
+          method: 'POST',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          dataType: 'json',
+          success: function (res) {
+            console.log(res.data.data)
+            if (res.data.status === 100) {
+              wx.navigateTo({
+                url: '../sumbit/sumbit',
+              })
+              
+            } else if (res.data.status === 103) {
+              wx.showToast({
+                title: '请重新登录',
+                icon: 'none'
+              })
+              wx.navigateTo({
+                url: '../login/login',
+              })
+            } else {
+              wx.showToast({
+                title: res.data.msg,
+                icon: 'none'
+              })
+            }
           }
-          else if (res.data.status === 104) {
-            wx.navigateTo({
-              url: '../sumbit/sumbit',
-            })
-          } else {
-            wx.showToast({
-              title: res.data.msg,
-              icon: 'none'
-            })
-          }
-        }
-      })
-    } else {
+        })
+      }
+       
+    }else{
       wx.showToast({
         title: '你来晚了，报名已截止',
         icon: 'none'

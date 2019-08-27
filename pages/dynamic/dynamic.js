@@ -2,6 +2,7 @@
 const app = getApp();
 var images = [];
 var simages = [];
+var url
 Page({
 
   /**
@@ -12,6 +13,8 @@ Page({
     showadd:false,
     evedet:'',
     ok:true,
+    ishidden:false,
+    isshow:true,
   },
 
   /**
@@ -71,6 +74,75 @@ Page({
       title: '《明日告白》影视剧组线上海选赛火热进行中，快进来看看吧~',
       path: '/pages/home/home'
     }
+  },
+  cut() {
+    var that = this;
+    console.log(1)
+    this.selectComponent('#imgcut').cut().then(r => {
+      // wx.previewImage({
+      //   urls: [r],
+      // })
+      console.log(2)
+      url = r
+      that.setData({
+        isshow: !that.data.isshow,
+        ishidden: !that.data.ishidden
+      })
+      wx.uploadFile({
+        url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
+        filePath:url ,
+        name: 'file',
+        header: {
+          "Content-Type": "multipart/form-data",
+          'accept': 'application/json',
+        },
+        formData: {
+          'token': wx.getStorageSync('token')
+        },
+        dataType: 'json',
+        success(res) {
+          let datas = JSON.parse(res.data)
+          console.log(datas)
+          
+          wx.showToast({
+            title: '上传成功',
+            icon: 'none'
+          })
+          images.push(datas.data.url)
+          simages.push(datas.data.fileName)
+          that.setData({
+            imgs: images,
+            showimg: false
+          })
+          wx.hideLoading()
+          // do something
+          console.log(simages)
+          if (simages.length == 6) {
+            that.setData({
+              showadd: !that.data.showadd
+            })
+          }
+        }
+      })
+          
+      
+    }).catch(e => {
+      wx.showModal({
+        title: '',
+        content: e.errMsg,
+        showCancel: false
+      })
+    })
+  },
+  chooseimg() {
+    wx.chooseImage({
+      count: 1,
+      success: (res) => {
+        this.setData({
+          src: res.tempFilePaths[0]
+        })
+      },
+    })
   },
   submit: function () {
     var that = this;
@@ -140,55 +212,59 @@ Page({
   //个人照片
   chooseImagess: function (e) {
     var that = this;
-    wx.chooseImage({
-      count: 6,
-      sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
-      sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
-      success: res => {
-        console.log(res.tempFilePaths);
-        var tempFilePaths = res.tempFilePaths;
-        for (var i in tempFilePaths) {
-          images.push(tempFilePaths[i])
-          console.log(1)
-          wx.showLoading();
-          wx.uploadFile({
-            url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
-            filePath: tempFilePaths[i],
-            name: 'file',
-            header: {
-              "Content-Type": "multipart/form-data",
-              'accept': 'application/json',
-            },
-            formData: {
-              'token': wx.getStorageSync('token')
-            },
-            dataType: 'json',
-            success(res) {
-              let datas = JSON.parse(res.data)
-              console.log(datas)
-              wx.hideLoading();
-              wx.showToast({
-                title: '上传成功',
-                icon: 'none'
-              })
-              simages.push(datas.data.fileName)
-              // do something
-              console.log(simages)
-              if (simages.length == 6) {
-                that.setData({
-                  showadd: !that.data.showadd
-                })
-              }
-            }
-          })
+    that.setData({
+      isshow: !that.data.isshow,
+      ishidden:!that.data.ishidden
+     })
+    // wx.chooseImage({
+    //   count: 6,
+    //   sizeType: ['original', 'compressed'], //可选择原图或压缩后的图片
+    //   sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
+    //   success: res => {
+    //     console.log(res.tempFilePaths);
+    //     var tempFilePaths = res.tempFilePaths;
+    //     for (var i in tempFilePaths) {
+    //       images.push(tempFilePaths[i])
+    //       console.log(1)
+    //       wx.showLoading();
+    //       wx.uploadFile({
+    //         url: app.data.urlevent + '/appfile/xcxfileprogerssupload.do', // 仅为示例，非真实的接口地址
+    //         filePath: tempFilePaths[i],
+    //         name: 'file',
+    //         header: {
+    //           "Content-Type": "multipart/form-data",
+    //           'accept': 'application/json',
+    //         },
+    //         formData: {
+    //           'token': wx.getStorageSync('token')
+    //         },
+    //         dataType: 'json',
+    //         success(res) {
+    //           let datas = JSON.parse(res.data)
+    //           console.log(datas)
+    //           wx.hideLoading();
+    //           wx.showToast({
+    //             title: '上传成功',
+    //             icon: 'none'
+    //           })
+    //           simages.push(datas.data.fileName)
+    //           // do something
+    //           console.log(simages)
+    //           if (simages.length == 6) {
+    //             that.setData({
+    //               showadd: !that.data.showadd
+    //             })
+    //           }
+    //         }
+    //       })
 
 
-        }
-        that.setData({
-          imgs: images,
-          showimg: false
-        })
-      }
-    })
+    //     }
+    //     that.setData({
+    //       imgs: images,
+    //       showimg: false
+    //     })
+    //   }
+    // })
   },
 })

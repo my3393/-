@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container">
+<!-- <view class="container">
   <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
@@ -10,4 +10,32 @@
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
   </view>
+</view> -->
+
+<view class='public' hidden="{{iss}}">
+   <view class='fons'>
+      个人照片
+      <text class='shang'>（请上传3～5张个人高清照片）</text>
+   </view>
+   <view class='dher'>
+      <view class="der"  wx:for="{{imgs}}"  wx:for-index="idx" data-idx="{{idx}}" bindtap="handleImagePreview">
+          <image  src='{{item}}' hidden='{{showimg}}' style='margin-right:20rpx;'></image>
+          <view class="detel" catchtap="detel" id="{{item}}" data-index='{{idx}}'>
+              <image  src="../../images/detel.png" />
+          </view>
+      </view>
+        
+      <image src='{{post}}' bindtap="chooseImagess" hidden='{{showadd}}'></image>
+   </view>
 </view>
+
+<view class='container' hidden='{{isshow}}'>
+  <imgcut id='imgcut' src='{{src}}' width='300' height='200'></imgcut>
+  <view class="footer">
+    <view bindtap="choose">选择图片</view>
+    <view bindtap="cut">截图</view>
+  </view>
+</view>
+ <image src='{{img}}'></image>
+
+

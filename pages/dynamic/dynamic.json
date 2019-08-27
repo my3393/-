@@ -1,3 +1,7 @@
 {
-  "navigationBarTitleText": "发动态"
+  "navigationBarTitleText": "发动态",
+  "usingComponents": {
+    "swiper-out": "../../plugin/swiperout/swiperout",
+    "imgcut": "../../plugin/imgcut/imgcut"
+  }
 }

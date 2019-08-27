@@ -73,9 +73,19 @@ Page({
   },
   que:function(){
     var that = this;
-    wx.navigateTo({
-      url:'../receive/receive'
-    })
+    if(that.data.detail.isReceive == 1){
+       wx.showToast({
+         title:'你已领取礼品'
+       })
+    }else{
+      wx.navigateTo({
+        url:'../receive/receive'
+      })
+      that.setData({
+        isgift:!that.data.isgift
+      })
+    }
+    
    
   },
   getdetail: function () {
@@ -121,6 +131,15 @@ Page({
           })
         }
       }
+    })
+  },
+  gohelp:function(){
+    var that = this;
+    wx.navigateTo({
+      url:'../home/home'
+    })
+    that.setData({
+      isgift:!that.data.isgift
     })
   },
   getvote: function () {

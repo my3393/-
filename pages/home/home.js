@@ -47,7 +47,7 @@ Page({
     dynamic :[],
     play:'',
     id:'',
-    tas: '',
+    tas: 999,
     userinfo:'',
     time:'',
     isAnnouncement:'',
@@ -64,7 +64,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     this.getdetail();
-    that.getcanreceivegift();
+    
     // 调用函数时，传入new Date()参数，返回值是日期和时间
     var time = util.formatTime(new Date());
     console.log(time)
@@ -437,8 +437,14 @@ Page({
         icon:'none'
       })
     } else if (that.data.detail.status == 1){
+      if(that.data.userinfo.isJoin == 1){
+        wx.showToast({
+          title: '你已报名',
+          icon:'none'
+        })
+      }else{
         wx.request({
-          url: app.data.urlevent + "/appcomeptitionplayer/detail.do",
+          url: app.data.urlevent + "/appcompetition/isaudit.do",
           data: {
             token: wx.getStorageSync('token'),
             userId: e.currentTarget.id
@@ -451,9 +457,8 @@ Page({
           success: function (res) {
             console.log(res.data.data)
             if (res.data.status === 100) {
-              wx.showToast({
-                title: '你已报名',
-                icon: 'none'
+              wx.navigateTo({
+                url: '../sumbit/sumbit',
               })
               
             } else if (res.data.status === 103) {
@@ -464,11 +469,6 @@ Page({
               wx.navigateTo({
                 url: '../login/login',
               })
-            }
-            else if (res.data.status === 104) {
-              wx.navigateTo({
-                url: '../sumbit/sumbit',
-              })
             } else {
               wx.showToast({
                 title: res.data.msg,
@@ -477,13 +477,15 @@ Page({
             }
           }
         })
+      }
+       
     }else{
       wx.showToast({
         title: '你来晚了，报名已截止',
         icon: 'none'
       })
     }
-    console.log(this.data.userinfo)
+    console.log(that.data.userinfo)
   },
   //去选手页
   player:function(e){
@@ -705,7 +707,7 @@ Page({
          
           that.getdev();
           that.getmode();
-          
+          that.getcanreceivegift();
           that.setData({
             detail: res.data.data,
             banner: res.data.data.competitionPhotoOss,
@@ -812,7 +814,7 @@ Page({
               res.data.data[i].isshow = 1
             } else if (a == 1 && res.data.data[i].isCurrent == 0) {
               res.data.data[i].isshow = 3
-            } else {
+            } else if(res.data.data[i].isCurrent == 1) {
               a = 1;
               res.data.data[i].isshow = 2
             }

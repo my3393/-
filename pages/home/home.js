@@ -56,6 +56,7 @@ Page({
     anfu:true,
     showModal:false,
     play:'',
+    isvote:true,
   },
 
   /**
@@ -72,6 +73,13 @@ Page({
     that.setData({     
       time: time
     })
+    if(options.tar){
+      that.setData({     
+        tar: options.tar,
+        idx:options.idx,
+        tab:1
+      }) 
+    }
   },
 
   /**
@@ -592,9 +600,8 @@ Page({
         success: function (res) {
           console.log(res.data.data)
           if (res.data.status === 100) {
-            wx.showToast({
-              title: '感谢你宝贵的一票',
-              icon: 'none'
+            that.setData({
+              isvote:!that.data.isvote
             })
             ranklist=[];
             player=[];
@@ -629,6 +636,12 @@ Page({
         }
       })
      }
+  },
+  que:function(){
+    var that = this;
+    that.setData({
+      isvote:!that.data.isvote
+    })
   },
   //赛区切换
   bind: function () {

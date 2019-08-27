@@ -116,3 +116,13 @@
 			</view>
 </view>
 
+<!-- 投票成功弹窗 -->
+<view class="yds" hidden='{{isvote}}' bindtap='qux'>
+			<view class="yd2">
+				  感谢你的支持
+          <view class="lip">我一定全力以赴，决不辜负您的厚爱，期待您的关注与支持。</view>
+        <view class='xioe' bindtap='que'>
+           好的
+        </view>
+			</view>
+</view>

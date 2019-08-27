@@ -13,7 +13,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    names:'0',
+    names:'',
     scope:'',
     minute:'',
     provinceId: '',
@@ -131,7 +131,7 @@ Page({
     var city_idreg = city_id;
     var area_idreg = area_id;
     var town_idreg = town_id;
-   
+    var phonetel = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
     if (that.data.names == '') {
       wx.showToast({
         title: '请输入收件人姓名',
@@ -393,7 +393,7 @@ Page({
         console.log(res.data.data)
         if (res.data.status === 100) {
           wx.showToast({
-            title: '提交成功,请耐心等待',
+            title: '礼品准备中,请耐心等待',
             icon: 'none',
             duration: 3000
           })

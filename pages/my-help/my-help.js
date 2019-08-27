@@ -124,6 +124,12 @@ Page({
             icon: 'none'
           })
          
+        }else if (res.data.status === 108) {
+          wx.showToast({
+            title: '赛季结束才能领取哦',
+            icon: 'none'
+          })
+         
         }  else {
           wx.showToast({
             title: res.data.msg,
@@ -136,11 +142,9 @@ Page({
   gohelp:function(){
     var that = this;
     wx.navigateTo({
-      url:'../home/home'
+      url:'../home/home?idx=' + 1 + '&tar=' + 1,
     })
-    that.setData({
-      isgift:!that.data.isgift
-    })
+    
   },
   getvote: function () {
     var that = this;

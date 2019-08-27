@@ -214,7 +214,7 @@ Page({
 
               that.setData({
                 isgift:!that.data.isgift,
-            })
+              })
            }else if(res.data.data.status == 1){
                 that.setData({
                   isart: !that.data.isart,

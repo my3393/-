@@ -22,7 +22,8 @@ Page({
     userinfo:'',
     ok:true,
     share:1,
-    sort:''
+    sort:'',
+    isvote:true,
   },
 
   /**
@@ -191,7 +192,7 @@ Page({
       
     //      }  
     return {
-      title: '大家好，我正在参加《明日告白》影视剧组剧组线上海选赛选拔,快来投我一票吧',
+      title: '大家好，我正在参加《明日告白》影视线上选拔，快来投我一票~',
       path: '/pages/player/player?id=' + that.data.id + '&share=' + that.data.share
     }
   },
@@ -219,10 +220,9 @@ Page({
         success: function (res) {
           console.log(res.data.data)
           if (res.data.status === 100) {
-            wx.showToast({
-              title: '感谢你宝贵的一票',
-              icon: 'none'
-            })
+              that.setData({
+                isvote:!that.data.isvote
+              })
             
             that.getdetail();
           } else if (res.data.status === 105) {
@@ -242,6 +242,12 @@ Page({
     }
    
    
+  },
+  que:function(){
+    var that = this;
+    that.setData({
+      isvote:!that.data.isvote
+    })
   },
   //当前赛事
   getseasondetail: function () {

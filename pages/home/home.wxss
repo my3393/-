@@ -84,6 +84,7 @@ page{
   vertical-align: middle;
   width: 340rpx;
   font-size: 28rpx;
+  color: #000;
 }
 .tima{
   margin-left: 110rpx;
@@ -174,9 +175,7 @@ page{
 .intor-tim{
   margin: 40rpx 0;
 }
-.reward{
 
-}
 
 /* 参赛选手 */
 .csx{
@@ -283,6 +282,7 @@ color: #A3A3A3;
 }
 .top_list{
   text-align: center;
+  vertical-align: top;
 }
 .top_head{
   margin-top: 20rpx;
@@ -354,12 +354,12 @@ color: #A3A3A3;
 }
 .fuhuos{
   display: inline-block;
-  width: 130rpx;
-  height: 60rpx;
+  width: 120rpx;
+  height: 50rpx;
   background: #C0C0C0;
   color: #fff;
   text-align: center;
-  line-height: 60rpx;
+  line-height: 50rpx;
   border-radius: 30rpx;
 }
 .fuhuotas{

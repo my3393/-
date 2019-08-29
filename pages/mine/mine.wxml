@@ -36,7 +36,7 @@
    
 </view>
 <!-- hidden='{{isf}}' -->
-<view class='public' bindtap='dynamic' hidden='{{isf}}' >
+<view class='public' bindtap='dynamic'  hidden='{{isf}}'>
    <view class='fons'>发动态</view>
     
     <view class='enter'>

@@ -19,6 +19,13 @@
 
     <view class="gift-fig">
       <image src='{{item.photoOss}}'></image>
+      <!-- <view class="goShop">
+         <view class="shop-l">前往商城</view>
+         <view class="shop-r">
+           <image src="../../images/enter.png" />
+
+         </view>
+      </view> -->
     </view>
     <view class="gift-num">
      {{item.name}}

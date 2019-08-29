@@ -107,7 +107,7 @@
 </view>
 <!-- 个人照片 -->
 <view class='container' hidden='{{isshow}}'>
-  <imgcut id='imgcut' src='{{src}}' width='320' height='200'></imgcut>
+  <imgcut id='imgcut' src='{{src}}' width='320' height='220'></imgcut>
   <view class="footer">
     <view bindtap="chooseimg">选择图片</view>
     <view bindtap="cut">截图</view>

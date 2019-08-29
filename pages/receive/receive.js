@@ -30,6 +30,8 @@ Page({
     tindex: 0,
     iscity: true,
     isqu: true,
+    isart:true,
+
   },
 
   /**
@@ -122,6 +124,21 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  cance:function(){
+    var that = this;
+    
+    that.setData({
+      isart: !that.data.isart,
+    })
+   
+  },
+  deter: function () {
+    var that = this;
+    this.setData({
+      isart: !that.data.isart,
+    })
+   
   },
   //入驻提交
   submit: function (e) {
@@ -397,11 +414,14 @@ Page({
             icon: 'none',
             duration: 3000
           })
-          setTimeout(function () {
-            wx.navigateBack({
-              delta: 1
-            })
-          }, 3000)
+          that.setData({
+            isart:!that.data.isart
+          })
+          // setTimeout(function () {
+          //   wx.navigateBack({
+          //     delta: 1
+          //   })
+          // }, 3000)
         } else {
           wx.showToast({
             title: res.data.msg,

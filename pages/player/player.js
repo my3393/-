@@ -515,7 +515,7 @@ Page({
               })
           }
           console.log(that.data.sort)
-          if (res.data.data.status == 2 && res.data.data.isJoinResurgence == 0 && res.data.data.competitionType == 2 && res.data.data.sort == that.data.sort) {
+          if (res.data.data.status == 2 && res.data.data.isJoinResurgence == 0 &&  res.data.data.sort == that.data.sort) {
             res.data.data.fuh = 2
           }
           

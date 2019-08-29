@@ -9,6 +9,7 @@ Page({
      isgift:true,
      vote:'',
      detail:'',
+     nogift:true
   },
 
   /**
@@ -16,6 +17,7 @@ Page({
    */
   onLoad: function (options) {
      this.getvote();
+     this.getcanreceivegift();
   }, 
 
   /**
@@ -71,20 +73,22 @@ Page({
     var that = this;
     that.getdetail();
   },
+  cance:function(){
+    var that = this;
+    that.setData({
+      isgift:!that.data.isgift
+    })
+  },
   que:function(){
     var that = this;
-    if(that.data.detail.isReceive == 1){
-       wx.showToast({
-         title:'你已领取礼品'
-       })
-    }else{
+    
       wx.navigateTo({
         url:'../receive/receive'
       })
       that.setData({
         isgift:!that.data.isgift
       })
-    }
+   
     
    
   },
@@ -119,9 +123,12 @@ Page({
             url: '../login/login',
           })
         }else if (res.data.status === 107) {
-          wx.showToast({
-            title: '未达到领取资格，去为选手助力吧',
-            icon: 'none'
+          // wx.showToast({
+          //   title: '未达到领取资格，去为选手助力吧',
+          //   icon: 'none'
+          // })
+          that.setData({
+            nogift:!that.data.nogift
           })
          
         }else if (res.data.status === 108) {
@@ -144,7 +151,9 @@ Page({
     wx.navigateTo({
       url:'../home/home?idx=' + 1 + '&tar=' + 1,
     })
-    
+    that.setData({
+      nogift:true,
+    })
   },
   getvote: function () {
     var that = this;
@@ -164,6 +173,45 @@ Page({
             that.setData({
               vote: res.data.data,
             })
+
+        } else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
+   //用户距离下一个礼品票数
+   getcanreceivegift: function () {
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/appuser/canreceivegift.do",
+      data: {
+        token: wx.getStorageSync('token'),
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+          that.setData({
+            recegift: res.data.data,
+          })
+          
+         
 
         } else if (res.data.status === 103) {
           wx.showToast({

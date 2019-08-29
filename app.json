@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/video/video",
     "pages/sumbit/sumbit",
     "pages/help/help",
     "pages/player/player",

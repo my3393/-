@@ -21,7 +21,7 @@ Page({
    banner:[],
    detail:[],
    seasonId:'',
-
+   isvote:true,
   },
 
   /**
@@ -33,10 +33,9 @@ Page({
        that.setData({
          id:options.id,
        })
-       that.getplayer();
+      
        that.getmode();
-       that.getdetail();
-       that.getseasondetail();
+      
   },
 
   /**
@@ -178,6 +177,12 @@ Page({
 
   },
   //投票
+  que:function(){
+    var that = this;
+    that.setData({
+      isvote:!that.data.isvote
+    })
+  },
   vote: function (e) {
     var that = this;
     wx.request({
@@ -194,9 +199,8 @@ Page({
       success: function (res) {
         console.log(res.data.data)
         if (res.data.status === 100) {
-          wx.showToast({
-            title: '感谢你宝贵的一票',
-            icon: 'none'
+          that.setData({
+            isvote:!that.data.isvote
           })
         
           player = [];
@@ -401,7 +405,10 @@ Page({
             id: res.data.data.id,
             seasonId: res.data.data.seasonId,
           })
+          that.getplayer();
          
+          that.getdetail();
+          that.getseasondetail();
          
         } else if (res.data.status === 103) {
           wx.showToast({

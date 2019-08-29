@@ -992,6 +992,17 @@ Page({
                top_2: res.data.data.data.splice(0, 1)[0],
                top_3: res.data.data.data.splice(0, 1)[0],        
              })
+             if(that.data.top_2){
+                if (that.data.top_2.status == 2 && that.data.top_2.isJoinResurgence == 0){ 
+                    top_2.fuh = 2
+                }
+                
+             }
+             if(that.data.top_3){
+              if (that.data.top_3.status == 2 && that.data.top_3.isJoinResurgence == 0){
+                  top_3.fuh = 2
+              }
+           }
              
            }
           for(var i in res.data.data.data){

@@ -7,7 +7,7 @@
   </view>
 </view>
 <view>
-  <swiper class="banner" indicator-dots="true" autoplay="true" duration="1000" indicator-color="#a7a7a7" indicator-active-color="#fe5ba9">
+  <swiper class="banner" indicator-dots="true" circular='true' autoplay="true" duration="1000" indicator-color="#a7a7a7" indicator-active-color="#fe5ba9">
     <block wx:for='{{banner}}'>
       <swiper-item id="{{item.ids}}" class='swiper'>
         <image class="banner_img" src="{{item}}"></image>
@@ -167,10 +167,10 @@
       <view class='sex'>
         {{top_2.name}}
         <view>{{top_2.totalVotes}}票</view>
-        <!-- <view class='fuhuota' wx:if='{{top_2.fuh == 2}}' catchtap='resurrection' id='{{top_2.userId}}'>
+        <view class='fuhuota' wx:if='{{top_2.fuh == 2}}' catchtap='resurrection' id='{{top_2.userId}}'>
           复活TA
         </view>
-        <view class='fuhuos' wx:elif='{{top_2.isJoinResurgence == 1}}'>已复活</view> -->
+        <view class='fuhuos' wx:elif='{{top_2.isJoinResurgence == 1}}'>已复活</view>
       </view>
     </view>
     <view class='top_list' wx:if="{{top_1.length == 0}}">
@@ -223,10 +223,10 @@
       <view class='sex'>
         {{top_3.name}}
         <view>{{top_3.totalVotes}}票</view>
-        <!-- <view class='fuhuota' wx:if='{{item.fuh == 2}}' catchtap='resurrection' id='{{top_3.userId}}'>
+        <view class='fuhuota' wx:if='{{item.fuh == 2}}' catchtap='resurrection' id='{{top_3.userId}}'>
           复活TA
         </view>
-        <view class='fuhuos' wx:elif='{{top_3.isJoinResurgence == 1}}'>已复活</view> -->
+        <view class='fuhuos' wx:elif='{{top_3.isJoinResurgence == 1}}'>已复活</view>
       </view>
     </view>
   </view>

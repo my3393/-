@@ -50,3 +50,14 @@
 <view class='submit' bindtap='submit'>
    提交
 </view>
+
+<view class="yds" hidden='{{isart}}' >
+			<view class="yd">
+				   领取成功
+          <view class="lip">请耐心等待，活动方正安排发货，点击前往可查看更多同类商品</view>
+        <view class='xioe'>
+          <view class='deter' catchtap='cance'>好的</view>
+          <!-- <view class='deter' catchtap='deter' >去看看</view> -->
+        </view>
+			</view>
+</view>

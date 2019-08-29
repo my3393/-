@@ -118,7 +118,7 @@ Page({
     that.setData({
       isart: !that.data.isart,
     })
-    that.getuser();
+   
   },
   deter: function () {
     var that = this;

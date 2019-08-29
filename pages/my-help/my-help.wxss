@@ -10,6 +10,8 @@ page{
   background: #fff;
   box-sizing: border-box;
   text-align: center;
+  display: flex;
+  justify-content: space-around;
 }
 .piao{
   margin: 30rpx 0 ;
@@ -78,5 +80,12 @@ color: #F861AA;
 .xioe{
   margin-top: 50rpx;
   line-height: 70rpx;
+  color: #F861AA;
+}
+.xioed{
+  margin-top: 50rpx;
+  line-height: 70rpx;
+  display: flex;
+  justify-content: space-around;
   color: #F861AA;
 }

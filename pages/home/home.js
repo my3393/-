@@ -33,6 +33,7 @@ Page({
     allseason:[],
     mo_id:'',
     player:[],
+    currentPage:1,
     x_currentPage:1,
     p_currentPage:1,
     d_currentPage:1,
@@ -57,6 +58,7 @@ Page({
     showModal:false,
     play:'',
     isvote:true,
+    competitionName:''
   },
 
   /**
@@ -64,7 +66,21 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    this.getdetail();
+    if (wx.getStorageSync('token')){
+      that.getdetail();
+      console.log('token存在')
+    }else{
+      that.gettoken();
+      console.log('token不存在')
+    }
+    
+    // if (that.data.userinfo.userId == '' || that.data.userinfo == '') {
+    //   that.gettoken();
+    // } else {
+    //   that.getdetail();
+    // }
+   
+   
     
     // 调用函数时，传入new Date()参数，返回值是日期和时间
     var time = util.formatTime(new Date());
@@ -159,7 +175,6 @@ Page({
         detail: [],
         banner: [],
         allseason: [],
-        mo_id: '',
         player: [],
         x_currentPage: 1,
         p_currentPage: 1,
@@ -176,17 +191,17 @@ Page({
         play: '',
         id: '',
         tas: '',
-        time: '',
+        
         isAnnouncement: '',
         isCurrent: ''
 
       })
 
       setTimeout(function () {
-        console.log(ranklist)
-        console.log(that.data.ranklist)
+        
         that.getdetail();
-        that.getdynamic();
+        that.getplayer();
+        that.getranklist();
       }, 500)
       // complete
       wx.hideNavigationBarLoading() //完成停止加载
@@ -219,19 +234,39 @@ Page({
      }
     //选手
     if(that.data.tab == 1){
-      if (that.data.x_currentPage == that.data.x_totalPage) {
-        wx.showToast({
-          title: '已经到底了哦',
-          icon: 'none'
-        })
-      } else {
-        console.log(that.data.x_currentPage == that.data.x_totalPage)
-        console.log()
-        that.setData({
-          x_currentPage: that.data.x_currentPage + 1,
-        })
-        that.getplayer();
+      if (that.data.isSearch == true){
+        if (that.data.currentPage == that.data.s_totalPage) {
+          wx.showToast({
+            title: '已经到底了哦',
+            icon: 'none'
+          })
+          
+        } else {
+          console.log(that.data.s_currentPage == that.data.s_totalPage)
+          console.log()
+          that.setData({
+            currentPage: that.data.currentPage + 1,
+          })
+          that.searchinps();
+         
+        }
+      }else{
+        if (that.data.x_currentPage == that.data.x_totalPage) {
+         
+          wx.showToast({
+            title: '已经到底了哦',
+            icon: 'none'
+          })
+        } else {
+          console.log(that.data.x_currentPage == that.data.x_totalPage)
+          console.log()
+          that.setData({
+            x_currentPage: that.data.x_currentPage + 1,
+          })
+          that.getplayer();
+         
 
+        }
       }
     }
     //排行榜
@@ -259,6 +294,60 @@ Page({
       title: '《明日告白》影视剧组线上海选赛火热进行中，快进来看看吧~',
       path: '/pages/home/home'
     }
+  },
+  handleImagePreview: function (e) {
+    var that = this;
+    var urlsa = [];
+    urlsa.push(e.currentTarget.id)
+    console.log(urlsa)
+    wx.previewImage({
+      current: e.currentTarget.id,
+      urls: urlsa
+    })
+  },
+  gettoken: function () {
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/applogin/default/token.do",
+      data: {
+      
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+          
+          wx.setStorage({
+            key: 'token',
+            data: res.data.data.token,
+          })
+          wx.setStorage({
+            key: 'userinfo',
+            data: res.data.data.user,
+          })
+          setTimeout(function () {
+            that.getdetail();
+          }, 300)
+        } else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
   },
   play:function(e){
     var that = this;
@@ -501,6 +590,12 @@ Page({
       url: '../player/player?id=' + e.currentTarget.id + '&ids=' +  e.currentTarget.dataset.id,
     })
   },
+  xiaochu(){
+    let that =this;
+    that.setData({
+      isSai:!that.data.isSai
+    })
+  },
   //我的
   mine:function(){
     wx.redirectTo({
@@ -512,20 +607,35 @@ Page({
   tag: function (e) {
     var that = this;
     console.log(e.currentTarget.dataset.num);
-    player=[];
-    ranklist=[];
-    dynamic=[];
+    let conut = e.currentTarget.dataset.num
+    if(conut == 1){
+      player = [];
+      that.setData({
+        
+      })
+      that.getplayer();
+    }else if(conut == 2){
+      ranklist = [];
+      that.getranklist();
+    }else if(conut == 3){
+      dynamic = [];
+      that.getdynamic();
+    }
+   
+    
+    
     that.setData({
+      isSearch: false,
       idx: e.currentTarget.dataset.num,
       tar: e.currentTarget.dataset.num,
       tab: e.currentTarget.dataset.num,
-      player:[],
-      ranklist:[],
-      dynamic:[],
+      // player:[],
+      // ranklist:[],
+      // dynamic:[],
     })
-    that.getplayer();
-    that.getranklist();
-    that.getdynamic();
+    
+    
+    
   },
   //搜索
   searchinp: function (e) {
@@ -535,7 +645,8 @@ Page({
     that.setData({
       isSearch: true,
       splayer:[],
-      valu:e.detail.value
+      valu:e.detail.value,
+      currentPage:1
     })
     wx.request({
       url: app.data.urlevent + "/appcomeptitionplayer/playerlist.do",
@@ -543,6 +654,7 @@ Page({
         competitionAreaId: that.data.mo_id,
         token: wx.getStorageSync('token'),
         keyword: e.detail.value,
+       
       },
       method: 'POST',
       header: {
@@ -557,7 +669,7 @@ Page({
           }
           that.setData({
             splayer: splayer,
-            //s_totalPage: res.data.data.totalPage
+            s_totalPage: res.data.data.totalPage
           })
 
         }else if (res.data.status === 103){
@@ -569,6 +681,49 @@ Page({
              url: '../login/login',
            })
         }else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
+  searchinps: function (e) {
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/appcomeptitionplayer/playerlist.do",
+      data: {
+        competitionAreaId: that.data.mo_id,
+        token: wx.getStorageSync('token'),
+        keyword: that.data.valu,
+        currentPage: that.data.currentPage
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+          for (var i in res.data.data.data) {
+            splayer.push(res.data.data.data[i])
+          }
+          that.setData({
+            splayer: splayer,
+            s_totalPage: res.data.data.totalPage
+          })
+
+        } else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
           wx.showToast({
             title: res.data.msg,
             icon: 'none'
@@ -603,19 +758,19 @@ Page({
             that.setData({
               isvote:!that.data.isvote
             })
-            ranklist=[];
+            // ranklist=[];
             player=[];
             that.setData({
               p_currentPage:1,
               x_currentPage:1,
-              ranklist:[],
-              player:[],
+              // ranklist:[],
+              // player:[],
             })
-            that.getranklist();
+            // that.getranklist();
             that.getplayer();
           } else if (res.data.status === 103) {
             wx.showToast({
-              title: '请重新登录',
+              title: '请先登录',
               icon: 'none'
             })
             wx.navigateTo({
@@ -648,7 +803,7 @@ Page({
     var that = this;
     this.setData({
       isSai: !this.data.isSai,
-      
+     
       valu:'',
     })
     that.getNarea();
@@ -664,6 +819,8 @@ Page({
     player = [];
     ranklist= []
     that.setData({
+      x_currentPage: 1,
+      p_currentPage: 1,
       competitionAreaId: e.currentTarget.id,
       competitionName: competitionName,
       qualifiedNumber: qualifiedNumber,
@@ -719,8 +876,10 @@ Page({
         if (res.data.status === 100) {
          
           that.getdev();
-          that.getmode();
-          that.getcanreceivegift();
+          if (that.data.competitionName == ''){
+            that.getmode();
+          }
+          
           that.setData({
             detail: res.data.data,
             banner: res.data.data.competitionPhotoOss,
@@ -731,7 +890,8 @@ Page({
         } else if (res.data.status === 103) {
           wx.showToast({
             title: '请重新登录',
-            icon: 'none'
+            icon: 'none',
+           
           })
           wx.navigateTo({
             url: '../login/login',
@@ -805,6 +965,7 @@ Page({
   //所有赛季
   getdev: function () {
     var that = this;
+    allseason=[]
     wx.request({
       url: app.data.urlevent + "/appcompetition/allseason.do",
       data: {
@@ -824,14 +985,37 @@ Page({
             res.data.data[i].end = res.data.data[i].endDate.substring(5)
             
             if (a == 0 && res.data.data[i].isCurrent == 0) {
-              res.data.data[i].isshow = 1
+              res.data.data[i].isshow = 1;
             } else if (a == 1 && res.data.data[i].isCurrent == 0) {
               res.data.data[i].isshow = 3
             } else if(res.data.data[i].isCurrent == 1) {
               a = 1;
-              res.data.data[i].isshow = 2
+              let time = Date.parse(that.data.time)
+              let st = res.data.data[i].startDate.replace(/-/g, '/');
+              let en = res.data.data[i].endDate.replace(/-/g, '/');
+              let m = ' 00:00:00';
+              let b = ' 23:59:59';
+             
+              let c = st +m;
+              let d = en + b
+             
+              let s= Date.parse(c)
+              let e = Date.parse(d)
+              
+              let t1 = time - s;
+              let t2 = time - e;
+             
+              if ( t2 < 0){
+                res.data.data[i].isshow = 2
+              }else if(t2 > 0){
+                res.data.data[i].isshow = 1
+                
+              }
+             
+              
             }
             allseason.push(res.data.data[i])
+            console.log(allseason)
             if (res.data.data[i].isCurrent == 1) {
               console.log('feko')
               that.setData({
@@ -861,6 +1045,7 @@ Page({
             allseason: allseason,
            
           })
+          console.log(that.data.allseason)
      
         } else if (res.data.status === 103) {
           wx.showToast({
@@ -1118,43 +1303,5 @@ Page({
       }
     })
   },
-   //用户距离下一个礼品票数
-   getcanreceivegift: function () {
-    var that = this;
-    wx.request({
-      url: app.data.urlevent + "/appuser/canreceivegift.do",
-      data: {
-        token: wx.getStorageSync('token'),
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      dataType: 'json',
-      success: function (res) {
-        console.log(res.data.data)
-        if (res.data.status === 100) {
-          
-          
-          that.setData({
-            recegift: res.data.data,
-          })
-
-        } else if (res.data.status === 103) {
-          wx.showToast({
-            title: '请重新登录',
-            icon: 'none'
-          })
-          wx.navigateTo({
-            url: '../login/login',
-          })
-        } else {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          })
-        }
-      }
-    })
-  },
+   
 })

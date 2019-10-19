@@ -162,7 +162,7 @@ page{
   background: #fff;
   text-align: center;
   border-radius: 10rpx;
-  overflow: hidden;
+ 
 }
 .intor-nam{
   height: 90rpx;
@@ -171,6 +171,8 @@ page{
   text-align: center;
   line-height: 90rpx;
   color: #fff;
+  border-top-right-radius: 4rpx;
+  border-top-left-radius: 4rpx;
 }
 .intor-tim{
   margin: 40rpx 0;
@@ -196,6 +198,7 @@ page{
   font-size: 24rpx;
   
 }
+
 .evesai{
   padding: 20rpx 20rpx;
   box-sizing: border-box;
@@ -322,7 +325,8 @@ color: #A3A3A3;
   padding: 20rpx 20rpx;
   margin-top: 30rpx;
   box-sizing: border-box;
-  margin-bottom: 100rpx;
+  padding-bottom: 100rpx;
+ 
 }
 .pai{
   display: inline-block;

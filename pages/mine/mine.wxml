@@ -1,9 +1,13 @@
 <!--pages/mine/mine.wxml-->
 <view class='ibottom clearfix'>
-  <view class='fhead' id='{{item.userId}}' catchtap='todetail'>
+ <view class='fhead' wx:if='{{userinfo.userName == null}}'>
+    <image mode='aspectFill' src='../../images/head.png'></image>
+  </view>
+  <view class='fhead'  wx:else>
     <image mode='aspectFill' src='{{userinfo.headPhoto}}'></image>
   </view>
-  <text>{{userinfo.userName}}</text>
+  <text wx:if='{{userinfo.userName == null}}' bindtap="login" class="deter">登录</text>
+  <text wx:else>{{userinfo.userName}}</text>
 
  <view style='float: right;' wx:if='{{userinfo.isJoin == 1}}'>
      <view class='flabel' bindtap='play' id='{{userinfo.idolId}}'>查看赛况</view>
@@ -35,6 +39,14 @@
      </view>
    
 </view>
+<view class='public' bindtap='orgin' >
+   <view class='fons'>机构参赛申请</view>
+    
+    <view class='enter'>
+       <image src='../../images/enter.png'></image>
+     </view>
+   
+</view>
 <!-- hidden='{{isf}}' -->
 <view class='public' bindtap='dynamic'  hidden='{{isf}}'>
    <view class='fons'>发动态</view>
@@ -51,6 +63,14 @@
        <image src='../../images/enter.png'></image>
      </view>
     
+</view>
+<view class='public' bindtap='feedback' >
+   <view class='fons'>意见反馈</view>
+    
+    <view class='enter'>
+       <image src='../../images/enter.png'></image>
+     </view>
+   
 </view>
 
 <view class='footer'>

@@ -1,16 +1,16 @@
 <!-- pages/home/home.wxml -->
 
 <view class='top' wx:if='{{isAnnouncement == 1}}'>
-  <image src='{{detail.announcementPhotoOss}}'></image>
+  <image src='{{detail.announcementPhotoOss}}' bindtap="handleImagePreview" id="{{detail.announcementPhotoOss}}"></image>
   <view class='clone' bindtap='clone'>
-    <image src='../../images/clone.png'></image>
+    <image src='../../images/clone.png' mode="aspectFit"></image>
   </view>
 </view>
 <view>
   <swiper class="banner" indicator-dots="true" circular='true' autoplay="true" duration="1000" indicator-color="#a7a7a7" indicator-active-color="#fe5ba9">
     <block wx:for='{{banner}}'>
       <swiper-item id="{{item.ids}}" class='swiper'>
-        <image class="banner_img" src="{{item}}"></image>
+        <image class="banner_img" src="{{item}}" mode="aspectFit"></image>
       </swiper-item>
     </block>
   </swiper>
@@ -91,7 +91,7 @@
       <view class='play' wx:else>
         <view class='play-list' wx:for='{{player}}' id='{{item.userId}}'>
           <view class='play-img' bindtap='player' id='{{item.userId}}' data-id='{{item.id}}'>
-            <image src='{{item.playerCoverOss}}'></image>
+            <image src='{{item.playerCoverOss}}' mode="aspectFit"></image>
           </view>
           <view style=' color: #000; font-size: 34rpx; margin-top: 10rpx;'>
             <text>{{item.playerNumber}}号</text>
@@ -260,12 +260,12 @@
       <view class='microtu'>
         <view wx:if="{{item.fileType == 1}}">
           <view class='dynac' wx:for="{{item.filePathOss}}" wx:for-index='indexs' bindtap='imgsrc' data-index='{{indexs}}' data-num='{{widx}}' data-src='{{item}}'>
-            <image src='{{item}}'></image>
+            <image src='{{item}}' mode="aspectFit"></image>
           </view>
         </view>
         <view wx:if="{{item.fileType == 2}}">
           <view class='dynac-vid' wx:for="{{item.filePathOss}}" bindtap='showModalFun' data-index='{{index}}' data-num='{{widx}}' data-src='{{item}}'>
-            <image src='{{dynamic[widx].fileCoverOss[index]}}'></image>
+            <image src='{{dynamic[widx].fileCoverOss[index]}}' mode="aspectFit"></image>
             <view class='plays'>
               <image src='../../images/play.png'></image>
             </view>
@@ -289,9 +289,9 @@
   <video class='maskvideo' src='{{play}}' loop='true'></video>
 </view>
 <!-- 赛区选择 -->
-<view class="sai-yds" hidden='{{isSai}}'>
+<view class="sai-yds" hidden='{{isSai}}' bindtap="xiaochu">
   <view class="sai-yd">
-    <view class='divis {{tas == index?"act":""}}' wx:for="{{narea}}" id='{{item.id}}' data-index='{{index}}' data-name='{{item.name}}' data-num='{{item.qualifiedNumber}}' bindtap='narea'>
+    <view class='divis {{tas == index?"act":""}}' wx:for="{{narea}}" id='{{item.id}}' data-index='{{index}}' data-name='{{item.name}}' data-num='{{item.qualifiedNumber}}' catchtap='narea'>
       {{item.name}}
     </view>
   </view>

@@ -223,7 +223,7 @@ Page({
           
          
 
-        } else if (res.data.status === 103) {
+        }else if (res.data.status === 103) {
           wx.showToast({
             title: '请重新登录',
             icon: 'none'
@@ -362,7 +362,6 @@ Page({
       success: function (res) {
         console.log(res.data.data)
         if (res.data.status === 100) {
-
           that.setData({
             userinfo: res.data.data.user,
 

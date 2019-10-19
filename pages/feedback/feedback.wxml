@@ -1,0 +1,6 @@
+<!--pages/feedback/feedback.wxml-->
+<view class="texa">
+  <textarea class="texta" placeholder="有什么意见或者建议可以直接告诉我们" bindinput='evedetail'></textarea>
+</view>
+
+<view class="sumbit" bindtap="sumbit">提交</view>

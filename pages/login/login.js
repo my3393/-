@@ -83,6 +83,7 @@ Page({
       })
     },
     bindGetUserInfo(e) {
+        var that = this;
         console.log(e.detail.userInfo)
         wx.showLoading({
           title: '加载中',
@@ -139,7 +140,7 @@ Page({
                                                     key: 'token',
                                                     data: res.data.data.token,
                                                 })
-                                              
+                                              console.log(res.data.data.user);
                                                 wx.setStorage({
                                                     key: 'userinfo',
                                                     data: res.data.data.user,
@@ -171,9 +172,72 @@ Page({
                             }
                         }
                     });
+                }else{
+                  that.gettoken();
+                   
+                  console.log('取消')
+                  wx.hideLoading()
+                 
+
                 }
-            }
+            },
+            // fail(res){
+            //   console.log('取消')
+            //   wx.hideLoading()
+            //   wx.navigateBack({
+            //     delta: 1
+            //   })
+            // }
         })
     },
+    back:function(){
+      this.gettoken();
+      wx.redirectTo({
+        url: '../home/home',
+      })
+    },
+  gettoken: function () {
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/applogin/default/token.do",
+      data: {
 
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+
+          wx.setStorage({
+            key: 'token',
+            data: res.data.data.token,
+          })
+          wx.setStorage({
+            key: 'userinfo',
+            data: res.data.data.user,
+          })
+          wx.redirectTo({
+            url: '../home/home',
+          })
+        }else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
 })

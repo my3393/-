@@ -136,6 +136,7 @@ page{
 .nav{
   padding: 20rpx;
   box-sizing: border-box;
+  margin-bottom: 100rpx;
 }
 .rank{
   margin-top: 20rpx;

@@ -131,7 +131,12 @@ Page({
     that.setData({
       isart: !that.data.isart,
     })
-   
+    // wx.navigateBack({
+    //   delta: 1
+    // })
+    wx.navigateTo({
+      url: '../my-help/my-help',
+    })
   },
   deter: function () {
     var that = this;
@@ -409,11 +414,11 @@ Page({
       success: function (res) {
         console.log(res.data.data)
         if (res.data.status === 100) {
-          wx.showToast({
-            title: '礼品准备中,请耐心等待',
-            icon: 'none',
-            duration: 3000
-          })
+          // wx.showToast({
+          //   title: '礼品准备中,请耐心等待',
+          //   icon: 'none',
+          //   duration: 3000
+          // })
           that.setData({
             isart:!that.data.isart
           })

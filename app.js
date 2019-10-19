@@ -37,54 +37,88 @@ App({
                     }
                   })
                   console.log(res.code)
-                  if (res) {
-                    setTimeout(function () {
-                      wx.request({
-                        url: "https://battel.api.xingtu-group.cn/battel-api-service/applogin/xcx/login.do",
-                        data: {
-                          code: res.code,
-                          nickName: avater.nickName,
-                          davatarUrl: avater.avatarUrl,
-                          encryptedData: encryptedData,
-                          iv: iv
-                        },
-                        method: 'POST',
-                        header: {
-                          'content-type': 'application/x-www-form-urlencoded'
-                        },
-                        dataType: 'json',
-                        success: function (res) {
-                          console.log(res.data.data);
-                          wx.setStorage({
-                            key: 'token',
-                            data: res.data.data.token,
-                          })
-                          wx.setStorage({
-                            key: 'userinfo',
-                            data: res.data.data.user,
-                          })
-                          // if (res.data.data.user.phone == null || res.data.data.user.phone == ''){
-                          //     wx.redirectTo({
-                          //         url: '../bindphone/bindphone',
-                          //     })
-                          // }
-                        }
-                      })
-                    }, 500)
-                  }
+                  // if (res) {
+                  //   setTimeout(function () {
+                  //     wx.request({
+                  //       url: "https://battel.api.xingtu-group.cn/battel-api-service/applogin/xcx/login.do",
+                  //       data: {
+                  //         code: res.code,
+                  //         nickName: avater.nickName,
+                  //         davatarUrl: avater.avatarUrl,
+                  //         encryptedData: encryptedData,
+                  //         iv: iv
+                  //       },
+                  //       method: 'POST',
+                  //       header: {
+                  //         'content-type': 'application/x-www-form-urlencoded'
+                  //       },
+                  //       dataType: 'json',
+                  //       success: function (res) {
+                  //         console.log(res.data.data);
+                  //         wx.setStorage({
+                  //           key: 'token',
+                  //           data: res.data.data.token,
+                  //         })
+                  //         wx.setStorage({
+                  //           key: 'userinfo',
+                  //           data: res.data.data.user,
+                  //         })
+                  //         // if (res.data.data.user.phone == null || res.data.data.user.phone == ''){
+                  //         //     wx.redirectTo({
+                  //         //         url: '../bindphone/bindphone',
+                  //         //     })
+                  //         // }
+                  //       }
+                  //     })
+                  //   }, 500)
+                  // }
                 }
               });
             }
-            if (res.authSetting['scope.userInfo'] == undefined || res.authSetting['scope.userInfo'] == false) {
-              wx.redirectTo({
-                url: '/pages/login/login',
-              })
+            // if (res.authSetting['scope.userInfo'] == undefined || res.authSetting['scope.userInfo'] == false) {
+            //   wx.redirectTo({
+            //     url: '/pages/login/login',
+            //   })
 
-            }
+            // }
           }
         })
       }
     })
+    // 获取用户信息
+    if (wx.canIUse('getUpdateManager')) {
+      const updateManager = wx.getUpdateManager()
+      updateManager.onCheckForUpdate(function (res) {
+        console.log('onCheckForUpdate====', res)
+        // 请求完新版本信息的回调
+        if (res.hasUpdate) {
+          console.log('res.hasUpdate====')
+          updateManager.onUpdateReady(function () {
+            wx.showModal({
+              title: '更新提示',
+              content: '新版本已经准备好，是否重启应用？',
+              success: function (res) {
+                console.log('success====', res)
+                // res: {errMsg: "showModal: ok", cancel: false, confirm: true}
+                if (res.confirm) {
+                  // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                  updateManager.applyUpdate()
+                }
+              }
+            })
+          })
+          updateManager.onUpdateFailed(function () {
+            // 新的版本下载失败
+            wx.showModal({
+              title: '更新失败~',
+              content: '请您删除当前小程序，重新搜索打开哟~'
+            })
+          })
+        }
+      })
+    }
+   // console.log("isshow", this.g.config)
+    // this.UserLogin();
   },
   globalData: {
     userInfo: null

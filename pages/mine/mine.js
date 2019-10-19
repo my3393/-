@@ -10,6 +10,7 @@ Page({
     isart:true,
     isf:true,
     detail:'',
+    zhif:true,
   },
 
   /**
@@ -35,13 +36,13 @@ Page({
     wx.getStorage({
       key: 'userinfo',
       success: function (res) {
-       
+        console.log(res.data)
         that.setData({
           userinfo: res.data
         })
       },
     })
-    this.getuser();
+    
   },
 
   /**
@@ -80,6 +81,23 @@ Page({
       title: '《明日告白》影视剧组线上海选赛火热进行中，快进来看看吧~',
       path: '/pages/home/home'
     }
+  },
+  login:function(){
+    wx.navigateTo({
+      url: '../login/login',
+    })
+  },
+  //参赛机构
+  orgin: function () {
+    wx.navigateTo({
+      url: '../orgin/orgin',
+    })
+  },
+  //意见反馈
+  feedback:function(){
+    wx.navigateTo({
+      url: '../feedback/feedback',
+    })
   },
   play: function (e) {
     var that = this;
@@ -148,7 +166,12 @@ Page({
               isf:true,
               zhif:true,
             })
-          }else if (res.data.data.user.isJoin == 1){
+          } else{
+            that.setData({
+              zhif: false,
+            })
+          }
+           if (res.data.data.user.isJoin == 1 && res.data.data.user.isReleaseDynamic != 0) {
             that.setData({
               isf: false,
             })
@@ -337,6 +360,9 @@ Page({
           that.setData({
             detail: res.data.data,
           })
+          if(that.data.userinfo.userName != null){
+            that.getuser();
+          }
         } else if (res.data.status === 103) {
           wx.showToast({
             title: '请重新登录',

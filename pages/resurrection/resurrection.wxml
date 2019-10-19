@@ -104,9 +104,9 @@
 </view>
 
 
-<view class="sai-yds" hidden='{{isSai}}'>
+<view class="sai-yds" hidden='{{isSai}}' bindtap="xiaochu">
 			<view class="sai-yd">
-			   <view class='divis {{tas == index?"act":""}}' wx:for="{{narea}}" id='{{item.id}}' data-index='{{index}}'  data-name='{{item.name}}' data-num='{{item.resurgenceQualifiedNumber}}'  bindtap='narea'>{{item.name}}</view>
+			   <view class='divis {{tas == index?"act":""}}' wx:for="{{narea}}" id='{{item.id}}' data-index='{{index}}'  data-name='{{item.name}}' data-num='{{item.resurgenceQualifiedNumber}}'  catchtap='narea'>{{item.name}}</view>
 			</view>
 </view>
 

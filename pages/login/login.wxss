@@ -56,7 +56,10 @@ button{
     color: white;
     background-color: #fe5ba9;
 }
-button:active{
+.button_active{
     background-color: #fe5ba9;
     color: white;
+}
+.bat{
+  margin-top: 30rpx;
 }

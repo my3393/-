@@ -3,6 +3,7 @@ var util = require('../../utils/util.js');
 const app = getApp();
 var votelist=[];
 var isshow;
+let share='';
 Page({
 
   /**
@@ -32,7 +33,7 @@ Page({
   onLoad: function (options) {
      var that = this;
      console.log(options)
-     that.getseasondetail();
+     
      var time = util.formatTime(new Date());
     console.log(time)
     // 再通过setData更改Page()里面的data，动态更新页面的数据
@@ -41,53 +42,18 @@ Page({
        ids:options.ids,
        time: time
      })
+     if(options.share){
+       share= options.share
+     }
+    if (wx.getStorageSync('token')) {
+      that.getdet();
+      console.log('token存在')
+    } else {
+      that.gettoken();
+      console.log('token不存在')
+    }
+    
      
-     that.getdet();
-      wx.getStorage({
-        key: 'userinfo',
-        success: function (res) {
-          if(options.share){
-            if (res.data.idolId == null || res.data.idolId == ''){
-                wx.request({
-                  url: app.data.urlevent + "/appcomeptitionplayer/focusplayer.do",
-                  data: {
-                    token: wx.getStorageSync('token'),
-                    userId: that.data.id
-                  },
-                  method: 'POST',
-                  header: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                  },
-                  dataType: 'json',
-                  success: function (res) {
-                    console.log(res.data.data)
-                    if (res.data.status === 100) {
-                      
-                      that.getuser();
-                    } else if (res.data.status === 103) {
-                      wx.showToast({
-                        title: '请重新登录',
-                        icon: 'none'
-                      })
-                      wx.navigateTo({
-                        url: '../login/login',
-                      })
-                    } else {
-                      wx.showToast({
-                        title: res.data.msg,
-                        icon: 'none'
-                      })
-                    }
-                  }
-                })
-            }
-          }
-          
-          that.setData({
-            userinfo: res.data
-          })
-        },
-      })
     
   },
 
@@ -151,8 +117,17 @@ Page({
       })
 
       setTimeout(function () {
-        that.getdetail();
-        that.getdet();
+        if (wx.getStorageSync('token')) {
+          that.getdet();
+          that.getdetail();
+          console.log('token存在')
+        } else {
+          that.gettoken();
+          console.log('token不存在')
+        }
+       
+        
+        
       }, 500)
       // complete
       wx.hideNavigationBarLoading() //完成停止加载
@@ -307,6 +282,100 @@ Page({
   hots:function(){
     wx.navigateTo({
       url: '../home/home',
+    })
+  },
+  //绑定
+  getbang(){
+    let that = this;
+    console.log(share)
+    wx.getStorage({
+      key: 'userinfo',
+      success: function (res) {
+        if (share != '') {
+          if (res.data.idolId == null || res.data.idolId == '') {
+            wx.request({
+              url: app.data.urlevent + "/appcomeptitionplayer/focusplayer.do",
+              data: {
+                token: wx.getStorageSync('token'),
+                userId: that.data.id
+              },
+              method: 'POST',
+              header: {
+                'content-type': 'application/x-www-form-urlencoded'
+              },
+              dataType: 'json',
+              success: function (res) {
+                console.log(res.data.data)
+                if (res.data.status === 100) {
+
+                  that.getuser();
+                } else if (res.data.status === 103) {
+                  wx.showToast({
+                    title: '请重新登录',
+                    icon: 'none'
+                  })
+                  wx.navigateTo({
+                    url: '../login/login',
+                  })
+                } else {
+                  wx.showToast({
+                    title: res.data.msg,
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+        }
+
+        that.setData({
+          userinfo: res.data
+        })
+      },
+    })
+  },
+  gettoken: function () {
+    var that = this;
+    wx.request({
+      url: app.data.urlevent + "/applogin/default/token.do",
+      data: {
+
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+
+          wx.setStorage({
+            key: 'token',
+            data: res.data.data.token,
+          })
+          wx.setStorage({
+            key: 'userinfo',
+            data: res.data.data.user,
+          })
+          setTimeout(function () {
+            that.getdet();
+          }, 300)
+        } else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
     })
   },
   //去报名
@@ -637,8 +706,8 @@ Page({
       success: function (res) {
         console.log(res.data.data)
         if (res.data.status === 100) {
-
-
+          that.getseasondetail();
+           that.getbang();
           that.setData({
             status: res.data.data.status,
             

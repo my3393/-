@@ -5,9 +5,9 @@ page{
   font-size: 30rpx;
 }
 .public{
-  margin-top: 20rpx;
-  width: calc(100% - 40rpx);
-  margin-left: 20rpx;
+ 
+  width: 100%;
+  
   padding: 20rpx;
   background: #fff;
   box-sizing: border-box;
@@ -19,6 +19,7 @@ page{
 .enter{
   float: right;
   width: 16rpx;
+  margin-right: 20rpx;
   height: 26rpx;
 }
 .dev{
@@ -61,7 +62,8 @@ textarea{
   display: inline-block;
 }
 .submit{
-  width: calc(100% - 40rpx);
+  width:calc((100% - 40rpx)/2);
+  display: inline-block;
   margin-left: 20rpx;
   border-radius: 40rpx;
   height: 80rpx;
@@ -186,8 +188,158 @@ imgcut {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  font-size: 40rpx;
 }
 .footer view{
   color: var(--color-primary);
   padding: 0 20rpx;
+}
+
+/* 海选告知书 */
+.yds{
+   width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 12;
+}
+.yd{
+	position:absolute;
+  width: 600rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  text-align: center;
+  font-size: 28rpx;
+  padding-top: 40rpx;
+	top: 40%;
+	left: 50%;
+	padding: 20rpx 20rpx;
+	box-sizing: content-box;
+  transform: translate(-50%,-50%)
+}
+.lip{
+  margin: 20rpx 0;
+  color: #A3A3A3;
+  height: 600rpx;
+  overflow: scroll;
+}
+
+
+
+.xioe{
+  margin-top: 50rpx;
+  line-height: 70rpx;
+  display: flex;
+  justify-content: space-around;
+  color: #F861AA;
+}
+.xioe>view{
+  width: 250rpx;
+  height: 80rpx;
+  border:2rpx solid #F861AA;
+  border-radius: 60rpx;
+  overflow: hidden;
+  text-align: center;
+  line-height: 80rpx;
+  background: #F861AA;
+  color: #fff;
+}
+.deter{
+  border:2rpx solid #979797!important;
+  background: #fff!important;
+  color: #979797!important;
+}
+.cent{
+  color: #000;
+  text-align: center;
+}
+
+/* 第一步 */
+
+.xinxi{
+  padding: 20rpx;
+  box-sizing: border-box;
+  color: #A3A3A3;
+}
+.o-nav{
+  padding: 20rpx;
+  background: #fff;
+  box-sizing: border-box;
+  color: #000000;
+}
+.kuang{
+  border: 1rpx solid #CCCCCC;
+  height: 70rpx;
+  border-radius: 10rpx;
+  line-height: 70rpx;
+  margin-top: 10rpx;
+  margin: 20rpx 0;
+}
+.inpu{
+  height: 70rpx;
+  line-height: 70rpx;
+  padding-left: 20rpx;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 90%;
+}
+.xia{
+  float: right;
+  width: 36rpx;
+  margin-right: 20rpx;
+  height: 16rpx;
+}
+.xia image{
+  width: 100%;
+  height: 100%;
+}
+
+/* 地区选择 */
+.mwrap{
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
+.mtitle{
+
+	height: 80rpx;
+	line-height: 80rpx;
+	background-color: #e6e6e6 !important;
+	width: 100%;
+	font-size: 30rpx;
+	color: #333;
+	text-align: center;
+}
+.province{
+	background-color: white;
+	width: 100%;
+	height: 520rpx;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+.province view{
+	line-height: 80rpx;
+	padding-left: 40rpx;
+	box-sizing: border-box;
+	border-bottom: 1px solid #DDDDDD;
+	font-size: 28rpx;
+	color: #333;
+}
+.province_active{
+	background-color: #FE5BA9;
+	color: white !important;
+}
+.next{
+   width: calc(100% - 40rpx);
+  margin-left: 20rpx;
+  border-radius: 40rpx;
+  height: 80rpx;
+  background: #F861AA;
+  color: #fff;
+  text-align: center;
+  line-height: 80rpx;
+  margin-top: 40rpx;
 }

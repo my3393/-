@@ -1,44 +1,121 @@
 <!--pages/sumbit/sumbit.wxml-->
+<!-- 第一步 -->
+<view hidden='{{isone}}'>
+   <view class="xinxi">
+     选手信息
+   </view>
+   <view class="o-nav">
+      选手姓名
+     <view class="kuang">
+        <input placeholder="请输入选手姓名" type="text" class="inpu" bindinput="x_name" value="{{x_name}}"></input>
+     </view>
+      选手手机号
+     <view class="kuang">
+        <input placeholder="请输入选手手机号（选填）" type="number" class="inpu" bindinput="x_phone" value="{{x_phone}}"></input>
+     </view>
+      选手身份证号
+     <view class="kuang">
+        <input placeholder="请输入选手身份证号" type="idcard" class="inpu" bindinput="x_card" value="{{x_card}}"></input>
+     </view>
+     选手性别
+     <view class="kuang">
+        <picker bindchange="sexChange" id='{{sex[index].id}}' value="{{index}}" range="{{sex}}" range-key="{{'name'}}" >
+           <input placeholder="请输入选手性别" class="inpu" value='{{sexs}}' disabled="true"></input>
+          <view class="xia">
+            <image src="../../images/xia.png"></image>
+          </view>
+        </picker>
+     </view>
+     出生日期
+     <view class="kuang">
+        <picker bindchange="dayChange"  value="{{index}}" start='1990-01-01' end='2024-12-12' mode ='date'>
+           <input placeholder="请选择出生日期" class="inpu" value='{{day}}' disabled="true"></input>
+          <view class="xia">
+            <image src="../../images/xia.png"></image>
+          </view>
+        </picker>
+     </view>
+     家庭住址
+     <view class="kuang" bindtap="diz">
+        <input placeholder="请选择地址" type="text" class="inpu" value='{{addres}}' disabled="true"></input>
+          <view class="xia">
+            <image src="../../images/xia.png"></image>
+          </view>
+     </view>
+      
+     <view class="kuang">
+        <input placeholder="请填写详细地址（楼栋，门牌号）" class="inpu" value="{{xiangx}}" bindinput="xiangx"></input>
+     </view>
+     所属赛区
+     <view class="kuang">
+        <picker bindchange="saiChange" id='{{sai[index].id}}' value="{{index}}" range="{{sai}}" range-key="{{'name'}}" >
+           <input placeholder="请选择赛区" class="inpu" value='{{sainame}}' disabled="true"></input>
+          <view class="xia">
+            <image src="../../images/xia.png"></image>
+          </view>
+        </picker>
+     </view>
+     所属机构
+     <view class="kuang">
+        <picker bindchange="orginChange" id='{{orgins[index].id}}' value="{{index}}" range="{{orgins}}" range-key="{{'institutionName'}}" >
+           <input placeholder="请选择机构" class="inpu" value='{{orginame}}' disabled="true"></input>
+          <view class="xia">
+            <image src="../../images/xia.png"></image>
+          </view>
+        </picker>
+     </view>
+   </view>
+   <view class="next" bindtap="next">下一步</view>
+   <view style="height:60rpx"></view>
+   <!--  -->
+   <!-- 居住地选择 -->
+  <view class="mask addrsss" id="citypick" hidden="{{isardess}}">
+        <view class="mwrap">
+          <view class="mtitle">选择地址</view>
+          <view class="province" hidden="{{isprov}}">
+            <view wx:for="{{province}}" id="{{item.id}}" data-name="{{item.name}}" bindtap="getprovs">{{item.name}}</view>
+          </view>
+          <view class="province" hidden="{{iscity}}">
+            <view wx:for="{{city}}" id="{{item.id}}" data-name="{{item.name}}" bindtap="getcity">{{item.name}}</view>
+          </view>
+          <view class="province" hidden="{{isqu}}">
+            <view wx:for="{{area}}" id="{{item.id}}" data-name="{{item.name}}" bindtap="getarea" data-index="{{index}}">{{item.name}}</view>
+          </view>
+          <view class="province" hidden="{{isjie}}">
+            <view wx:for="{{town}}" id="item.id" data-name="{{item.name}}" bindtap="gettown">{{item.name}}</view>
+          </view>
+        </view>
+  </view>   
+</view>
 <view hidden='{{ishidden}}'>
-  <view class='public'>
-    <view class='fons'>选择赛区</view>
-    <view style='margin-top:20rpx;'>
-      <input class='dev' placeholder='请选择赛区' disabled='false' bindtap='choose' value='{{dev}}'></input>
-      <view class='enter'>
-        <image src='../../images/enter.png'></image>
-      </view>
-    </view>
-  </view>
-
-  <view class='public'>
-    <view class='fons'>姓名</view>
-    <view style='margin-top:20rpx;'>
-      <input class='dev' placeholder='请输入姓名' bindinput='name'></input>
-      
-    </view>
-  </view>
-
-  <view class='public'>
-    <view class='fons'>手机号</view>
-    <view style='margin-top:20rpx;'>
-      <input class='dev' placeholder='请输入手机号' type='number' bindinput='scope' maxlength='11'></input>
-      
-    </view>
-  </view>
-
-  <view class='public' hidden='{{ishidd}}'>
-    <view class='fons'>个人简介</view>
-    <view style='margin-top:20rpx;'>
-      <textarea class='texta' placeholder='详细介绍下自己及特长技能（出生、特长、获奖情况、参加的活动等）' maxlength='500' bindinput='intor'>
-      
-      </textarea>
-      
-    </view>
-  </view>
-
+  <view class="xinxi">
+     监护人信息
+   </view>
+  <view class="o-nav">
+     监护人姓名
+     <view class="kuang">
+        <input placeholder="请输入监护人姓名" type="text" class="inpu" bindinput="j_name" value="{{j_name}}"></input>
+     </view>
+      监护人手机号
+     <view class="kuang">
+        <input placeholder="请输入监护人手机号" type="number" class="inpu" bindinput="j_phone" value="{{j_phone}}"></input>
+     </view>
+      监护人身份证号
+     <view class="kuang">
+        <input placeholder="请输入监护人身份证号" type="idcard" class="inpu" bindinput="j_card" value="{{j_card}}"></input>
+     </view>
+     
+      亲属关系
+     <view class="kuang">
+        <input placeholder="请填写你与选手的亲属关系" type="text" class="inpu" bindinput="between" value="{{between}}"></input>
+     </view>
+   </view>
+   <view class="xinxi">
+     选手资料及证明
+   </view>
   <view class='public'>
     <view class='fons'>
-        个人照片
+        选手照片
         <text class='shang'>（请上传3～5张个人高清照片）</text>
     </view>
     <view class='dher'>
@@ -68,14 +145,23 @@
         </view>
   </view>
   <view class='public'>
+    <view class='fons'>与选手关系证明<text class='shang'>（ （请上传监护人与选手亲属关系的《户口簿》页照片）</text></view>
+      <view class='dher'>
+        <image src='{{post3}}' bindtap="chooseImagess" hidden='{{showadd}}' id="{{1}}"></image>   
+        </view>
+  </view>
+  <view class='public'>
     <view class='fons'>保险凭证<text class='shang'>（参与赛事购买的保险图片）</text></view>
       <view class='dher'>
           
       <image src='{{post4}}' bindtap="chooseImagess" hidden='{{showadd}}' id="{{2}}"></image>
         </view>
   </view>
+  <view class='submit' bindtap='back'>
+    上一步
+  </view>
   <view class='submit' bindtap='submit'>
-    提交报名
+    下一步
   </view>
 
   <!-- 赛区选择 -->
@@ -114,3 +200,40 @@
   </view>
 </view>
 
+<!-- 海选赛时风险告知书 -->
+
+<view class="yds" hidden='{{isshu1}}' >
+			<view class="yd">
+				  <view class="cent">电影《Battle》小演员海选赛事风险告知书</view>
+          <view class="lip">
+           <text decode="{{true}}">&ensp;&ensp;</text> 鉴于，中联影视文化传媒股份有限公司（简称中联影视）经与制片方和导演等主创方共同商议决定，为出品制作的电影《Battle》选拔优秀小演员之目的，在全国多个城市组织街舞比赛；
+鉴于，街舞是一种具有一定烈度的运动，同时海选街舞比赛具有较强的竞技性和对抗性，选手在训练和比赛中可能存在某种不可预知的危险；
+鉴于，在组织和筹办海选赛事过程中，或因不确定性因素或事件，可能导致赛事不能顺利举办，或者不能达到预期目标，或者导致海选赛事终止，从而使选手蒙受一定经济损失。
+在选手签署《电影〈Battle〉小演员海选赛事选手协议》（以下简称《选手协议》）时，表明选手及其法定监护人已充分知晓、理解和接受《电影〈Battle〉小演员海选赛风险告知书》（简称《风险告知书》）揭示的风险，并愿意自行承担上述一切风险。《风险告知书》的全部条款属于《选手协议》的一部分。
+          <view class="cent">第一条 重要提示</view>
+          <text decode="{{true}}">&ensp;&ensp;</text>  1.1中联影视虽然恪尽职守，履行诚实、审慎的义务，对海选赛事的各类风险进行了识别、控制、监督和检查，但是鉴于认识能力的局限，仍然存在某种未知的重大风险被忽略从而导致赛事风险管理失败的风险。
+1.2 选手自愿报名参加海选比赛，需由其法定监护人确认全程陪同参与，中途更换法定监护人的，原法定监护人有义务向继任的法定监护人告知本风险告知书和赛事规则的内容。
+1.3选手法定监护人已经充分了解参加本次海选比赛可能出现的风险，且已准备必要的防范措施，承诺恪守法定监护职责，履行对选手参赛期间的安全保护义务。
+1.4选手自愿遵守赛事规则及相关风险管理措施。
+1.5选手法定监护人完全了解选手身体状况,确认选手身体健康状况良好,具备参赛条件,已为参赛做好充分准备。
+1.6选手已经购买了人身意外伤害保险，愿意承担比赛期间发生的自身意外风险责任,且同意对于非竞技原因造成的任何形式的损失,
+主办单位不承担任何形式的赔偿责任。
+             <view class="cent">第二条 风险揭示</view>
+             中联影视不能也没有义务为如下风险负责：
+2.1 政治风险。是指海选赛事受到政治抵制、战争、宗教、恐怖活动、民众示威等因素的严重影响，导致无法正常进行或人身、财产安全受到损失的风险。
+2.2 灾害风险。是指海选赛事因自然灾害，包括但不限于高温、热浪、暴风雨(雪)、雷电、冰雹、地震、泥石流等灾害的严重影响，导致无法正常进行或人身、财产安全受到损失的的风险。
+2.3 人为事件风险。是指海选赛事因其他第三方的故意或过失造成的火灾、盗窃、人身伤害等刑事案件严重影响，导致无法正常进行或人身、财产安全受到损失的风险。
+2.4 竞赛项目风险。街舞运动无论在训练和比赛中均有一定的难度、强度和烈度，海选比赛的高对抗性和高标准决定了竞赛过程有一定的危险性，可能存在由于选手压力大、精神紧张、身体健康出现异常等情形，从而导致选手在比赛中发生某种危险的风险。
+2.5 赛事运行风险。海选赛事可能存在因日程安排、交通阻塞、卫生安全、媒体传播等因素严重影响，从而导致赛事失败的风险。
+2.6 其他中联影视无法预见、无法避免或无法控制的风险。
+              <view class="cent">第三条 其他事项</view>
+               3.1 本《风险告知书》的最终解释权归中联影视所有。
+3.2 选手法定监护人承诺并保证已认真阅读本《风险告知书》，理解上文所揭示的所有风险，并愿意承担因参赛可能造成的风险损失，中联影视不对选手的风险损失承担任何责任。 
+本选手（监护人）已认真阅读并全面理解以上内容,且对上述所有内容予以确认并自愿承担相应的法律责任。
+          </view>
+        <view class='xioe'>
+          <view class='deter' bindtap='noagree'>不同意</view>
+          <view  bindtap='agree' >已阅读并同意</view>
+        </view>
+			</view>
+</view>

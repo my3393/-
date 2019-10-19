@@ -8,8 +8,9 @@
   wx:if="{{canIUse}}"
   open-type="getUserInfo"
   bindgetuserinfo="bindGetUserInfo"
- 
+  hover-class="button_active"
 >
   授权登录
 </button>
 <view wx:else>请升级微信版本</view>
+<!-- <button class="bat" bindtap="back">取消</button> -->

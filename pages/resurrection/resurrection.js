@@ -34,8 +34,7 @@ Page({
          id:options.id,
        })
       
-       that.getmode();
-      
+       that.getmode();  
   },
 
   /**
@@ -87,7 +86,7 @@ Page({
        player = [];
        splayer = [];
       that.setData({
-
+         tas:1000000,
         isgz: true,
         isSearch: false,
         isSai: true,
@@ -95,18 +94,17 @@ Page({
         splayer: [],
         currentPage: 1,
         narea: [],
-        qualifiedNumber: '',
-        competitionName: '',
+       
         banner: [],
         detail: [],
-        seasonId: '',
+        
         valu:'',
       })
 
       setTimeout(function () {
-        that.getplayer();
-        that.getmode();
-        that.getdetail();
+         that.getplayer();
+        // that.getmode();
+         that.getdetail();
       }, 500)
       // complete
       wx.hideNavigationBarLoading() //完成停止加载
@@ -114,13 +112,20 @@ Page({
 
     }, 1000);
   },
-
+  xiaochu() {
+    let that = this;
+    that.setData({
+      isSai: !that.data.isSai
+    })
+  },
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
     //选手
     var that = this;
+   
+   
     if (that.data.currentPage == that.data.totalPage) {
       wx.showToast({
         title: '已经到底了哦',
@@ -243,7 +248,8 @@ Page({
     that.setData({
       isSearch: true,
       splayer: [],
-      valu: e.detail.value
+      valu: e.detail.value,
+      currentPage: 1
     })
     wx.request({
       url: app.data.urlevent + "/appcomeptitionplayer/resurgencelist.do",
@@ -285,6 +291,51 @@ Page({
       }
     })
   },
+  searchinps: function (e) {
+    var that = this;
+    console.log(e);
+    
+    wx.request({
+      url: app.data.urlevent + "/appcomeptitionplayer/resurgencelist.do",
+      data: {
+        competitionAreaId: that.data.id,
+        token: wx.getStorageSync('token'),
+        keyword: e.detail.value,
+        currentPage: that.data.currentPage
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      success: function (res) {
+        console.log(res.data.data)
+        if (res.data.status === 100) {
+          for (var i in res.data.data.data) {
+            splayer.push(res.data.data.data[i])
+          }
+          that.setData({
+            splayer: splayer,
+            s_totalPage: res.data.data.totalPage
+          })
+
+        } else if (res.data.status === 103) {
+          wx.showToast({
+            title: '请重新登录',
+            icon: 'none'
+          })
+          wx.navigateTo({
+            url: '../login/login',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
   //赛区选择
   narea: function (e) {
     console.log(e)
@@ -300,6 +351,7 @@ Page({
       competitionName: competitionName,
       qualifiedNumber: qualifiedNumber,
       isSai: !this.data.isSai,
+      currentPage:1,
       tas: index,
       isSearch: false,
       players: [],

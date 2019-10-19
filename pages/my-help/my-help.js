@@ -87,10 +87,7 @@ Page({
       })
       that.setData({
         isgift:!that.data.isgift
-      })
-   
-    
-   
+      }) 
   },
   getdetail: function () {
     var that = this;

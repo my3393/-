@@ -21,6 +21,27 @@ Page({
       { id: 4, name: '赛事动态' },
      
     ],
+    imgs:[
+       "https://graph.baidu.com/resource/11629b5b21495fc38faf001572947644.jpg",
+       "https://graph.baidu.com/resource/116e3b442899944bd09e901572947676.jpg",
+       "https://graph.baidu.com/resource/116b9dee63af0f77fcb8f01572947716.jpg",
+       "https://graph.baidu.com/resource/1168b577d0799dcb13b6901572947760.jpg",
+       "https://graph.baidu.com/resource/116cbad4102d7edcff35201572947785.jpg",
+       "https://graph.baidu.com/resource/1160b18a8b52c43cfeb7201572947853.jpg",
+       "https://graph.baidu.com/resource/116d0dda7132957d62b4701572947898.jpg",
+       "https://graph.baidu.com/resource/11623e5635f45dfc30cd601572947929.jpg",
+       "https://graph.baidu.com/resource/116681ce718914c1289eb01572948120.jpg",
+       "https://graph.baidu.com/resource/116f8559d311e9c84a23f01572948152.jpg",
+       "https://graph.baidu.com/resource/116f95a39fe452bdd327f01572948176.jpg",
+       "https://graph.baidu.com/resource/11677181943ed8b40434a01572948206.jpg",
+       "https://graph.baidu.com/resource/11672e7856e2831f1f14801572948242.jpg",
+       "https://graph.baidu.com/resource/1162efea64f39cef37f3c01572948274.jpg",
+       "https://graph.baidu.com/resource/116e4c0174b47a031212c01572948296.jpg", 
+       "https://graph.baidu.com/resource/116ffe62425f60905601401572948318.jpg"
+     
+    ],
+    isguiz:false,
+    tapTime: '',
     idx:'',
     tar:'',
     tab:'',
@@ -202,6 +223,7 @@ Page({
         that.getdetail();
         that.getplayer();
         that.getranklist();
+        that.getdynamic();
       }, 500)
       // complete
       wx.hideNavigationBarLoading() //完成停止加载
@@ -294,6 +316,13 @@ Page({
       title: '《明日告白》影视剧组线上海选赛火热进行中，快进来看看吧~',
       path: '/pages/home/home'
     }
+  },
+  //查看更多
+  gend:function(e){
+    let that = this
+     this.setData({
+       isguiz:!that.data.isguiz,
+     })
   },
   handleImagePreview: function (e) {
     var that = this;
@@ -496,6 +525,10 @@ Page({
             success: function (res) {
               console.log(res.data.data)
               if (res.data.status === 100) {
+                ranklist = [];
+                that.setData({
+                  p_currentPage:1
+                })
                 wx.showToast({
                   title: '复活成功',
                   icon: 'none'
@@ -528,60 +561,67 @@ Page({
   //去报名
   submit: function (e) {
     var that = this;
-    if(that.data.detail.status == 0){
-      wx.showToast({
-        title: '报名还未开启',
-        icon:'none'
-      })
-    } else if (that.data.detail.status == 1){
-      if(that.data.userinfo.isJoin == 1){
+    var nowTime = new Date();
+    if (nowTime - this.data.tapTime < 1000) {
+      console.log('阻断')
+      return;
+    }
+   
+      if(that.data.detail.status == 0){
         wx.showToast({
-          title: '你已报名',
+          title: '报名还未开启',
           icon:'none'
         })
-      }else{
-        wx.request({
-          url: app.data.urlevent + "/appcompetition/isaudit.do",
-          data: {
-            token: wx.getStorageSync('token'),
-            userId: e.currentTarget.id
-          },
-          method: 'POST',
-          header: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          dataType: 'json',
-          success: function (res) {
-            console.log(res.data.data)
-            if (res.data.status === 100) {
-              wx.navigateTo({
-                url: '../sumbit/sumbit',
-              })
-              
-            } else if (res.data.status === 103) {
-              wx.showToast({
-                title: '请重新登录',
-                icon: 'none'
-              })
-              wx.navigateTo({
-                url: '../login/login',
-              })
-            } else {
-              wx.showToast({
-                title: res.data.msg,
-                icon: 'none'
-              })
+      } else if (that.data.detail.status == 1){
+        if(that.data.userinfo.isJoin == 1){
+          wx.showToast({
+            title: '你已报名',
+            icon:'none'
+          })
+        }else{
+          wx.request({
+            url: app.data.urlevent + "/appcompetition/isaudit.do",
+            data: {
+              token: wx.getStorageSync('token'),
+              userId: e.currentTarget.id
+            },
+            method: 'POST',
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            dataType: 'json',
+            success: function (res) {
+              console.log(res.data.data)
+              if (res.data.status === 100) {
+                wx.navigateTo({
+                  url: '../sumbit/sumbit',
+                })
+                
+              } else if (res.data.status === 103) {
+                wx.showToast({
+                  title: '请重新登录',
+                  icon: 'none'
+                })
+                wx.navigateTo({
+                  url: '../login/login',
+                })
+              } else {
+                wx.showToast({
+                  title: res.data.msg,
+                  icon: 'none'
+                })
+              }
             }
-          }
+          })
+        }
+        
+      }else{
+        wx.showToast({
+          title: '你来晚了，报名已截止',
+          icon: 'none'
         })
       }
-       
-    }else{
-      wx.showToast({
-        title: '你来晚了，报名已截止',
-        icon: 'none'
-      })
-    }
+    this.setData({ tapTime: nowTime });
     console.log(that.data.userinfo)
   },
   //去选手页
@@ -606,23 +646,39 @@ Page({
   //商品切换
   tag: function (e) {
     var that = this;
+    let conut = '';
+    var nowTime = new Date();
+    if (nowTime - this.data.tapTime < 800) {
+      console.log('阻断')
+      return;
+    }
     console.log(e.currentTarget.dataset.num);
-    let conut = e.currentTarget.dataset.num
+     conut = e.currentTarget.dataset.num
     if(conut == 1){
       player = [];
       that.setData({
-        
+        x_currentPage:1,
+      
       })
       that.getplayer();
     }else if(conut == 2){
       ranklist = [];
+      
+      that.setData({
+        p_currentPage: 1,
+       
+      })
       that.getranklist();
     }else if(conut == 3){
       dynamic = [];
+      that.setData({
+        d_currentPage: 1,
+       
+      })
       that.getdynamic();
     }
    
-    
+    this.setData({ tapTime: nowTime });
     
     that.setData({
       isSearch: false,
@@ -735,12 +791,17 @@ Page({
   //投票
   vote: function (e) {
     var that = this;
-     if(isshow == 3){
-       wx.showToast({
-         title:'当前赛程已结束哦',
-         icon:'none'
-       })
-     }else{
+    var nowTime = new Date();
+    if (nowTime - this.data.tapTime < 800) {
+      console.log('阻断')
+      return;
+    }
+    //  if(isshow == 3){
+    //    wx.showToast({
+    //      title:'当前赛程已结束哦',
+    //      icon:'none'
+    //    })
+    //  }else{
       wx.request({
         url: app.data.urlevent + "/appcomeptitionplayer/uservote.do",
         data: {
@@ -790,7 +851,8 @@ Page({
           }
         }
       })
-     }
+    //  }
+    this.setData({ tapTime: nowTime });
   },
   que:function(){
     var that = this;
@@ -846,6 +908,19 @@ Page({
     var num = e.currentTarget.dataset.num;
     var selectindex = e.currentTarget.dataset.src;//获取data-src
     var imgList = this.data.dynamic[num].filePathOss;//获取data-list
+    //图片预览
+    wx.previewImage({
+      current: selectindex, // 当前显示图片的http链接   
+      urls: imgList // 需要预览的图片http链接列表
+    })
+  },
+  imgsrcs: function (e) {
+    var that = this;
+
+    console.log(e)
+    var num = e.currentTarget.dataset.index;
+    var selectindex = e.currentTarget.dataset.src;//获取data-src
+    var imgList = that.data.imgs;//获取data-list
     //图片预览
     wx.previewImage({
       current: selectindex, // 当前显示图片的http链接   

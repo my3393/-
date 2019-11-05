@@ -20,12 +20,23 @@
     <view class='yua'>
       <image src='../../images/reward.png'></image>
     </view>
+    
     <view class='eve' wx:if="{{detail.status == 1}}">赛事报名</view>
     <view class='eve' wx:else>{{isCurrent}}</view>
-    <view class='sumbit' wx:if="{{detail.status == 1}}" id='{{userinfo.userId}}' bindtap='submit'>
+     <view  class='sumbit'  wx:if="{{detail.status == 0}}" >
+      报名还未开始
+    </view>
+    <view  class='sumbit'  wx:elif="{{detail.status == 1}}" id='{{userinfo.userId}}' bindtap='submit'>
       立即报名
     </view>
-    <view class='fupk' bindtap='resurr' hidden='{{isfuhuo}}'>复活PK榜</view>
+     <view class='fupk' bindtap='resurr' wx:elif='{{!isfuhuo}}'>复活PK榜</view>
+     <view  class='sumbit jiez'  wx:elif="{{detail.status == 2}}" >
+      报名截止
+    </view>
+     <view  class='sumbit jiez'  wx:elif="{{detail.status == 3}}" >
+      已结束
+    </view>
+   
     <view class='tima' wx:if='{{detail.status == 1}}'>
       时间：{{detail.startDate}}-{{detail.endDate}}
     </view>
@@ -33,7 +44,7 @@
   </view>
 </view>
 <view class='nav-list'>
-  <view wx:for="{{tag}}" wx:for-index="idx" bindtap="tag" data-num='{{idx}}' class='{{tar == idx?"active":""}}'>
+  <view hover-class="tag-hover" hover-stop-propagation="true" wx:for="{{tag}}" wx:for-index="idx" bindtap="tag" data-num='{{idx}}' class='{{tar == idx?"active":""}}'>
     {{item.name}}
   </view>
 </view>
@@ -55,16 +66,52 @@
   <view class='sindic'>
     <view class='heng'></view>
     <text>赛事奖励</text>
+    <view class='heng'>
+     
+    </view>
+  </view>
+  <view class='species'>
+   <view> battle赛事奖励</view>
+ <text decode="{{true}}">&ensp;</text> 小演员主角：1名，由电影总导演优先在胜出选手中选出。
+<text decode="{{true}}">&ensp;&ensp;</text> 其他配角：决选前20名获得参演电影的资格。
+  </view>
+   <view class='sindic'>
+    <view class='heng'></view>
+    <text>赛事阵容</text>
     <view class='heng'></view>
   </view>
-  <view class='species'></view>
+  <view class="zhenr" wx:for='{{imgs}}' bindtap='imgsrcs' wx:for-index='indexs' data-index='{{indexs}}'  data-src='{{item}}'>
+     <image src='{{item}}'></image>
+     
+     <!-- <image src=></image> -->
+
+  </view>
   <view class='sindic'>
     <view class='heng'></view>
     <text>赛事规则</text>
     <view class='heng'></view>
   </view>
   <view class='species'>
-  Battle，俗称斗舞。 一般参与battle的舞种是Hiphop，Locking，Popping，Waacking，Breaking，Punking和Voguing（后面两种练的人比较少）。其他答案里没有提到Locking（锁舞）的，我比较熟，就说下这个。 Locking这个舞种有自己的routine，即固定的几套基本动作。在Battle里会重点考察根据不同音乐场景下运用和改编动作的能力。为什么？因为battle的时候音乐都是DJ出，dancer不知道会遇到怎样的节奏和旋律，所以随机应变，使用不同的技术，理解音乐融入音乐最重要。音乐感觉和动作变化，这些都是要靠长期练习积累。 </view>
+ <view>赛事规则</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 一、乙方报名成功即获得选手资格，乙方及其法定监护人即应自愿服从包含甲方在内的海选主办方的统一安排，遵守海选赛事规则，参加本次海选赛事。</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 二、甲方可根据乙方的街舞基础情况，安排乙方参与一定课时的街舞教学强化培训，并按规定的标准收取培训费用。</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 三、甲方按照赛事规则规定，组织乙方参加甲方组织的第一轮初选；乙方经初选进入甲方赛区前5名的，由甲方推荐参加第二轮全国五大赛区复选。</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 四、甲方负责各自初选赛区的比赛场地、赛事组织实施和安全保卫工作，并按照公平、公正原则进行第一轮初选。</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 五、乙方参加初选赛事的交通费、食宿费自理并自行就近安排；乙方如参加后续复选和决选赛事，由甲方统一组织安排，甲方可向乙方预收一定费用后，按照实际发生情况结算。</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 六、乙方应当购买海选赛事期间（2019年11月1日-2020年1月31日）的人身意外伤害保险，并在选手报名系统上传保单。</view>
+   <view wx:if='{{isguiz}}'><text decode="{{true}}">&ensp;&ensp;</text> 七、乙方参加甲方及其他主办方组织的各项集体活动时，不得擅自行动，未获甲方及其他主办方同意不得擅自离开驻地活动；非主办方组织的活动所造成交通意外或者其他人身意外伤害，主办方不承担任何责任。
+<view><text decode="{{true}}">&ensp;&ensp;</text> 八、乙方外出参加赛事活动时，乙方监护人应尽到特别注意义务，保护乙方及自身的人身安全，严禁接触任何危险区域；保管好自己的现金和贵重物品；甲方应尽到随时提醒和保护义务。如因乙方及其监护人的过错导致人身或财产损失的，甲方及其他主办方不承担赔偿责任。</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 九、乙方及其监护人应严格遵守法律法规和社会公德，自觉遵守机场、车站、码头、宾馆、餐厅、公共交通工具、赛事场馆等公共场所的有关管理规定，文明礼貌，不毁坏公私财物，不浪费粮食，不大声喧哗、不得酗酒、赌博、吵闹、打架及作出其他有损社会公认的道德标准的行为。如乙方及其监护人或其他随行人员违反上述规定，自行承担相应法律责任；后果严重的，甲方或其他主办方有权取消乙方的参赛资格。</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 十、乙方及其法定监护人或其他随行人员，应文明礼貌、友善地对待其它选手、评委及工作人员，不得私下接触本次大赛的评委或要求私自查看选手的成绩；不得对评委、主办方人员进行贿赂，或以其他非正当方式干扰比赛，一经发现，甲方或其他主办方有权取消乙方的参赛资格。</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 十一、乙方法定监护人应积极配合甲方及其他主办方工作人员的各项管理和安排，履行对乙方的管理责任，监督教导孩子遵守主办方制定的各项规定，不得干涉海选赛事的正常工作，不得扰乱海选赛事的正常秩序。</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 十二、乙方应按规定交纳参与本次海选赛事的相关费用；如中途落榜、自愿退出比赛或被取消参赛资格，乙方所缴纳的费用将不予退还。</view>
+<view><text decode="{{true}}">&ensp;&ensp;</text> 十三、经决选胜出的前20名选手，将获得参演电影的资格，电影小演员主角由电影总导演优先在胜出选手中选拔。</view>
+<text decode="{{true}}">&ensp;&ensp;</text> 十四、海选主办方拥有本次海选获奖选手的肖像、影像和姓名使用权。
+  
+</view>
+<view class="gend" bindtap="gend" wx:if="{{isguiz}}">收起</view>
+<view class="gend" bindtap="gend" wx:else>查看更多</view>
+ </view>
   <view style='padding-bottom:120rpx;'>
   </view>
 </view>
@@ -87,11 +134,12 @@
           <image src='../../images/noplay.png'></image>
         </view>
         <view>还没人参加快去试试~</view>
+        <view style="height:120rpx"></view>
       </view>
       <view class='play' wx:else>
         <view class='play-list' wx:for='{{player}}' id='{{item.userId}}'>
           <view class='play-img' bindtap='player' id='{{item.userId}}' data-id='{{item.id}}'>
-            <image src='{{item.playerCoverOss}}' mode="aspectFit"></image>
+            <image src='{{item.playerCoverOss}}'></image>
           </view>
           <view style=' color: #000; font-size: 34rpx; margin-top: 10rpx;'>
             <text>{{item.playerNumber}}号</text>
@@ -251,7 +299,7 @@
     <view class='micro' wx:for-index='widx' wx:for='{{dynamic}}'>
       <view class='ibottom clearfix'>
         <view class='fhead' id='{{item.userId}}' catchtap='todetail' data-type='{{item.type}}'>
-          <image mode='aspectFill' src='{{item.headPhoto}}'></image>
+          <image  src='{{item.headPhoto}}'></image>
         </view>
         <text>{{item.userName}}</text>
         <view class='flabel'>{{item.createDate}}</view>
